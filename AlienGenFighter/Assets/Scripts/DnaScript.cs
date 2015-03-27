@@ -70,16 +70,26 @@ public class DnaScript
 		return _genes[(byte) cara];
 	}
 
+	public byte GetGeneAt(byte index)
+	{
+		return _genes[index];
+	}
+
 	public void SetGeneAt(ECharateristic cara, byte value)
 	{
 		_genes[(byte) cara] = value;
+	}
+
+	public void SetGeneAt(byte index, byte value)
+	{
+		_genes[index] = value;
 	}
 
 	public static DnaScript operator *(DnaScript gene, DnaScript gene2)
 	{
 		DnaScript dnaRet = new DnaScript();
 		for (byte i = 0; i < Size; ++i)
-			dnaRet.SetGeneAt((ECharateristic)i, (byte)Random.Range(gene.GetGeneAt((ECharateristic)i), gene2.GetGeneAt((ECharateristic)i)));
+			dnaRet.SetGeneAt(i, (byte)Random.Range(gene.GetGeneAt(i), gene2.GetGeneAt(i)));
 		//le C# c'est deg :p 
 		//TODO : voir si le traitement doit etre different pour les resistance
 
