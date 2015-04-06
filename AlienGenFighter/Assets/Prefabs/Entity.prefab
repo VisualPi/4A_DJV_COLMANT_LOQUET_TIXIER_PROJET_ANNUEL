@@ -28,7 +28,7 @@ GameObject:
   - 114: {fileID: 11449362}
   m_Layer: 0
   m_Name: Entity
-  m_TagString: Untagged
+  m_TagString: entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,7 +41,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 437166}
-  - 54: {fileID: 5450264}
   - 136: {fileID: 13666508}
   m_Layer: 0
   m_Name: EntityPhysics
@@ -119,21 +118,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131178}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &5450264
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 146694}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &11449362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,7 +131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 448586}
   _gameObject: {fileID: 139538}
-  _rigidbody: {fileID: 5450264}
+  _rigidbody: {fileID: 0}
 --- !u!136 &13666508
 CapsuleCollider:
   m_ObjectHideFlags: 1

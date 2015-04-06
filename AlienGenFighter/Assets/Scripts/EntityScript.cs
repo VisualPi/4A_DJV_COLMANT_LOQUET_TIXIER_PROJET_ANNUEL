@@ -11,22 +11,18 @@ public class EntityScript : MonoBehaviour
 	public GameObject _gameObject;
 	public Rigidbody _rigidbody;
 
-
-	//public EntityScript(DnaScript dna) //inutile ?!
-	//{
-	//	_dna = dna;
-	//
-	//}
+	private Vector3 _targetPosition;
 
 	// Use this for initialization
 	void Start()
 	{
+		_transform.LookAt(_targetPosition);
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-
+		
 	}
 
 	public DnaScript GetDNA()
@@ -44,5 +40,14 @@ public class EntityScript : MonoBehaviour
 	public void SetCapacity(CapacityScript cap)
 	{
 		_capacities = cap;
+	}
+
+	public Vector3 GetTargetPosition()
+	{
+		return _targetPosition;
+	}
+	public void SetTargetPosition(Vector3 pos)
+	{
+		_targetPosition = pos;
 	}
 }
