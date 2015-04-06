@@ -15,6 +15,7 @@ public class CapacityScript : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		_capacities = new Dictionary<ECapacity, bool>();
 		for (ECapacity i = 0; i < (ECapacity)NbCapacity; ++i)
 			_capacities.Add(i, false);
 

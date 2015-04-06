@@ -1,33 +1,21 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class EntityManagerScript : MonoBehaviour
 {
-	public List<EntityScript> _AvailableAliveEntities;
-	//private List<EntityScript> _AvailableDeadEntities; //a voir 
+	[SerializeField] public NetworkView _networkView;
+	private readonly Queue<EntityScript> _AvailableEntities = new Queue<EntityScript>();
 
-	public EntityScript GetNewAliveEntity()
+	public EntityScript GetFromQueue()
 	{
-		var ret = _AvailableAliveEntities[_AvailableAliveEntities.Count - 1];
-		_AvailableAliveEntities.RemoveAt(_AvailableAliveEntities.Count - 1); 
-		return ret;
+		var e = _AvailableEntities.Dequeue();
+		e.EnableComponents(); //TODO : RPC ?!
+		return e;
 	}
-	
-	//public EntityScript GetNewDeadEntity()
-	//{
-	//	var ret = _AvailableDeadEntities[_AvailableDeadEntities.Count - 1];
-	//	_AvailableDeadEntities.RemoveAt(_AvailableDeadEntities.Count - 1);
-	//	return ret;
-	//}
-
-	public void AddNewAliveEntity(EntityScript e)
+	[RPC]
+	public void AddToQueue(EntityScript e)
 	{
-		_AvailableAliveEntities.Add(e);
+		e.DisableComponents(); //TODO: RPC ?!
+		_AvailableEntities.Enqueue(e);
 	}
-
-	//public void AddNewDeadEntity(EntityScript e)
-	//{
-	//	_AvailableDeadEntities.Add(e);
-	//}
 }

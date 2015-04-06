@@ -40,7 +40,7 @@ public class EntityInstanciater : EditorWindow
 		{
 			var go = Instantiate(_entityPrefab);
 			go.transform.position = new Vector3(10000, 1, 10000 + i * 2);
-			_entityManager.AddNewAliveEntity(go.GetComponent<EntityScript>());
+			_entityManager.AddToQueue(go.GetComponent<EntityScript>());
 			go.tag = "entity";
 			
 			//go = Instantiate(_entityPrefab); //sera peut etre pas le meme prefab pour les mort
@@ -52,7 +52,7 @@ public class EntityInstanciater : EditorWindow
 
 	public void DeleteAllEntities()
 	{
-		for (int index = 0; index < GameObject.FindGameObjectsWithTag("entity").Length; index++)
+		for (var index = 0; index < GameObject.FindGameObjectsWithTag("entity").Length; index++)
 		{
 			var go = GameObject.FindGameObjectsWithTag("entity")[index];
 			DestroyImmediate(go);
