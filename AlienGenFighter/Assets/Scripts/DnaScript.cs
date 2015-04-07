@@ -54,7 +54,14 @@ public class DnaScript
 		_genes[(byte)ECharateristic.HeatResistance]		= heatResistance;
 		_genes[(byte)ECharateristic.DeseaseResistance]	= deseaseResistance;
 	}
-
+	public DnaScript(DnaScript defaultDna)
+	{
+		_genes = defaultDna._genes;
+	}
+	public DnaScript(byte[] genes)
+	{
+		_genes = genes;
+	}
 	public DnaScript()
 	{
 		_genes = new byte[Size]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -69,22 +76,18 @@ public class DnaScript
 	{
 		return _genes[(byte) cara];
 	}
-
 	public byte GetGeneAt(byte index)
 	{
 		return _genes[index];
 	}
-
 	public void SetGeneAt(ECharateristic cara, byte value)
 	{
 		_genes[(byte) cara] = value;
 	}
-
 	public void SetGeneAt(byte index, byte value)
 	{
 		_genes[index] = value;
 	}
-
 	public static DnaScript operator *(DnaScript gene, DnaScript gene2)
 	{
 		DnaScript dnaRet = new DnaScript();
@@ -95,7 +98,6 @@ public class DnaScript
 
 		return dnaRet;
 	}
-
 	public string ToCode()
 	{
 		return _genes.Aggregate("", (current, g) => current + g);
