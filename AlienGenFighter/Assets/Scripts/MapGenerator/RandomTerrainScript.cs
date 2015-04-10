@@ -38,6 +38,7 @@ public class RandomTerrainScript : MonoBehaviour
         heightArray = new float[(int)sizeMap.z, (int)sizeMap.x];
         terrainData = terrain.terrainData;
         terrainData.size = sizeMap;
+        terrainData.heightmapResolution = (int)sizeMap.x;
         terrainData.SetHeights(0, 0, ArrayMapCreator());
     }
 
