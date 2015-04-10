@@ -63,10 +63,12 @@ public class CheckerboardMapScript : MonoBehaviour
         int nbCaseZ = (int)sizeMap.z / 100;
         //int nbCaseTotal = nbCase * nbCase;
         // checkerboard = new BoxCollider[nbCaseTotal];
-        //GameObject actualCase;
+        GameObject actualCase;
         Terrain.layer = 8;
         int x = 0;
         int z = 0;
+        int cpt = 0;
+        
         for (int i = 0; i < nbCaseZ; i++)
         {
             for (int j = 0; j < nbCaseX; j++)
@@ -80,8 +82,13 @@ public class CheckerboardMapScript : MonoBehaviour
                     z = 0;
                 }
                 Vector3 colliderPosition = new Vector3(50+x, 100, 50+z);
-                Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
+                actualCase =   (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
+                actualCase.transform.parent = Terrain.transform; 
+                actualCase.GetComponent<BoxCollider>().name = "SquareMap_"+cpt;
+                MapManagerScript._SquareMaps.Add("SquareMap_" + cpt, actualCase.GetComponent<SquareMapScript>());
+                Debug.Log(MapManagerScript._SquareMaps["SquareMap_" + cpt]);
                 x += 100;
+                cpt++;
             }
             z += 100;
             
