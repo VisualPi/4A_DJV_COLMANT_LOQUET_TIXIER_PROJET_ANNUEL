@@ -61,7 +61,7 @@ public class MapGenerator : MonoBehaviour {
 
                 if (j == 0 || j == length - 1 || i == 0 || i == length - 1)
                 {
-                    Debug.Log("Water");
+               //     Debug.Log("Water");
                     CreatePlane(i, j, 4);
                     grid[i, j] = 4;
                 }
@@ -91,7 +91,7 @@ public class MapGenerator : MonoBehaviour {
                 }*/
                 else 
                 {
-                    Debug.Log("HERE");
+                  //  Debug.Log("HERE");
                     CreatePlane(i, j, seed);
                     grid[i,j] = 0;
                 }   //break;
