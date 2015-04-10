@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
+[Serializable]
 public class EntityScript : MonoBehaviour
 {
-	[SerializeField] public Transform				_transform;
-	[SerializeField] public GameObject				_gameObject;
-	[SerializeField] public Rigidbody				_rigidbody;
-	[SerializeField] public EntityMovementScript	_movement;
-	[SerializeField] public NetworkView				_networkView;
+	[SerializeField] private Transform				_transform;
+	[SerializeField] private GameObject				_gameObject;
+	[SerializeField] private Rigidbody				_rigidbody;
+	[SerializeField] private EntityMovementScript	_movement;
+	[SerializeField] private NetworkView			_networkView;
+	[SerializeField] private EntityCollisionScript	_collider;
 
 	private DnaScript		_dna;
 	private CapacityScript	_capacities;
@@ -15,21 +18,19 @@ public class EntityScript : MonoBehaviour
 	private bool			_isPlayable = false;
 	private bool			_isAlive = true;
 
-	// Use this for initialization
 	void Start()
 	{
-
+		_dna = new DnaScript();
+		_dna.SetGeneAt(ECharateristic.Height, 1);
+		_capacities = new CapacityScript();
 	}
-
-	// Update is called once per frame
 	void Update()
 	{
 		if (_isPlayable)
 		{
-			//TODO:
+			//TODO: things
 		}
 	}
-
 	public DnaScript GetDNA()
 	{
 		return _dna;
@@ -46,7 +47,6 @@ public class EntityScript : MonoBehaviour
 	{
 		_capacities = cap;
 	}
-
 	public bool GetPlayable()
 	{
 		return _isPlayable;
@@ -55,7 +55,6 @@ public class EntityScript : MonoBehaviour
 	{
 		return _isAlive;
 	}
-
 	[RPC]
 	public void SetPlayable(bool b)
 	{
@@ -67,22 +66,53 @@ public class EntityScript : MonoBehaviour
 		_isAlive = b;
 	}
 
-	[RPC] //pas sur
+	[RPC]
 	public void DisableComponents()
 	{
 		_movement.enabled = false;
 		_networkView.enabled = false;
 		_isPlayable = false;
+		_movement.SetPlayable(false);
 		this.enabled = false;
 	}
-	[RPC] //pas sur
+	[RPC]
 	public void EnableComponents()
 	{
 		this.enabled = true;
 		_movement.enabled = true;
 		_networkView.enabled = true;
 		_isPlayable = true;
+		_movement.SetPlayable(true);
 		_isAlive = true;
+		_transform.parent = null;
 	}
-
+	public EntityCollisionScript GetColliderScript()
+	{
+		return _collider;
+	}
+	public void SetColliderScript(EntityCollisionScript col)
+	{
+		_collider = col;
+	}
+	public Transform GetTransform()
+	{
+		return _transform;
+	}
+	public void SetTransform(Transform tr)
+	{
+		_transform = tr;
+	}
+	public EntityMovementScript GetMovement()
+	{
+		return _movement;
+	}
+	public void SetMovement(EntityMovementScript mv)
+	{
+		_movement = mv;
+	}
+	public void OnTriggerEnter(Collider col)
+	{
+		Debug.Log("Aie");
+	}
 }
+
