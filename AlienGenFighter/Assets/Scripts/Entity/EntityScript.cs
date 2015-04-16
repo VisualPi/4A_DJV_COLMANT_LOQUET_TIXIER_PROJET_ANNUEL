@@ -110,9 +110,5 @@ public class EntityScript : MonoBehaviour
 	{
 		_movement = mv;
 	}
-	public void OnTriggerEnter(Collider col)
-	{
-		Debug.Log("Aie");
-	}
 }
 

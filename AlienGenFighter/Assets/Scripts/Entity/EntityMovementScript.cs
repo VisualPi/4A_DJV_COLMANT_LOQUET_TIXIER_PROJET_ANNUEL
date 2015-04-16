@@ -31,10 +31,10 @@ public class EntityMovementScript : MonoBehaviour
 			var animPercentage = (Time.time - _animeStartTime) * _entitySpeed;
 			var nextPos = Vector3.Lerp(_startPosition, _targetPosition, animPercentage / _distancePosition);
 			Ray ray = new Ray(new Vector3(nextPos.x, 255f, nextPos.z), Vector3.down);
-			if (Physics.Raycast(ray, out hit, float.MaxValue, 1<<8))
+			if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
 			{
-				_transform.position = new Vector3( hit.point.x, 
-												   hit.point.y+ _entity.GetDNA().GetGeneAt(ECharateristic.Height), 
+				_transform.position = new Vector3( hit.point.x,
+												   hit.point.y+ _entity.GetDNA().GetGeneAt(ECharateristic.Height),
 												   hit.point.z);
 			}
         }

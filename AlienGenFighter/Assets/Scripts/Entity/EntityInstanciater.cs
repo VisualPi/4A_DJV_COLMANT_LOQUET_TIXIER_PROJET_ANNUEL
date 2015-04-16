@@ -5,7 +5,7 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class EntityInstanciater : Editor
 {
-	SerializedProperty _propMessage;
+	SerializedProperty _propTab;
 	private float _nbEntity;
 	private GameObject _entityPrefab;
 	EntityScript _content;
@@ -13,7 +13,7 @@ public class EntityInstanciater : Editor
 
 	void OnEnable()
 	{
-		_propMessage = serializedObject.FindProperty("tab");
+		_propTab = serializedObject.FindProperty("tab");
 	}
 	public override void OnInspectorGUI()
 	{
@@ -21,7 +21,7 @@ public class EntityInstanciater : Editor
 		base.DrawDefaultInspector();
 		bool enlarge = false;
 		EditorGUILayout.BeginVertical();
-		EditorGUILayout.LabelField(string.Format("Message count = {0}", _propMessage.arraySize));
+		EditorGUILayout.LabelField(string.Format("Message count = {0}", _propTab.arraySize));
 		_entityPrefab = (GameObject)EditorGUILayout.ObjectField("Entity Prefab", _entityPrefab, typeof(GameObject), true);
 		_nbEntity = EditorGUILayout.Slider("Nb Entity", _nbEntity, 0, 99999);
 		if(GUILayout.Button("Add"))
@@ -46,19 +46,17 @@ public class EntityInstanciater : Editor
 				go.transform.position = new Vector3(-1000 + i * 2, 1000, -1000);
 				go.transform.parent = _parent.transform;
 				t.tab[i] = go.GetComponent<EntityScript>();
-				//_content = null;
 			}
 			enlarge = false;
 		}
 	}
-
 	void EnlargeArray()
 	{
 		for(int i = 0 ; i < _nbEntity ; i++)
-			_propMessage.InsertArrayElementAtIndex(i);
+			_propTab.InsertArrayElementAtIndex(i);
 	}
 	void DeleteArray()
 	{
-		_propMessage.ClearArray();
+		_propTab.ClearArray();
 	}
 }

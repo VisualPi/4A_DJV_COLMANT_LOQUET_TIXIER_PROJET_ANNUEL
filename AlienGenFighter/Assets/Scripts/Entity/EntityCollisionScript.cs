@@ -12,8 +12,8 @@ public class EntityCollisionScript : MonoBehaviour
 		if(col.tag.Equals("SquareMap") && !col.name.Equals(_lastCol))
 		{
 			if(!_lastCol.Equals(""))
-				MapManagerScript._SquareMaps[_lastCol].GetEntityOnCurrentSquare().Remove(_entity);
-			MapManagerScript._SquareMaps[col.name].GetEntityOnCurrentSquare().Add(_entity);
+				MapManagerScript._SquareMaps[_lastCol].GetContext().GetEntityOnCurrentSquare().Remove(_entity);
+			MapManagerScript._SquareMaps[col.name].GetContext().GetEntityOnCurrentSquare().Add(_entity);
 			_lastCol = col.name;
 		}
 	}
