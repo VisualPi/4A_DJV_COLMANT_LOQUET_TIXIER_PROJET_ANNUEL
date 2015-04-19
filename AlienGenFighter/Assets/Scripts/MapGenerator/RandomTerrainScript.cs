@@ -5,11 +5,14 @@ using System.Collections.Generic; // used for Sum of array
 
 public class RandomTerrainScript : MonoBehaviour
 {
+
     [SerializeField]
     Terrain terrain;
     
     [SerializeField]
-    Vector3 sizeMap;
+    public Vector3 sizeMap;
+
+    static Vector3 _gameArea;
     // La composante Y définit la hauteur maximale du terrain
 
     string seed;
@@ -25,6 +28,11 @@ public class RandomTerrainScript : MonoBehaviour
     
     Vector2 actualPoint;
 
+    enum SizeMapZE
+    {
+        A,B,C
+    };
+
     
 /*
     void InitPropertyForTerrainData(int length, int height, int width)
@@ -35,11 +43,19 @@ public class RandomTerrainScript : MonoBehaviour
     */
     void InitialiseTerrainParameter()
     {
+       
+        _gameArea = sizeMap;
         heightArray = new float[(int)sizeMap.z, (int)sizeMap.x];
         terrainData = terrain.terrainData;
-        terrainData.size = sizeMap;
-        terrainData.heightmapResolution = (int)sizeMap.x;
+        
+       
+  
+        
+        terrainData.heightmapResolution = (int)_gameArea.x;
         terrainData.SetHeights(0, 0, ArrayMapCreator());
+        
+       
+        terrainData.size = _gameArea;
     }
 
 
@@ -51,7 +67,7 @@ public class RandomTerrainScript : MonoBehaviour
 
         for (int i = 0; i < seedHill; ++i)
         {
-            RandomHeight = Random.Range(0.3f, 0.5f);
+            RandomHeight = Random.Range(0.5f, 0.8f);
             int x = Random.Range(0, (int)sizeMap.x) ;
             int z = Random.Range(0, (int)sizeMap.z) ;
 
@@ -88,6 +104,11 @@ public class RandomTerrainScript : MonoBehaviour
         return tempDistance;
     }
 
+    private float SampleGaussian(float x, float mu, float sigma)
+    {
+        float d = (x - mu);
+        return Mathf.Exp(-d * d / (sigma * sigma));
+    }
 
     float[,] ArrayMapCreator()
     {
@@ -98,9 +119,9 @@ public class RandomTerrainScript : MonoBehaviour
 
 
         float range = 0.0f;
-       // int randomV = Random.Range(0, 2);
-      //  int op = 0;
        
+
+        Debug.Log(Mathf.PerlinNoise(10.0f, 10.0f));
         
         foreach (Vector3 hillPoint in hillsPoint)
         {
@@ -111,35 +132,55 @@ public class RandomTerrainScript : MonoBehaviour
                 for (int x = 0; x < sizeMap.x; x++)
                 {
 
-              
-                    
-                   distanceF = Vector3.Distance(hillPoint, new Vector3(x,0,y));
-                   // distance = getDistanceBetweenTwoPoint(hillPoint, new Vector2(x,y));
-                    //Debug.Log("(" + x + "," + y + ") = " + distance.magnitude.ToString());
 
-                   if (distanceF < range)
+
+                    heightArray[y, x] = 0.0f;
+
+                    heightArray[y, x] = Mathf.PerlinNoise(Time.time * 1.0F, 0.0F);
+
+                     
+                    
+                    
+                    
+                    
+                    
+                    distanceF = Vector3.Distance(hillPoint, new Vector3(x,0,y));
+                  /*
+                   if (Vector3.Distance(new Vector3(x,0,y), new Vector3(sizeMap.x/2 ,0,sizeMap.z/2))<10)
                    {
-                       if (heightArray[y, x] != hillPoint.y)
-                       {
-                           heightArray[y, x] += (hillPoint.y - ((hillPoint.y / range) * distanceF));
-                       }
+                       heightArray[y, x] += 0.0f;
                    }
                    else
                    {
-                       if (heightArray[y, x] == 0.0f)
-                       {
-                           heightArray[y, x] = 0.01f;
-                       }
-                       else
-                       {
-                           heightArray[y, x] += 0.01f;
-                       }
-                   }        
-                }                
+                       heightArray[y, x] += 0.01f;
+                   }
+
+
+
+                    
+                                       if (distanceF < range)
+                                       {
+                                           if (heightArray[y, x] != hillPoint.y)
+                                           {
+                                               heightArray[y, x] = (hillPoint.y - ((hillPoint.y / range) * distanceF)) + 0.01f;
+                                           }
+                                       }
+                                       else
+                                       {
+                                           if (heightArray[y, x] == 0.0f)
+                                           {
+                                               heightArray[y, x] = 0.01f;
+                                           }
+                                           else
+                                           {
+                                               heightArray[y, x] += 0.01f;
+                                           }
+                                       }  */
+                }               
             }
         }
 
-
+/*
         for (int g = 0; g < sizeMap.z; g++)
         {
             for (int o = 0; o < sizeMap.x; o++)
@@ -147,7 +188,7 @@ public class RandomTerrainScript : MonoBehaviour
                 heightArray[g, o] += Random.Range(0.0f, 0.001f);
             }
         }
-
+*/
 
         return heightArray;
     }
@@ -155,7 +196,7 @@ public class RandomTerrainScript : MonoBehaviour
     void Start()
     {
         InitialiseTerrainParameter();
-        
+        Debug.Log(terrainData.size);
       
 
 
