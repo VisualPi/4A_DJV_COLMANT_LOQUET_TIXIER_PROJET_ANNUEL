@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public enum ECharateristic
+public enum ECharateristic : byte
 {
 	NbLamb = 0, NbArm, Nbhead, Skincolor, Wings, Height, Sociability, Bravery, Adventurous, Aggressiveness,
 	Tolerance, Activity, Charism, Timidity, Influence, Attitude, Curiosity, Perfectionism, Sporty, Ambition,
@@ -19,8 +19,8 @@ public class DnaScript
 	public DnaScript(byte nbLamb, byte nbArm, byte nbHead, byte skinColor, byte wings, byte height, byte sociability, byte bravery, byte adventurous, byte aggressiveness, byte tolerance, byte activity, byte charism, byte timidity, byte influence, byte attitude, byte curiosity, byte perfectionism, byte sporty, byte ambition, byte patience, byte negociation, byte authority, byte attention, byte kindness, byte domination, byte suggestibility, byte honesty, byte subjectivity, byte instinct, byte loyalty, byte heatResistance, byte deseaseResistance)
 	{
 		_genes = new byte[Size];
-		_genes.Initialize();//need ?
-		_genes[(byte)ECharateristic.NbLamb]				= nbLamb;
+
+		_genes[(byte) ECharateristic.NbLamb]			= nbLamb;
 		_genes[(byte)ECharateristic.NbArm]				= nbArm;
 		_genes[(byte)ECharateristic.Nbhead]				= nbHead;
 		_genes[(byte)ECharateristic.Skincolor]			= skinColor;
@@ -93,8 +93,6 @@ public class DnaScript
 		DnaScript dnaRet = new DnaScript();
 		for (byte i = 0; i < Size; ++i)
 			dnaRet.SetGeneAt(i, (byte)Random.Range(gene.GetGeneAt(i), gene2.GetGeneAt(i)));
-		//le C# c'est deg :p 
-		//TODO : voir si le traitement doit etre different pour les resistance
 
 		return dnaRet;
 	}
