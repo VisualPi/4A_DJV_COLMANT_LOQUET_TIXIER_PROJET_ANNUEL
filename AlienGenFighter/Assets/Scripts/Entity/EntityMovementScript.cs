@@ -7,20 +7,32 @@ public class EntityMovementScript : MonoBehaviour
 	[SerializeField] private Transform _transform;
 	[SerializeField] private EntityScript _entity;
 
+	[SerializeField]
 	private Vector3 _startPosition;
+	[SerializeField]
 	private Vector3 _targetPosition;
 
+	[SerializeField]
 	private float _distancePosition = 1f;
+	[SerializeField]
 	private float _animeStartTime = 0f;
+	[SerializeField]
 	private float _entitySpeed = 5f;
 
+	[SerializeField]
 	private bool _isPlayable;
 
-	void Start()
+	public void Init()
 	{
 		_startPosition = _transform.position;
 		_targetPosition = _startPosition;
-		SetTargetPosition(new Vector3(15,1,0));
+		_animeStartTime = 0f;
+	}
+
+	public void OnMouseDown()
+	{
+		SetTargetPosition(new Vector3(15,1,15));
+		Debug.Log("GO");
 	}
 	void Update()
 	{

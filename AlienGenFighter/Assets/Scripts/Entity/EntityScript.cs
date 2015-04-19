@@ -18,11 +18,14 @@ public class EntityScript : MonoBehaviour
 	private bool			_isPlayable = false;
 	private bool			_isAlive = true;
 
-	void Start()
+    private EntityRules _rules;
+	public void Init()
 	{
 		_dna = new DnaScript();
 		_dna.SetGeneAt(ECharateristic.Height, 1);
 		_capacities = new CapacityScript();
+        _rules = new EntityRules();
+		_movement.Init();
 	}
 	void Update()
 	{
@@ -110,5 +113,13 @@ public class EntityScript : MonoBehaviour
 	{
 		_movement = mv;
 	}
+    public EntityRules GetRules()
+    {
+        return _rules;
+    }
+    public void SetRules(EntityRules rules)
+    {
+        _rules = rules;
+    }
 }
 

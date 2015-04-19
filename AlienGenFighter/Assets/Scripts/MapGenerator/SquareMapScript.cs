@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Context
+public class SquareContext
 {
 	private int _nbEntityOnCurrentSquare = 0;
 	private List<EntityScript> _entityOnCurrentSquare = new List<EntityScript>();
+    private EntityScript _currentEntity;
 
 	public int GetNbEntityOnCurrentSquare()
 	{
@@ -23,6 +24,14 @@ public class Context
 	{
 		_entityOnCurrentSquare = value;
 	}
+    public EntityScript GetCurrentEntity()
+    {
+        return _currentEntity;
+    }
+    public void SetCurrentEntity(EntityScript entity)
+    {
+        _currentEntity = entity;
+    }
 }
 
 
@@ -34,20 +43,23 @@ public class SquareMapScript : MonoBehaviour
 	private int foodQuantity = 50;
 	private int drinkableWater = 1000;
 
-	[SerializeField] private Collider _collider;
+	[SerializeField] private Collider	_collider;
+	[SerializeField] private Transform _transform;
+	private Camera						_squareCamera;
+	private Camera _mainCamera;
 
-	private Context _context;
+	SquareContext _context = new SquareContext();
 	void Start()
 	{
+		_squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();//TODO : a voir
+		_mainCamera = GameObject.Find("Camera2D").GetComponent<Camera>();
+		
+		//_context = new SquareContext();
 		//consumeResources(10, 1000);
 	}
 	void Update()
 	{
-
-	}
-	void OnMouseDown()
-	{
-		getResources();
+		
 	}
 	public void OnTriggerEnter(Collider col)
 	{
@@ -59,7 +71,7 @@ public class SquareMapScript : MonoBehaviour
 	{
 		//Debug.Log("Exit from square");
 		if(col.tag.Equals("entity"))
-			_context.SetNbEntityOnCurrentSquare(_context.GetNbEntityOnCurrentSquare()+1);
+			_context.SetNbEntityOnCurrentSquare(_context.GetNbEntityOnCurrentSquare()-1);
 		if(_context.GetNbEntityOnCurrentSquare() < 0)
 			_context.SetNbEntityOnCurrentSquare(0);//TODO : au cas ou pour les tests, a enlever apres
 	}
@@ -81,11 +93,11 @@ public class SquareMapScript : MonoBehaviour
 		Debug.Log("EAU : " + drinkableWater.ToString());
 	}
 
-	public Context GetContext()
+	public SquareContext GetContext()
 	{
 		return _context;
 	}
-	public void SetContext(Context context)
+	public void SetContext(SquareContext context)
 	{
 		_context = context;
 	}
@@ -107,4 +119,17 @@ public class SquareMapScript : MonoBehaviour
 			_context.GetEntityOnCurrentSquare()[i].GetColliderScript().SetLastCol(_collider.name);
         }
 	}
+	public void OnMouseOver()
+	{
+		getResources();
+	}
+	public void OnMouseDown()
+	{
+		Debug.Log("Click on " + this.name);
+		_squareCamera.transform.position = new Vector3(_transform.position.x, _transform.position.y + 10, _transform.position.z);
+
+		_squareCamera.enabled = true;
+		_mainCamera.enabled = false;
+	}
+
 }
