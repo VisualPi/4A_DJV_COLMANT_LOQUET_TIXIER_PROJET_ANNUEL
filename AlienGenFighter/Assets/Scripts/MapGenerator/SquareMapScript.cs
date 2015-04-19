@@ -125,8 +125,7 @@ public class SquareMapScript : MonoBehaviour
 	}
 	public void OnMouseDown()
 	{
-		Debug.Log("Click on " + this.name);
-		_squareCamera.transform.position = new Vector3(_transform.position.x, _transform.position.y + 10, _transform.position.z);
+		_squareCamera.transform.position = new Vector3(_transform.position.x, _transform.position.y + 50, _transform.position.z);
 
 		_squareCamera.enabled = true;
 		_mainCamera.enabled = false;
