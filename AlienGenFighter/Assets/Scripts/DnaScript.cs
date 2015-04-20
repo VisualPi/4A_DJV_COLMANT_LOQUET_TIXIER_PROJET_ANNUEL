@@ -19,40 +19,39 @@ public class DnaScript
 	public DnaScript(byte nbLamb, byte nbArm, byte nbHead, byte skinColor, byte wings, byte height, byte sociability, byte bravery, byte adventurous, byte aggressiveness, byte tolerance, byte activity, byte charism, byte timidity, byte influence, byte attitude, byte curiosity, byte perfectionism, byte sporty, byte ambition, byte patience, byte negociation, byte authority, byte attention, byte kindness, byte domination, byte suggestibility, byte honesty, byte subjectivity, byte instinct, byte loyalty, byte heatResistance, byte deseaseResistance)
 	{
 		_genes = new byte[Size];
-
-		_genes[(byte) ECharateristic.NbLamb]			= nbLamb;
-		_genes[(byte)ECharateristic.NbArm]				= nbArm;
-		_genes[(byte)ECharateristic.Nbhead]				= nbHead;
-		_genes[(byte)ECharateristic.Skincolor]			= skinColor;
-		_genes[(byte)ECharateristic.Wings]				= wings;
-		_genes[(byte)ECharateristic.Height]				= height;
-		_genes[(byte)ECharateristic.Sociability]		= sociability;
-		_genes[(byte)ECharateristic.Bravery]			= bravery;
-		_genes[(byte)ECharateristic.Adventurous]		= adventurous;
-		_genes[(byte)ECharateristic.Aggressiveness]		= aggressiveness;
-		_genes[(byte)ECharateristic.Tolerance]			= tolerance;
-		_genes[(byte)ECharateristic.Activity]			= activity;
-		_genes[(byte)ECharateristic.Charism]			= charism;
-		_genes[(byte)ECharateristic.Timidity]			= timidity;
-		_genes[(byte)ECharateristic.Influence]			= influence;
-		_genes[(byte)ECharateristic.Attitude]			= attitude;
-		_genes[(byte)ECharateristic.Curiosity]			= curiosity;
-		_genes[(byte)ECharateristic.Perfectionism]		= perfectionism;
-		_genes[(byte)ECharateristic.Sporty]				= sporty;
-		_genes[(byte)ECharateristic.Ambition]			= ambition;
-		_genes[(byte)ECharateristic.Patience]			= patience;
-		_genes[(byte)ECharateristic.Negociation]		= negociation;
-		_genes[(byte)ECharateristic.Authority]			= authority;
-		_genes[(byte)ECharateristic.Attention]			= attention;
-		_genes[(byte)ECharateristic.Kindness]			= kindness;
-		_genes[(byte)ECharateristic.Domination]			= domination;
-		_genes[(byte)ECharateristic.Suggestibility]		= suggestibility;
-		_genes[(byte)ECharateristic.Honesty]			= honesty;
-		_genes[(byte)ECharateristic.Subjectivity]		= subjectivity;
-		_genes[(byte)ECharateristic.Instinct]			= instinct;
-		_genes[(byte)ECharateristic.Loyalty]			= loyalty;
-		_genes[(byte)ECharateristic.HeatResistance]		= heatResistance;
-		_genes[(byte)ECharateristic.DeseaseResistance]	= deseaseResistance;
+		_genes[(int)ECharateristic.NbLamb]				= nbLamb;
+		_genes[(int)ECharateristic.NbArm]				= nbArm;
+		_genes[(int)ECharateristic.Nbhead]				= nbHead;
+		_genes[(int)ECharateristic.Skincolor]			= skinColor;
+		_genes[(int)ECharateristic.Wings]				= wings;
+		_genes[(int)ECharateristic.Height]				= height;
+		_genes[(int)ECharateristic.Sociability]		= sociability;
+		_genes[(int)ECharateristic.Bravery]			= bravery;
+		_genes[(int)ECharateristic.Adventurous]		= adventurous;
+		_genes[(int)ECharateristic.Aggressiveness]		= aggressiveness;
+		_genes[(int)ECharateristic.Tolerance]			= tolerance;
+		_genes[(int)ECharateristic.Activity]			= activity;
+		_genes[(int)ECharateristic.Charism]			= charism;
+		_genes[(int)ECharateristic.Timidity]			= timidity;
+		_genes[(int)ECharateristic.Influence]			= influence;
+		_genes[(int)ECharateristic.Attitude]			= attitude;
+		_genes[(int)ECharateristic.Curiosity]			= curiosity;
+		_genes[(int)ECharateristic.Perfectionism]		= perfectionism;
+		_genes[(int)ECharateristic.Sporty]				= sporty;
+		_genes[(int)ECharateristic.Ambition]			= ambition;
+		_genes[(int)ECharateristic.Patience]			= patience;
+		_genes[(int)ECharateristic.Negociation]		= negociation;
+		_genes[(int)ECharateristic.Authority]			= authority;
+		_genes[(int)ECharateristic.Attention]			= attention;
+		_genes[(int)ECharateristic.Kindness]			= kindness;
+		_genes[(int)ECharateristic.Domination]			= domination;
+		_genes[(int)ECharateristic.Suggestibility]		= suggestibility;
+		_genes[(int)ECharateristic.Honesty]			= honesty;
+		_genes[(int)ECharateristic.Subjectivity]		= subjectivity;
+		_genes[(int)ECharateristic.Instinct]			= instinct;
+		_genes[(int)ECharateristic.Loyalty]			= loyalty;
+		_genes[(int)ECharateristic.HeatResistance]		= heatResistance;
+		_genes[(int)ECharateristic.DeseaseResistance]	= deseaseResistance;
 	}
 	public DnaScript(DnaScript defaultDna)
 	{
@@ -66,12 +65,10 @@ public class DnaScript
 	{
 		_genes = new byte[Size]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	}
-
 	public byte[] GetGenotype()
 	{
 		return _genes;
 	}
-
 	public byte GetGeneAt(ECharateristic cara)
 	{
 		return _genes[(byte) cara];

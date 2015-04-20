@@ -4,30 +4,53 @@ using System.Threading;
 
 public class EntityMovementScript : MonoBehaviour
 {
-	public Transform	_transform;
-	
-	private Vector3		_startPosition;
-	private Vector3		_targetPosition;
+	[SerializeField] private Transform _transform;
+	[SerializeField] private EntityScript _entity;
 
-	private float		_distancePosition = 1f;
-	private float		_animeStartTime = 0f;
-	private float		_entitySpeed = 5f;
+	[SerializeField]
+	private Vector3 _startPosition;
+	[SerializeField]
+	private Vector3 _targetPosition;
 
-	// Use this for initialization
-	void Start()
+	[SerializeField]
+	private float _distancePosition = 1f;
+	[SerializeField]
+	private float _animeStartTime = 0f;
+	[SerializeField]
+	private float _entitySpeed = 5f;
+
+	[SerializeField]
+	private bool _isPlayable;
+
+	public void Init()
 	{
 		_startPosition = _transform.position;
 		_targetPosition = _startPosition;
-		//SetTargetPosition(new Vector3(0f, 1f, 15f));
+		_animeStartTime = 0f;
 	}
 
-	// Update is called once per frame
+	public void OnMouseDown()
+	{
+		SetTargetPosition(new Vector3(15,1,15));
+		Debug.Log("GO");
+	}
 	void Update()
 	{
-		var animPercentage = (Time.time - _animeStartTime) * _entitySpeed;
-		_transform.position = Vector3.Lerp(_startPosition, _targetPosition, animPercentage / _distancePosition);
+		_isPlayable = true;
+		if(_isPlayable)
+		{
+			RaycastHit hit;
+			var animPercentage = (Time.time - _animeStartTime) * _entitySpeed;
+			var nextPos = Vector3.Lerp(_startPosition, _targetPosition, animPercentage / _distancePosition);
+			Ray ray = new Ray(new Vector3(nextPos.x, 255f, nextPos.z), Vector3.down);
+			if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+			{
+				_transform.position = new Vector3( hit.point.x,
+												   hit.point.y+ _entity.GetDNA().GetGeneAt(ECharateristic.Height),
+												   hit.point.z);
+			}
+        }
 	}
-
 	public Vector3 GetTargetPosition()
 	{
 		return _targetPosition;
@@ -40,12 +63,21 @@ public class EntityMovementScript : MonoBehaviour
 		_targetPosition = pos;
 		_distancePosition = Vector3.Distance(_startPosition, _targetPosition);
 	}
-
 	[RPC]
 	public void SetSpeed(float speed)
 	{
 		_entitySpeed = speed;
 	}
-
-
+	public void SetPlayable(bool b)
+	{
+		_isPlayable = b;
+	}
+	public Vector3 GetPosition()
+	{
+		return _transform.position;
+	}
+	public void SetPosition(Vector3 pos)
+	{
+		_transform.position = pos;
+	}
 }
