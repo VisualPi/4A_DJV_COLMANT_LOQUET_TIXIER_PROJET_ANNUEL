@@ -14,7 +14,7 @@ namespace Assets.Scripts.Camera {
 		private float rotationY = 0.0f;
 
 		void Start() {
-			Screen.lockCursor = true;
+			Cursor.visible = true;
 		}
 
 		void FixedUpdate() {
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Camera {
 			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) { Transform.position -= Transform.up * climbSpeed * Time.deltaTime; }
 
 			if (Input.GetKeyDown(KeyCode.End)) {
-				Screen.lockCursor = (Screen.lockCursor == false) ? true : false;
+				Cursor.visible = Cursor.visible == false;
 			}
 		}
 	}

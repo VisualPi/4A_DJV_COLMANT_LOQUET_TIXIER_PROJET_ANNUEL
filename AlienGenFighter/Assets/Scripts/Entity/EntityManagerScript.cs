@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 public class EntityManagerScript : MonoBehaviour
 {
@@ -9,13 +9,17 @@ public class EntityManagerScript : MonoBehaviour
 	public static Queue<EntityScript> _AvailableEntities;
 	[SerializeField]
 	public EntityScript[] tab;
+
 	public void Start()
 	{
+		if (tab.Length<=0)
+			throw new Exception("No Entity!");
+
 		_AvailableEntities = new Queue<EntityScript>(tab.Length);
 		for(int index = 0 ; index < tab.Length ; index++)
 		{
-			EntityScript t = tab[index];
-			AddToQueue(t);
+			EntityScript e = tab[index];
+			AddToQueue(e);
 		}
 
 		tab = null;

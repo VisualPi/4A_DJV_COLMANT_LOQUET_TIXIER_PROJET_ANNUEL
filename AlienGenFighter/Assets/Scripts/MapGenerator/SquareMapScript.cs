@@ -118,10 +118,12 @@ public class SquareMapScript : MonoBehaviour
 			_context.GetEntityOnCurrentSquare()[i].GetColliderScript().SetLastCol(_collider.name);
         }
 	}
+
 	public void OnMouseOver()
 	{
 		getResources();
 	}
+
 	public void OnMouseDown()
 	{
 		_squareCamera.transform.position = new Vector3(_transform.position.x, _transform.position.y + 50, _transform.position.z);
