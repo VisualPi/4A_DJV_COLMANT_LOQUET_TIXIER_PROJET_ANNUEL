@@ -3,31 +3,33 @@ using UnityEngine;
 using System.Collections.Generic;
 using UENetwork = UnityEngine.Network;
 
+using Assets.Scripts.GUI.Misc;
+using UnityEngine.UI;
+
 namespace Assets.Scripts.Network {
 	public class Manager : MonoBehaviour {
+		//
+		[SerializeField] private ManagedScrollList _scrollListManager;
 
 		//
-		private string _titleMessage = "AGF";
-		private string _connectToIp = "127.0.0.1";
-		private int _connectionPort = 26500;
-		private bool _useNAT = false;
-		private string _ipAddress;
-		private string _port;
-		private int _numberOfPlayers = 2;
-		[SerializeField]
-		private string _playerName;
-		[SerializeField]
-		private string _serverName;
-		[SerializeField]
-		private string _serverNameForClient;
+		private string	_titleMessage = "AGF";
+		private string	_connectToIp = "127.0.0.1";
+		private int		_connectionPort = 26500;
+		private bool	_useNAT = false;
+		private string	_ipAddress;
+		private string	_port;
+		private int		_numberOfPlayers = 2;
+		private string	_playerName;
+		private string	_serverName;
+		private string	_serverNameForClient;
 
 		//
 		private string _gameNameType = "AGFServer ESGI 4A DJV2";
 		private Ping _masterServerPing;
 		private HostData[] _hostDatas;
 		private string _ipString;
-		private List<Ping> _serverPingsList = new List<Ping>();
-		private bool _noPublicServer = false;
+		//private List<Ping> _serverPingsList = new List<Ping>();
+		//private bool _noPublicServer = false;
 
 		// Use this for initialization
 		private void Start() {
@@ -36,6 +38,12 @@ namespace Assets.Scripts.Network {
 
 			if (_serverName == "") // if not always use, set as default name.
 				_serverName = "Server";
+
+			// Set player name
+			_playerName = PlayerPrefs.GetString("playerName");
+
+			if (_playerName == "") // if not always use, set as default name.
+				_playerName = "Player";
 
 			// Ping the master server to find out how long it takes to communicate to it.
 			MasterServer.RequestHostList(_gameNameType);
@@ -69,47 +77,45 @@ namespace Assets.Scripts.Network {
 			}
 		}
 
-		public HostData[] HostDatas { get { return _hostDatas; } }
-
-		public List<Ping> ServerPingsList { get { return _serverPingsList; } }
-
 		#endregion Geter Seter
 
 		#region Setup Server
 
-		public bool StartPublicServer(string name = null) {
-			if (name != null)
-				ServerName = name;
-
+		public void StartPublicServer() {
 			UENetwork.InitializeServer(_numberOfPlayers, _connectionPort, !UENetwork.HavePublicAddress());
 			MasterServer.RegisterHost(_gameNameType, _serverName, "");
-
-			// Display Manage Game
-			return true;
 		}
 
 		public IEnumerator SearchPublicServer() {
-			_hostDatas = new HostData[0];
-
+			// Clear the list of servers
+			_scrollListManager.ClearList();
 			MasterServer.ClearHostList();
 			MasterServer.RequestHostList(_gameNameType);
 
+			// Wait for the host list is retrieved from the Master Server
 			yield return new WaitForSeconds(_masterServerPing.time / 100 + 0.1f);
 
+			// The list of public servers has been retrieved .
 			_hostDatas = MasterServer.PollHostList();
 
-			_serverPingsList.Clear();
-			_serverPingsList.TrimExcess();
+			// We process information to be displayed
+			var items = new List<Item>();
+			for (int i = 0; i < _hostDatas.Length; i++) {
+				items.Add(new Item() {
+					Id = i,
+					CurrentNbPlayer = _hostDatas[i].connectedPlayers.ToString(),
+					MaxNbPlayer = _hostDatas[i].playerLimit.ToString(),
+					Ping = new Ping(_hostDatas[i].ip[0]).ToString(),
+					ServerName = _hostDatas[i].gameName,
+					DoWork = ConnectToAPublicServer
+				});
+			}
 
-			for (int i = 0; i < _hostDatas.Length; i++)
-				_serverPingsList.Add(new Ping(_hostDatas[i].ip[0]));
+			_scrollListManager.PopulateList(items);
 		}
 
-		public bool ConnectToAPublicServer(string pseudo = null) {
-			if (pseudo != null)
-				ServerName = pseudo;
-
-			return true;
+		public void ConnectToAPublicServer(int id) {
+			Debug.Log(id);
 		}
 
 		#endregion Setup Server

@@ -9,5 +9,6 @@ namespace Assets.Scripts.GUI.Sample {
 		public Text CurrentNbPlayer;
 		public Text MaxNbPlayer;
 		public Text Ping;
+		public int Id;
 	}
 }

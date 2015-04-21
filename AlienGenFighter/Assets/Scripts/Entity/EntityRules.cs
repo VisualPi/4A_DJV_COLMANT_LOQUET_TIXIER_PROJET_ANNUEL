@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
@@ -65,7 +64,7 @@ public class EntityRules
 	#endregion
 #endregion
 
-	#region ACTION_DEFINITION
+#region ACTION_DEFINITION
 	#region MANGER
 	private void SearchForEat(SquareContext context)
     {

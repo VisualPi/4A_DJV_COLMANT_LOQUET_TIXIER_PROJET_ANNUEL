@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class SquareContext
@@ -44,9 +43,9 @@ public class SquareMapScript : MonoBehaviour
 	private int drinkableWater = 1000;
 
 	[SerializeField] private Collider	_collider;
-	[SerializeField] private Transform _transform;
+	[SerializeField] private Transform	_transform;
 	private Camera						_squareCamera;
-	private Camera _mainCamera;
+	private Camera						_mainCamera;
 
 	SquareContext _context = new SquareContext();
 	void Start()

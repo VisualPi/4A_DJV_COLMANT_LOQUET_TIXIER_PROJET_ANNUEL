@@ -567,8 +567,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
+    m_Left: 0
+    m_Right: 0
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
@@ -587,11 +587,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: -1
+  m_MinWidth: 65
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: .100000001
+  m_FlexibleWidth: 0
   m_FlexibleHeight: -1
 --- !u!1 &152595831
 GameObject:
@@ -825,8 +825,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
+    m_Left: 0
+    m_Right: 0
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
@@ -845,11 +845,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: -1
+  m_MinWidth: 90
   m_MinHeight: -1
   m_PreferredWidth: -1
   m_PreferredHeight: -1
-  m_FlexibleWidth: .100000001
+  m_FlexibleWidth: 0
   m_FlexibleHeight: -1
 --- !u!1 &310782307
 GameObject:
@@ -5565,7 +5565,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1558625130}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1885260885}
+        m_MethodName: ClearList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1885260885}
+        m_MethodName: PopulateList
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1558625130
@@ -6999,36 +7023,71 @@ MonoBehaviour:
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
+    DoWork:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - ServerName: Bonjour
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
+    DoWork:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
+    DoWork:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
+    DoWork:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
+    DoWork:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
+    DoWork:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   - ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
+    DoWork:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+        Culture=neutral, PublicKeyToken=null
   ContentPanel: {fileID: 1885260880}
 --- !u!1 &2030330466
 GameObject:

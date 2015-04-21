@@ -274,7 +274,7 @@ namespace Assets.Scripts.Network.GUI {
 
 		public void OnStartPublicServer() {
 			// TODO : Start Public Server here
-			_manager.StartPublicServer(_inputFieldNameAPublicServer.text);
+			_manager.StartPublicServer();
 		}
 
 		#endregion
