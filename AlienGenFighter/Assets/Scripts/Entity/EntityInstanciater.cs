@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 
 [CustomEditor(typeof(EntityManagerScript))]
 [CanEditMultipleObjects]
 public class EntityInstanciater : Editor
 {
+#else
+	public class EntityInstanciater : MonoBehaviour
+{
+#endif
+#if UNITY_EDITOR
 	SerializedProperty _propTab;
+#endif
 	private float _nbEntity;
 	private GameObject _entityPrefab;
 	EntityScript _content;
 	private GameObject _parent;
-
+#if UNITY_EDITOR
 	void OnEnable()
 	{
 		_propTab = serializedObject.FindProperty("tab");
@@ -59,4 +66,5 @@ public class EntityInstanciater : Editor
 	{
 		_propTab.ClearArray();
 	}
+#endif
 }
