@@ -20,6 +20,9 @@ public class EntityScript : MonoBehaviour
 
     private EntityRules _rules;
 	private EntityStateScript _state;
+
+	private float _foodTime;
+	private float _drinkTime;
 	public void Init()
 	{
 		_dna = new DnaScript();
@@ -27,6 +30,8 @@ public class EntityScript : MonoBehaviour
 		_capacities = new CapacityScript();
         _rules = new EntityRules();
 		_state = new EntityStateScript();
+		_foodTime = 0f;
+		_drinkTime = 0f;
 		_movement.Init();
 	}
 	void Update()
@@ -34,6 +39,18 @@ public class EntityScript : MonoBehaviour
 		if (_isPlayable)
 		{
 			//TODO: things
+			_foodTime += Time.deltaTime;
+			_drinkTime += Time.deltaTime;
+			if (_foodTime >= 10f)
+			{
+				_state.SetFood(_state.GetFood() - 1);
+				_foodTime = 0f;
+			}
+			if (_drinkTime >= 10f)
+			{
+				_state.SetWater(_state.GetWater() - 1);
+				_drinkTime = 0f;
+			}
 		}
 	}
 	public DnaScript GetDNA()
