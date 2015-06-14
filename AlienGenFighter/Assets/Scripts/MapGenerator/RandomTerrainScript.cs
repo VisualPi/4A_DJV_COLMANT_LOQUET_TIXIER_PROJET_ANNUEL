@@ -230,7 +230,7 @@ public class RandomTerrainScript : MonoBehaviour
             if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
             {
                 Instantiate(_food, new Vector3(hit.point.x,
-                                                        hit.point.y + _civilisation.transform.localScale.y,
+                                                        hit.point.y + _food.transform.localScale.y,
                                                         hit.point.z), Quaternion.identity);
             }
         }
@@ -240,7 +240,7 @@ public class RandomTerrainScript : MonoBehaviour
             if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
             {
                 Instantiate(_water, new Vector3(hit.point.x,
-                                                        hit.point.y + _civilisation.transform.localScale.y,
+                                                        hit.point.y + _water.transform.localScale.y,
                                                         hit.point.z), Quaternion.identity);
             }
         }

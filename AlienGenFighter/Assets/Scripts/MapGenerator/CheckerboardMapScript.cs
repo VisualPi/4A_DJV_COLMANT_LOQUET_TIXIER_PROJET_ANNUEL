@@ -60,7 +60,7 @@ public class CheckerboardMapScript : MonoBehaviour
 
     }
     */
-    void Start()
+    void Awake()
     {
         Debug.Log(gameArea.sizeMap.x);
         Debug.Log(gameArea.sizeMap.z);

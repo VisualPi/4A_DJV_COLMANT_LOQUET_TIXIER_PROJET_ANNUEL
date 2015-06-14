@@ -7,14 +7,30 @@ using UnityEditorInternal;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private RandomTerrainScript _terrain;
+    [SerializeField] private GameObject _food;
+    [SerializeField] private GameObject _water;
     public void Start()
     {
-        _terrain.PutFoodAndWater(50);
+        
+        //_terrain.PutFoodAndWater(50);
         _terrain.CreateCivilisations();
     }
+
+    private bool first = true;
     public void Update()
     {
-        foreach( var map in MapManagerScript._SquareMaps)
+        if (first) //deg mais bon
+        {
+            foreach (var map in MapManagerScript._SquareMaps)
+            {
+                //Debug.Log("mapKey : " + map.Key + " mapValue : " + map.Value);
+                map.Value.AddEdible(_food, 3);
+                map.Value.AddEdible(_water, 3);
+            }
+            first = false;
+        }
+        
+        foreach ( var map in MapManagerScript._SquareMaps)
         {
 			//Debug.Log("Foreach " + map.Value.name);
             foreach(var ent in map.Value.GetContext().GetEntityOnCurrentSquare())
