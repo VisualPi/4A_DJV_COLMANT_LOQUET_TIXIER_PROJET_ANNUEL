@@ -73,7 +73,6 @@
      <Compile Include="Assets\Scripts\MapGenerator\TerrainGenerationScript.cs" />
      <Compile Include="Assets\Scripts\Network\GUI\MyGUI.cs" />
      <Compile Include="Assets\Scripts\Network\Manager.cs" />
-     <Compile Include="Assets\Scripts\Test.cs" />
      <None Include="Assets\Materials\Placeholder.txt" />
      <None Include="Assets\Models\Placeholder.txt" />
  <Reference Include="UnityEngine.UI">
