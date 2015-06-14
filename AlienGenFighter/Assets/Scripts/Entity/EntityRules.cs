@@ -156,12 +156,12 @@ public class EntityRules
 	}
 	private void GoToWater(SquareContext context)
 	{
-		Debug.Log("Go To drink");
+		//Debug.Log("Go To drink");
 		context.GetCurrentEntity().GetMovement().SetTargetPosition(context.GetCurrentEntity().GetState().GetTargetedWater().GetTransform().position);
 	}
 	private void Drink(SquareContext context)
 	{
-		Debug.Log("Eat !!");
+		//Debug.Log("Eat !!");
 		var f = 1;
 		context.GetCurrentEntity().GetState().GetTargetedWater().Take(f);  //TODO : a voir le nombre de food
 		context.GetCurrentEntity().GetState().SetWater(context.GetCurrentEntity().GetState().GetWater() + f);

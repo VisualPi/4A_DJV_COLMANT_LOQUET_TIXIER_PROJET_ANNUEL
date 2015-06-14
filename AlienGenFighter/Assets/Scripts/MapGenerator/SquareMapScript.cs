@@ -72,13 +72,12 @@ public class SquareMapScript : MonoBehaviour
 	private Camera						_squareCamera;
 	private Camera						_mainCamera;
 
-    private SquareContext _context;// = new SquareContext();
+    private SquareContext _context = new SquareContext();
 	void Start()
 	{
 		_squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();//TODO : a voir
 		_mainCamera = GameObject.Find("Camera2D").GetComponent<Camera>();
 		
-		_context = new SquareContext();
 		//consumeResources(10, 1000);
 	}
 	void Update()
@@ -156,5 +155,21 @@ public class SquareMapScript : MonoBehaviour
 		_squareCamera.enabled = true;
 		_mainCamera.enabled = false;
 	}
+
+    public void AddEdible(GameObject go, int nb)
+    {
+        RaycastHit hit;
+        Ray ray;
+        for (var i = 0; i < nb; i++)
+        {
+            ray = new Ray(new Vector3(Random.Range(_collider.bounds.min.x, _collider.bounds.max.x), 255f, Random.Range(_collider.bounds.min.z, _collider.bounds.max.z)), Vector3.down);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+            {
+                Instantiate(go, new Vector3(hit.point.x,
+                                                        hit.point.y + go.transform.localScale.y,
+                                                        hit.point.z), Quaternion.identity);
+            }
+        }
+    }
 
 }

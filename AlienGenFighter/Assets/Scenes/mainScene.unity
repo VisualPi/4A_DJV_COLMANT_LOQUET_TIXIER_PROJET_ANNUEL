@@ -20142,6 +20142,14 @@ Prefab:
       propertyPath: _terrain
       value: 
       objectReference: {fileID: 1728160344}
+    - target: {fileID: 11453730, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
+      propertyPath: _water
+      value: 
+      objectReference: {fileID: 161486, guid: e0cde20fef08dd442994846709fb2b8b, type: 2}
+    - target: {fileID: 11453730, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
+      propertyPath: _food
+      value: 
+      objectReference: {fileID: 123276, guid: 971060ebffeabe045858f069f326a98c, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
   m_IsPrefabParent: 0
