@@ -6,6 +6,15 @@ public class SquareContext
 	private int _nbEntityOnCurrentSquare = 0;
 	private List<EntityScript> _entityOnCurrentSquare = new List<EntityScript>();
     private EntityScript _currentEntity;
+	private Dictionary<string, List<OtherTargetable>> _staticEntities;
+
+	public SquareContext()
+	{
+		_staticEntities = new Dictionary<string, List<OtherTargetable>>();
+		_staticEntities.Add("Food", new List<OtherTargetable>());
+		_staticEntities.Add("Water", new List<OtherTargetable>());
+		//TODO : add there others
+	}
 
 	public int GetNbEntityOnCurrentSquare()
 	{
@@ -31,6 +40,22 @@ public class SquareContext
     {
         _currentEntity = entity;
     }
+	public Dictionary<string, List<OtherTargetable>> GetStaticEntities()
+	{
+		return _staticEntities;
+	}
+	public void SetStaticEntities(Dictionary<string, List<OtherTargetable>> value)
+	{
+		_staticEntities = value;
+	}
+	public List<OtherTargetable> GetStaticEntitiesByType(string type)
+	{
+		return _staticEntities[type];
+	}
+	public void SetStaticEntitiesByType(List<OtherTargetable> value, string type)
+	{
+		_staticEntities[type] = value;
+	}
 }
 
 
@@ -47,13 +72,13 @@ public class SquareMapScript : MonoBehaviour
 	private Camera						_squareCamera;
 	private Camera						_mainCamera;
 
-	SquareContext _context = new SquareContext();
+    private SquareContext _context;// = new SquareContext();
 	void Start()
 	{
 		_squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();//TODO : a voir
 		_mainCamera = GameObject.Find("Camera2D").GetComponent<Camera>();
 		
-		//_context = new SquareContext();
+		_context = new SquareContext();
 		//consumeResources(10, 1000);
 	}
 	void Update()

@@ -1,6 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using System.Timers;
 
 public class EntityManagerScript : MonoBehaviour
 {
@@ -10,16 +11,15 @@ public class EntityManagerScript : MonoBehaviour
 	[SerializeField]
 	public EntityScript[] tab;
 
+	private static List<float> _timers; 
 	public void Start()
 	{
-		if (tab.Length<=0)
-			throw new Exception("No Entity!");
-
+		_timers = new List<float>();
 		_AvailableEntities = new Queue<EntityScript>(tab.Length);
 		for(int index = 0 ; index < tab.Length ; index++)
 		{
-			EntityScript e = tab[index];
-			AddToQueue(e);
+			EntityScript t = tab[index];
+			AddToQueue(t);
 		}
 
 		tab = null;
@@ -33,7 +33,13 @@ public class EntityManagerScript : MonoBehaviour
 	[RPC]
 	public static void AddToQueue(EntityScript e)
 	{
+		
 		e.DisableComponents();
 		_AvailableEntities.Enqueue(e);
 	}
+    public static void AddToQueueAndMove(EntityScript e)
+    {
+        e.GetTransform().position = new Vector3(10000,10000,_AvailableEntities.Count+10);
+        AddToQueue(e);
+    }
 }

@@ -28,8 +28,10 @@ public class RandomTerrainScript : MonoBehaviour
     
     Vector2 actualPoint;
 
-	public GameObject _civilisation;
-	enum SizeMapZE
+	[SerializeField] private GameObject _civilisation;
+    [SerializeField] private GameObject _food;
+    [SerializeField] private GameObject _water;
+    enum SizeMapZE
     {
         A,B,C
     };
@@ -51,8 +53,9 @@ public class RandomTerrainScript : MonoBehaviour
         terrainData.heightmapResolution = (int)_gameArea.x;
         terrainData.SetHeights(0, 0, ArrayMapCreator());
         terrainData.size = _gameArea;
-		CreateCivilisations();
-	}
+		//CreateCivilisations();
+        //PutFoodAndWater(50);
+    }
 
 
     void CreateHill()
@@ -217,6 +220,32 @@ public class RandomTerrainScript : MonoBehaviour
 													hit.point.z), Quaternion.identity);
 		}
 	}
+    public void PutFoodAndWater(int nb)
+    {
+        RaycastHit hit;
+        Ray ray;
+        for (var i = 0; i < nb; i++)
+        {
+            ray = new Ray(new Vector3(Random.Range(0, sizeMap.x), 255f, Random.Range(0, sizeMap.z)), Vector3.down);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+            {
+                Instantiate(_food, new Vector3(hit.point.x,
+                                                        hit.point.y + _civilisation.transform.localScale.y,
+                                                        hit.point.z), Quaternion.identity);
+            }
+        }
+        for (var i = 0; i < nb; i++)
+        {
+            ray = new Ray(new Vector3(Random.Range(0, sizeMap.x), 255f, Random.Range(0, sizeMap.z)), Vector3.down);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+            {
+                Instantiate(_water, new Vector3(hit.point.x,
+                                                        hit.point.y + _civilisation.transform.localScale.y,
+                                                        hit.point.z), Quaternion.identity);
+            }
+        }
+
+    }
 }
 	
 	

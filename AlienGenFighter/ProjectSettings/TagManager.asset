@@ -6,6 +6,8 @@ TagManager:
   tags:
   - entity
   - SquareMap
+  - Food
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Map
   - SquareMap
   - Pastille
-  - 
+  - Targetable
   - 
   - 
   - 

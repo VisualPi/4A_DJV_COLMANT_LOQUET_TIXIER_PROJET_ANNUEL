@@ -19,12 +19,19 @@ public class EntityScript : MonoBehaviour
 	private bool			_isAlive = true;
 
     private EntityRules _rules;
+	private EntityStateScript _state;
+
+	private float _foodTime;
+	private float _drinkTime;
 	public void Init()
 	{
 		_dna = new DnaScript();
 		_dna.SetGeneAt(ECharateristic.Height, 1);
 		_capacities = new CapacityScript();
         _rules = new EntityRules();
+		_state = new EntityStateScript();
+		_foodTime = 0f;
+		_drinkTime = 0f;
 		_movement.Init();
 	}
 	void Update()
@@ -32,6 +39,18 @@ public class EntityScript : MonoBehaviour
 		if (_isPlayable)
 		{
 			//TODO: things
+			_foodTime += Time.deltaTime;
+			_drinkTime += Time.deltaTime;
+			if (_foodTime >= 10f)
+			{
+				_state.SetFood(_state.GetFood() - 1);
+				_foodTime = 0f;
+			}
+			if (_drinkTime >= 10f)
+			{
+				_state.SetWater(_state.GetWater() - 1);
+				_drinkTime = 0f;
+			}
 		}
 	}
 	public DnaScript GetDNA()
@@ -74,6 +93,7 @@ public class EntityScript : MonoBehaviour
 	{
 		_movement.enabled = false;
 		_networkView.enabled = false;
+        _isAlive = false;
 		_isPlayable = false;
 		_movement.SetPlayable(false);
 		this.enabled = false;
@@ -121,5 +141,13 @@ public class EntityScript : MonoBehaviour
     {
         _rules = rules;
     }
+	public EntityStateScript GetState()
+	{
+		return _state;
+	}
+	public void SetState(EntityStateScript state)
+	{
+		_state = state;
+	}
 }
 
