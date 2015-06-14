@@ -13,13 +13,13 @@ GameObject:
   - 23: {fileID: 2375632}
   - 114: {fileID: 11430708}
   - 54: {fileID: 5444460}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Food
   m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &476642
 Transform:
   m_ObjectHideFlags: 1

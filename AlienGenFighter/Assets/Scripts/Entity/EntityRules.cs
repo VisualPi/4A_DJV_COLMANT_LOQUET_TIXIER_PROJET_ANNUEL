@@ -21,7 +21,7 @@ public class EntityRules
 		rg = new RulesGroup();
 		rg.GetRuleList().Add(new Rules(new RuleCondition(HasZeroWater), new RuleAction(Die)));
 		_rules[0].Add(rg);
-		//manger - priority 0
+		////manger - priority 0
 		rg = new RulesGroup();
 		rg.GetRuleList().Add(new Rules(new RuleCondition(isHungry), new RuleAction(SearchForEat)));
 		rg.GetRuleList().Add(new Rules(new RuleCondition(CanGoToFood), new RuleAction(GoToEat)));
@@ -47,9 +47,6 @@ public class EntityRules
 	}
 
 	public bool b = true;
-
-
-
 
 	#region CONDITION_DEFINITION
 	#region MOURIR
@@ -127,7 +124,8 @@ public class EntityRules
 	#region MOURIR
 	private void Die(SquareContext context)
 	{
-		EntityManagerScript.AddToQueue(context.GetCurrentEntity());
+		EntityManagerScript.AddToQueueAndMove(context.GetCurrentEntity());
+        //Debug.LogError("DIE !!!");
 		return;
 	}
 	#endregion

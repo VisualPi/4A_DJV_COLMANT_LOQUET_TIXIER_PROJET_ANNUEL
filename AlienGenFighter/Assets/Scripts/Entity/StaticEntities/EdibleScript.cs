@@ -15,7 +15,7 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
 	public void Start()
 	{
 		_quantity = _defaultQuantity;
-		_type = tag;
+	    _type = tag;
 	}
 
 	// Update is called once per frame
@@ -35,6 +35,7 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
 	}
 	public void OnTriggerEnter(Collider col)
 	{
+	    if (_type.Equals("")) return;
 		if(col.tag.Equals("SquareMap") && !col.name.Equals(_lastCol))
 		{
 			if(!_lastCol.Equals(""))
@@ -45,7 +46,7 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
 		}
 	}
 
-	public Transform GetTransform()
+    public Transform GetTransform()
 	{
 		return _transform;
 	}

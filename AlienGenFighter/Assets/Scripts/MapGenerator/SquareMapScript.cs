@@ -73,13 +73,13 @@ public class SquareMapScript : MonoBehaviour
 	private Camera						_squareCamera;
 	private Camera _mainCamera;
 
-	SquareContext _context = new SquareContext();
+    private SquareContext _context;// = new SquareContext();
 	void Start()
 	{
 		_squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();//TODO : a voir
 		_mainCamera = GameObject.Find("Camera2D").GetComponent<Camera>();
 		
-		//_context = new SquareContext();
+		_context = new SquareContext();
 		//consumeResources(10, 1000);
 	}
 	void Update()

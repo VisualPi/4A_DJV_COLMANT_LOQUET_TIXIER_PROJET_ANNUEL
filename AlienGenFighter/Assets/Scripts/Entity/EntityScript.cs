@@ -93,6 +93,7 @@ public class EntityScript : MonoBehaviour
 	{
 		_movement.enabled = false;
 		_networkView.enabled = false;
+        _isAlive = false;
 		_isPlayable = false;
 		_movement.SetPlayable(false);
 		this.enabled = false;

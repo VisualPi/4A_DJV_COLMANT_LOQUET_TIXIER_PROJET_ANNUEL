@@ -33,8 +33,13 @@ public class EntityManagerScript : MonoBehaviour
 	[RPC]
 	public static void AddToQueue(EntityScript e)
 	{
-		e.GetTransform().position = new Vector3(10000,10000,0);
+		
 		e.DisableComponents();
 		_AvailableEntities.Enqueue(e);
 	}
+    public static void AddToQueueAndMove(EntityScript e)
+    {
+        e.GetTransform().position = new Vector3(10000,10000,_AvailableEntities.Count+10);
+        AddToQueue(e);
+    }
 }

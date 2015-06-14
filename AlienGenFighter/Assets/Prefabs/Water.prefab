@@ -13,7 +13,7 @@ GameObject:
   - 65: {fileID: 6544078}
   - 54: {fileID: 5413112}
   - 114: {fileID: 11468550}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Water
   m_TagString: Water
   m_Icon: {fileID: 0}

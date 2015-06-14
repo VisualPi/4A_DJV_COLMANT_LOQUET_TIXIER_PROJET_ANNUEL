@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEditorInternal;
 
 
 public class GameManager : MonoBehaviour
 {
-
+    [SerializeField] private RandomTerrainScript _terrain;
+    public void Start()
+    {
+        _terrain.PutFoodAndWater(50);
+        _terrain.CreateCivilisations();
+    }
     public void Update()
     {
         foreach( var map in MapManagerScript._SquareMaps)
@@ -45,14 +51,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-
-
-    public bool isHungry(SquareContext context)
-    {
-        //tester si l'entité a besoin de manger
-        return true;
-    }
-
-
 }
