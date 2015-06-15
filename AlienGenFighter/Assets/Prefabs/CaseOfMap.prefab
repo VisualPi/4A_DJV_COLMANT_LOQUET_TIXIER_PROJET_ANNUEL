@@ -115,6 +115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 6509744}
   _transform: {fileID: 434054}
+  _cameraManager: {fileID: 0}
+  _squareCamera: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

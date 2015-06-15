@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System;
-using System.Collections.Generic;
-using UnityEditorInternal;
 
 
 public class GameManager : MonoBehaviour
