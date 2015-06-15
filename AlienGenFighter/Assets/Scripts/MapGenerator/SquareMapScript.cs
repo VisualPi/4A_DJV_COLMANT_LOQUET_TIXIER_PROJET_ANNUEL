@@ -59,8 +59,7 @@ public class SquareContext
 }
 
 
-public class SquareMapScript : MonoBehaviour
-{
+public class SquareMapScript : MonoBehaviour {
 	private float moveSpeedInfluence = 1.0f;
 	private float temperature = 25.0f;
 	
@@ -69,22 +68,37 @@ public class SquareMapScript : MonoBehaviour
 
 	[SerializeField] private Collider	_collider;
 	[SerializeField] private Transform	_transform;
-	private Camera						_squareCamera;
-	private Camera						_mainCamera;
+    [SerializeField] private CameraManagerScript _cameraManager;
+    [SerializeField] private Camera     _squareCamera;
+    //[SerializeField] private Camera     _worldMapCamera;
 
     private SquareContext _context = new SquareContext();
-	void Start()
-	{
-		_squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();//TODO : a voir
-		_mainCamera = GameObject.Find("Camera2D").GetComponent<Camera>();
+	void Start() {
+        if (_squareCamera == null) {
+            Debug.Log("error : _squareCamera is null");
+            _squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();
+        }
+        if (_cameraManager == null) {
+            Debug.Log("error : _cameraManager is null");
+            _cameraManager = GameObject.Find("CameraManager").GetComponent<CameraManagerScript>();
+        }
+        //_squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();//TODO : a voir
+        //_worldMapCamera = GameObject.Find("Camera2D").GetComponent<Camera>();
 		
 		//consumeResources(10, 1000);
 	}
-	void Update()
-	{
-		
-	}
-	public void OnTriggerEnter(Collider col)
+
+    public CameraManagerScript CameraManager {
+        get { return _cameraManager; }
+        set { _cameraManager = value; }
+    }
+
+    public Camera SquareCamera {
+        get { return _squareCamera; }
+        set { _squareCamera = value; }
+    }
+
+    public void OnTriggerEnter(Collider col)
 	{
 		//Debug.Log("Enter on square");
 		if (col.tag.Equals("entity"))
@@ -148,12 +162,11 @@ public class SquareMapScript : MonoBehaviour
 		getResources();
 	}
 
-	public void OnMouseDown()
-	{
-		_squareCamera.transform.position = new Vector3(_transform.position.x, _transform.position.y + 50, _transform.position.z);
+	public void OnMouseDown() {
+        if (_cameraManager.IsCurrentCamera(_squareCamera)) return;
 
-		_squareCamera.enabled = true;
-		_mainCamera.enabled = false;
+		_squareCamera.transform.position = new Vector3(_transform.position.x, _transform.position.y + 50, _transform.position.z);
+        _cameraManager.ShowCamera(_squareCamera);
 	}
 
     public void AddEdible(GameObject go, int nb)

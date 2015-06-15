@@ -138,9 +138,23 @@ Prefab:
       propertyPath: _terrain
       value: 
       objectReference: {fileID: 1728160344}
+    - target: {fileID: 11426038, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
+      propertyPath: CurrentCamera
+      value: 
+      objectReference: {fileID: 1779369123}
+    - target: {fileID: 11426038, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
+      propertyPath: _currentCamera
+      value: 
+      objectReference: {fileID: 1779369123}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &157539865
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11428956, guid: 11c696afce134f24fab96885fdf9f065,
+    type: 2}
+  m_PrefabInternal: {fileID: 157539862}
+  m_Script: {fileID: 11500000, guid: 7b43dc8663fcaeb45acbade707bbc70d, type: 3}
 --- !u!1 &208590241
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,17 +231,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 157539865}
+        m_MethodName: OnSwitchCamera
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgument: {fileID: 1779369123}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Camera, UnityEngine, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: is a test
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &208590244
@@ -601,7 +616,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 466474, guid: c02d73afbb23fff4f956203440497c2a, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2050588, guid: c02d73afbb23fff4f956203440497c2a, type: 2}
       propertyPath: m_CullingMask.m_Bits
@@ -614,6 +629,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c02d73afbb23fff4f956203440497c2a, type: 2}
   m_IsPrefabParent: 0
+--- !u!20 &1779369123
+Camera:
+  m_PrefabParentObject: {fileID: 2050588, guid: c02d73afbb23fff4f956203440497c2a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1779369122}
 --- !u!1 &1809250466
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +745,10 @@ Prefab:
     - target: {fileID: 489400, guid: 42cf24f0173b6fe4bbc26a8c65fd6b20, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2071818, guid: 42cf24f0173b6fe4bbc26a8c65fd6b20, type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 42cf24f0173b6fe4bbc26a8c65fd6b20, type: 2}

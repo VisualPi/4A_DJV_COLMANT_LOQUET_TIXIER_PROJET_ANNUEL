@@ -1,46 +1,27 @@
 ﻿using UnityEngine;
 
 public class CameraManagerScript : MonoBehaviour {
+    [SerializeField] private Camera _currentCamera;
 
-    [SerializeField]
-    private Transform _transform;
-
-    [SerializeField]
-    private float _normalMoveSpeed = 40;
-    [SerializeField]
-    private float _slowMoveFactor = 0.25f;
-    [SerializeField]
-    private float _fastMoveFactor = 5;
-
-    // Use this for initialization
-    void Start() {
-        Cursor.visible = true;
+    public void Start() {
+        _currentCamera.enabled = true;
     }
 
-    // Update is called once per frame
-    void FixedUpdate() {
-        var moveSpeed = _normalMoveSpeed;
+    public void ShowCamera(Camera cam) {
+        if (IsCurrentCamera(cam)) return;
 
-        if (Input.GetKey(KeyCode.AltGr) || Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) {
-            moveSpeed = _normalMoveSpeed * _fastMoveFactor * Time.deltaTime;
-        } else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) {
-            moveSpeed = _normalMoveSpeed * _slowMoveFactor * Time.deltaTime;
-        } else {
-            moveSpeed *= Time.deltaTime;
-        }
+        HideCurrentCamera();
+        (_currentCamera = cam).enabled = true;
+    }
 
-        _transform.transform.position += Vector3.forward * moveSpeed * Input.GetAxis("Vertical");
-        _transform.transform.position += Vector3.right * moveSpeed * Input.GetAxis("Horizontal");
+    public void HideCurrentCamera() {
+        if (_currentCamera != null)
+            _currentCamera.enabled = false;
 
-        if (Input.GetKey(KeyCode.Space)) {
-            _transform.transform.position += Vector3.up * moveSpeed;
-        }
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-            _transform.transform.position -= Vector3.up * moveSpeed;
-        }
+        _currentCamera = null;
+    }
 
-        if (Input.GetKeyDown(KeyCode.End)) {
-            Cursor.visible = Cursor.visible == false;
-        }
+    public bool IsCurrentCamera(Camera cam) {
+        return _currentCamera == cam;
     }
 }
