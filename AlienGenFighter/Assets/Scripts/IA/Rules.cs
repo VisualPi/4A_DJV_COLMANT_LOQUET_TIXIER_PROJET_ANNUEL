@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using Assets.Scripts.Context;
 
 public class RuleCondition
 {
