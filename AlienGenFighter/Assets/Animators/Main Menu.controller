@@ -13,7 +13,7 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -26,7 +26,7 @@ AnimatorController:
     m_DefaultWeight: 0
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_MultiThreadedStateMachine: 1
 --- !u!1101 &110101342
 AnimatorStateTransition:
@@ -168,7 +168,7 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_Motion: {fileID: 7400000, guid: d27b898055b0b3a4f8516741cc5e3208, type: 2}
+  m_Motion: {fileID: 7400000, guid: fb748e848e67ebf4599cb74af7ba219e, type: 2}
   m_Tag: 
 --- !u!1102 &110248002
 AnimatorState:
@@ -186,7 +186,7 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_Motion: {fileID: 7400000, guid: d27b898055b0b3a4f8516741cc5e3208, type: 2}
+  m_Motion: {fileID: 7400000, guid: fb748e848e67ebf4599cb74af7ba219e, type: 2}
   m_Tag: 
 --- !u!1102 &110283402
 AnimatorState:

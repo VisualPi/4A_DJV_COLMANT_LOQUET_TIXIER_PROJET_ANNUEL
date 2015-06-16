@@ -7018,76 +7018,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SampleButton: {fileID: 132552, guid: a9a0f0e90b31eed48adf6e9a28a8c3a0, type: 2}
   ItemList:
-  - ServerName: Test
+  - Id: 0
+    ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
-    DoWork:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - ServerName: Bonjour
+  - Id: 0
+    ServerName: Bonjour
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
-    DoWork:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - ServerName: Test
+  - Id: 0
+    ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
-    DoWork:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - ServerName: Test
+  - Id: 0
+    ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
-    DoWork:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - ServerName: Test
+  - Id: 0
+    ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
-    DoWork:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - ServerName: Test
+  - Id: 0
+    ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
-    DoWork:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-  - ServerName: Test
+  - Id: 0
+    ServerName: Test
     Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
     CurrentNbPlayer: 0
     MaxNbPlayer: 2
     Ping: 9
-    DoWork:
-      m_PersistentCalls:
-        m_Calls: []
-      m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-        Culture=neutral, PublicKeyToken=null
   ContentPanel: {fileID: 1885260880}
 --- !u!1 &2030330466
 GameObject:

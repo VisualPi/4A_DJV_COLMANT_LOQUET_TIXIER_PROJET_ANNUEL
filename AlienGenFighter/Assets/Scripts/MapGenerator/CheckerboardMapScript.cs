@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class CheckerboardMapScript : MonoBehaviour
 {
@@ -15,6 +13,12 @@ public class CheckerboardMapScript : MonoBehaviour
 
     [SerializeField]
     RandomTerrainScript gameArea;
+
+    [SerializeField]
+    private Camera _squareCamera;
+
+    [SerializeField]
+    private CameraManagerScript _cameraManager;
 
     BoxCollider[] checkerboard;
     // Use this for initialization
@@ -89,10 +93,17 @@ public class CheckerboardMapScript : MonoBehaviour
                     z = 0;
                 }
                 Vector3 colliderPosition = new Vector3(32+x, 100, 32+z);
-                actualCase =   (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
-                actualCase.transform.parent = Terrain.transform; 
-                actualCase.GetComponent<BoxCollider>().name = "SquareMap_"+cpt;
-                MapManagerScript._SquareMaps.Add("SquareMap_" + cpt, actualCase.GetComponent<SquareMapScript>());
+
+                actualCase = (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
+                actualCase.transform.parent = Terrain.transform;
+                actualCase.GetComponent<BoxCollider>().name = "SquareMap_" + cpt;
+
+                // Define for does not "GetComponent" for all component in SquareMapScript.
+                var currentSquareMapScript = actualCase.GetComponent<SquareMapScript>();
+                currentSquareMapScript.CameraManager = _cameraManager;
+                currentSquareMapScript.SquareCamera = _squareCamera;
+
+                MapManagerScript._SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
               //  Debug.Log(MapManagerScript._SquareMaps["SquareMap_" + cpt]);
                 x += 64;
                 cpt++;

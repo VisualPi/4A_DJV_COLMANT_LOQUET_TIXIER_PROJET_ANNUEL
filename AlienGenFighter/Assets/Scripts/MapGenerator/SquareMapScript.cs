@@ -15,7 +15,7 @@ public class SquareContext
 		_staticEntities.Add("Water", new List<OtherTargetable>());
 		//TODO : add there others
 	}
-
+    
 	public int GetNbEntityOnCurrentSquare()
 	{
 		return _nbEntityOnCurrentSquare;
@@ -74,7 +74,7 @@ public class SquareMapScript : MonoBehaviour {
 
     private SquareContext _context = new SquareContext();
 	void Start() {
-        if (_squareCamera == null) {
+        if (_squareCamera == null) { // TODO : Fix it
             Debug.Log("error : _squareCamera is null");
             _squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();
         }
@@ -82,10 +82,6 @@ public class SquareMapScript : MonoBehaviour {
             Debug.Log("error : _cameraManager is null");
             _cameraManager = GameObject.Find("CameraManager").GetComponent<CameraManagerScript>();
         }
-        //_squareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();//TODO : a voir
-        //_worldMapCamera = GameObject.Find("Camera2D").GetComponent<Camera>();
-		
-		//consumeResources(10, 1000);
 	}
 
     public CameraManagerScript CameraManager {
