@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Assets.Scripts.Context;
 using Random = UnityEngine.Random;
 
 public class EntityRules
@@ -50,129 +51,150 @@ public class EntityRules
 
 	#region CONDITION_DEFINITION
 	#region MOURIR
-	private bool HasZeroFood(SquareContext context)
+	private bool HasZeroFood(EntityScript entity)
 	{
-		return context.GetCurrentEntity().GetState().GetFood() <= 0;
+		return entity.GetState().GetFood() <= 0;
 	}
-	private bool HasZeroWater(SquareContext context)
+	private bool HasZeroWater(EntityScript entity)
 	{
-		return context.GetCurrentEntity().GetState().GetWater() <= 0;
+		return entity.GetState().GetWater() <= 0;
 	}
 	#endregion
 	#region MANGER
-	private bool isHungry(SquareContext context)
+	private bool isHungry(EntityScript entity)
 	{
-		return context.GetCurrentEntity().GetState().GetFood() < 70;
+		return entity.GetState().GetFood() < 70;
 	}
-	private bool CanGoToFood(SquareContext context)
+	private bool CanGoToFood(EntityScript entity)
 	{
-		for(var i = 0 ; i < context.GetStaticEntitiesByType("Food").Count ; ++i)
+		for(var i = 0 ; i < entity.GetContext().Food.Count ; ++i)
 		{
-			if(Vector3.Distance(context.GetStaticEntitiesByType("Food")[i].GetTransform().position,
-				context.GetCurrentEntity().GetTransform().position) < 5f)
+			if(Vector3.Distance(entity.GetContext().Food[i].Position,
+				entity.GetTransform().position) < 5f)
 			{
-				context.GetCurrentEntity().GetState().SetTargetedFood(context.GetStaticEntitiesByType("Food")[i] as EdibleScript);
+				entity.GetState().SetTargetedFood(entity.GetContext().Food[i]);
 				return true;
 			}
 
 		}
 		return false;
 	}
-	private bool CanEat(SquareContext context)
+	private bool CanEat(EntityScript entity)
 	{
-		return Mathf.Abs(context.GetCurrentEntity().GetTransform().position.x - context.GetCurrentEntity().GetState().GetTargetedFood().GetTransform().position.x) <= 0.5f
-				&& Mathf.Abs(context.GetCurrentEntity().GetTransform().position.z - context.GetCurrentEntity().GetState().GetTargetedFood().GetTransform().position.z) <= 0.5f
-				&& context.GetCurrentEntity().GetState().GetTargetedFood().GetQuantity() > 0;
+	    if (Mathf.Abs(entity.GetTransform().position.x - entity.GetState().GetTargetedFood().Position.x) <= 0.5f
+	        && Mathf.Abs(entity.GetTransform().position.z - entity.GetState().GetTargetedFood().Position.z) <= 0.5f)
+	    {
+	        if (!GameData.Ressources.ContainsKey(entity.GetState().GetTargetedFood().Name))
+	        {
+	            entity.GetContext().RemoveFoodByPosition(entity.GetState().GetTargetedFood().Position);
+	            return false;
+	        }
+	        return true;
+	    }
+	    else
+	        return false;
 	}
 	#endregion
 	#region BOIRE
-	private bool isTthirsty(SquareContext context)
+	private bool isTthirsty(EntityScript entity)
 	{
-		return context.GetCurrentEntity().GetState().GetWater() < 70;
+		return entity.GetState().GetWater() < 70;
 	}
-	private bool CanGoToWater(SquareContext context)
+	private bool CanGoToWater(EntityScript entity)
 	{
-		for(var i = 0 ; i < context.GetStaticEntitiesByType("Water").Count ; ++i)
-		{
-			if(Vector3.Distance(context.GetStaticEntitiesByType("Water")[i].GetTransform().position,
-				context.GetCurrentEntity().GetTransform().position) < 5f)
-			{
-				context.GetCurrentEntity().GetState().SetTargetedWater(context.GetStaticEntitiesByType("Water")[i] as EdibleScript);
-				return true;
-			}
+        for (var i = 0; i < entity.GetContext().Water.Count; ++i)
+        {
+            if (Vector3.Distance(entity.GetContext().Water[i].Position,
+                entity.GetTransform().position) < 5f)
+            {
+                entity.GetState().SetTargetedWater(entity.GetContext().Water[i]);
+                return true;
+            }
 
-		}
-		return false;
-	}
-	private bool CanDrink(SquareContext context)
+        }
+        return false;
+    }
+	private bool CanDrink(EntityScript entity)
+    {
+        if (Mathf.Abs(entity.GetTransform().position.x - entity.GetState().GetTargetedWater().Position.x) <= 0.5f
+            && Mathf.Abs(entity.GetTransform().position.z - entity.GetState().GetTargetedWater().Position.z) <= 0.5f)
+        {
+            if (!GameData.Ressources.ContainsKey(entity.GetState().GetTargetedWater().Name))
+            {
+                entity.GetContext().RemoveWaterByPosition(entity.GetState().GetTargetedWater().Position);
+                return false;
+            }
+            return true;
+        }
+        else
+            return false;
+    }
+    #endregion
+    #region BOUGER
+    private bool CanMove(EntityScript entity)
 	{
-		return Mathf.Abs(context.GetCurrentEntity().GetTransform().position.x - context.GetCurrentEntity().GetState().GetTargetedWater().GetTransform().position.x) <= 0.5f
-				&& Mathf.Abs(context.GetCurrentEntity().GetTransform().position.z - context.GetCurrentEntity().GetState().GetTargetedWater().GetTransform().position.z) <= 0.5f
-				&& context.GetCurrentEntity().GetState().GetTargetedWater().GetQuantity() > 0;
-	}
-	#endregion
-	#region BOUGER
-	private bool CanMove(SquareContext context)
-	{
-		return Mathf.Abs(context.GetCurrentEntity().GetMovement().GetPosition().x - context.GetCurrentEntity().GetMovement().GetTargetPosition().x) <= 0.1f
-			   && Mathf.Abs(context.GetCurrentEntity().GetMovement().GetPosition().z - context.GetCurrentEntity().GetMovement().GetTargetPosition().z) <= 0.1f;
+		return Mathf.Abs(entity.GetMovement().GetPosition().x - entity.GetMovement().GetTargetPosition().x) <= 0.1f
+			   && Mathf.Abs(entity.GetMovement().GetPosition().z - entity.GetMovement().GetTargetPosition().z) <= 0.1f;
 	}
 
 	#endregion
 	#endregion
 	#region ACTION_DEFINITION
 	#region MOURIR
-	private void Die(SquareContext context)
+	private void Die(EntityScript entity)
 	{
-		EntityManagerScript.AddToQueueAndMove(context.GetCurrentEntity());
+		EntityManagerScript.AddToQueueAndMove(entity);
         //Debug.LogError("DIE !!!");
 		return;
 	}
 	#endregion
 	#region MANGER
-	private void SearchForEat(SquareContext context)
+	private void SearchForEat(EntityScript entity)
 	{
 		return;
 		//imaginer une animation ou il cherche a manger ou alors il se tient le ventre ...
 	}
-	private void GoToEat(SquareContext context)
+	private void GoToEat(EntityScript entity)
 	{
-		//Debug.Log("Go To eat");
-		context.GetCurrentEntity().GetMovement().SetTargetPosition(context.GetCurrentEntity().GetState().GetTargetedFood().GetTransform().position);
+        //Debug.Log("Go To eat");
+        entity.GetMovement().SetTargetPosition(entity.GetState().GetTargetedFood().Position);
 	}
-	private void Eat(SquareContext context)
+	private void Eat(EntityScript entity)
 	{
 		//Debug.Log("Eat !!");
 		var f = 1;
-		context.GetCurrentEntity().GetState().GetTargetedFood().Take(f); //TODO : a voir le nombre de food
-		context.GetCurrentEntity().GetState().SetFood(context.GetCurrentEntity().GetState().GetFood() + f);
+        GameData.Ressources[entity.GetState().GetTargetedFood().Name].Take(f); //TODO : a voir le nombre de food
+        entity.GetState().SetFood(entity.GetState().GetFood() + f);
 	}
 	#endregion
 	#region BOIRE
-	private void SearchForWater(SquareContext context)
+	private void SearchForWater(EntityScript entity)
 	{
 		return;
 		//imaginer une animation ou il cherche a manger ou alors il se tient le ventre ...
 	}
-	private void GoToWater(SquareContext context)
+	private void GoToWater(EntityScript entity)
 	{
-		//Debug.Log("Go To drink");
-		context.GetCurrentEntity().GetMovement().SetTargetPosition(context.GetCurrentEntity().GetState().GetTargetedWater().GetTransform().position);
+        //Debug.Log("Go To drink");
+        entity.GetMovement().SetTargetPosition(entity.GetState().GetTargetedWater().Position);
 	}
-	private void Drink(SquareContext context)
+	private void Drink(EntityScript entity)
 	{
 		//Debug.Log("Eat !!");
 		var f = 1;
-		context.GetCurrentEntity().GetState().GetTargetedWater().Take(f);  //TODO : a voir le nombre de food
-		context.GetCurrentEntity().GetState().SetWater(context.GetCurrentEntity().GetState().GetWater() + f);
+        GameData.Ressources[entity.GetState().GetTargetedWater().Name].Take(f);  //TODO : a voir le nombre de food
+        entity.GetState().SetWater(entity.GetState().GetWater() + f);
 	}
 	#endregion
 	#region BOUGER
-	private void Move(SquareContext context)
+	private void Move(EntityScript entity)
 	{
-		//Debug.Log("Entity " + context.GetCurrentEntity() + " is moving");
-		var pos = context.GetCurrentEntity().GetMovement().GetPosition();
-		context.GetCurrentEntity().GetMovement().SetTargetPosition(new Vector3(pos.x + Random.Range(-15f, 15f), 1, pos.z + Random.Range(-15f, 15f)));
+		//Debug.Log("Entity " + entity + " is moving");
+		var pos = entity.GetMovement().GetPosition();
+	    var newPos = new Vector3(pos.x + Random.Range(-15f, 15f), 1, pos.z + Random.Range(-15f, 15f));
+	    newPos.x = Mathf.Clamp(newPos.x, 0, GameData.MapSize.x);
+        newPos.z = Mathf.Clamp(newPos.z, 0, GameData.MapSize.z);
+        entity.GetMovement().SetTargetPosition(newPos);
 	}
 	#endregion
 	#endregion

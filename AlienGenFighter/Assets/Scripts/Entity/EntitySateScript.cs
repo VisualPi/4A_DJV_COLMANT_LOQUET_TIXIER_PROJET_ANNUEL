@@ -5,10 +5,10 @@ public class EntityStateScript
 {
 	private int _food = 50;
 	private int _water = 50;
-	private EdibleScript _targetedFood;
-	private EdibleScript _targetedWater;
+	private EdibleInformations _targetedFood;
+	private EdibleInformations _targetedWater;
 
-	public int GetFood()
+    public int GetFood()
 	{
 		return _food;
 	}
@@ -25,20 +25,20 @@ public class EntityStateScript
 		_water = drink;
 	}
 
-	public EdibleScript GetTargetedFood()
+	public EdibleInformations GetTargetedFood()
 	{
 		return _targetedFood;
 	}
-	public void SetTargetedFood(EdibleScript value)
+	public void SetTargetedFood(EdibleInformations value)
 	{
 		_targetedFood = value;
 	}
-	public EdibleScript GetTargetedWater()
+	public EdibleInformations GetTargetedWater()
 	{
 		return _targetedWater;
 	}
-	public void SetTargetedWater(EdibleScript value)
+	public void SetTargetedWater(EdibleInformations value)
 	{
 		_targetedWater = value;
-	}
+    }
 }

@@ -21,8 +21,8 @@ TagManager:
   - SquareMap
   - Pastille
   - Targetable
-  - 
-  - 
+  - FieldOfVue
+  - Entity
   - 
   - 
   - 

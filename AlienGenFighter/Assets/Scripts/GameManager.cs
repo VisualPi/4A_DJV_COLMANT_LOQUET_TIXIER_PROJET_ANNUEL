@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _water;
     public void Start()
     {
-        
         //_terrain.PutFoodAndWater(50);
         _terrain.CreateCivilisations();
     }
@@ -18,22 +17,20 @@ public class GameManager : MonoBehaviour
     {
         if (first) //deg mais bon
         {
-            foreach (var map in MapManagerScript._SquareMaps)
+            foreach (var map in GameData.SquareMaps)
             {
-                //Debug.Log("mapKey : " + map.Key + " mapValue : " + map.Value);
                 map.Value.AddEdible(_food, 3);
                 map.Value.AddEdible(_water, 3);
             }
             first = false;
         }
         
-        foreach ( var map in MapManagerScript._SquareMaps)
+        foreach ( var map in GameData.SquareMaps)
         {
 			//Debug.Log("Foreach " + map.Value.name);
-            foreach(var ent in map.Value.GetContext().GetEntityOnCurrentSquare())
+            foreach(var ent in map.Value.GetContext().Entities)
             {
 				//Debug.Log("Foreach " + ent.name);
-				map.Value.GetContext().SetCurrentEntity(ent);
                 bool next = false;
                 for(var priority = 0 ; priority < ent.GetRules().GetRules().Length ; ++priority)
                 {
@@ -45,9 +42,9 @@ public class GameManager : MonoBehaviour
                         {
 							//Debug.Log("For rule = " + rule);
 							var curRule = ent.GetRules().GetRules()[priority][group].GetRuleList()[rule];
-                            if (curRule._condition.Test(map.Value.GetContext()))
+                            if (curRule._condition.Test(ent))
                             {
-                                curRule._action.Execute(map.Value.GetContext());
+                                curRule._action.Execute(ent);
                                 if (rule == ent.GetRules().GetRules()[priority][group].GetRuleList().Count - 1)
                                     next = true;
                             }

@@ -13,7 +13,7 @@ public class EntitySpawnerScript : MonoBehaviour
 		for(var i = 0 ; i < _nbDefaultEntity ; ++i)
 		{
 			var e = EntityManagerScript.GetFromQueue();
-			e.transform.position = new Vector3(_transform.position.x + Random.Range(0.0f, 15f), _transform.position.y, _transform.position.z + Random.Range(0.0f, 15f));
+			e.transform.position = new Vector3(_transform.position.x + Random.Range(1.0f, 15f), _transform.position.y, _transform.position.z + Random.Range(1.0f, 15f));
 			e.Init();
 			_entitiesInCivilisation.Add(e);
 		}

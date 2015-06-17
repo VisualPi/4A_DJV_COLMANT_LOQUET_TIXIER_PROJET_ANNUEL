@@ -46,7 +46,7 @@ public class RandomTerrainScript : MonoBehaviour
     */
     void InitialiseTerrainParameter()
     {
-       
+        GameData.MapSize = sizeMap;
         _gameArea = sizeMap;
         heightArray = new float[(int)sizeMap.z, (int)sizeMap.x];
         terrainData = terrain.terrainData;

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Assets.Scripts.Context;
 
 [Serializable]
 public class EntityScript : MonoBehaviour
@@ -20,6 +21,7 @@ public class EntityScript : MonoBehaviour
 
     private EntityRules _rules;
 	private EntityStateScript _state;
+    private EntityContext _context;
 
 	private float _foodTime;
 	private float _drinkTime;
@@ -30,7 +32,8 @@ public class EntityScript : MonoBehaviour
 		_capacities = new CapacityScript();
         _rules = new EntityRules();
 		_state = new EntityStateScript();
-		_foodTime = 0f;
+        _context = new EntityContext();
+        _foodTime = 0f;
 		_drinkTime = 0f;
 		_movement.Init();
 	}
@@ -149,5 +152,13 @@ public class EntityScript : MonoBehaviour
 	{
 		_state = state;
 	}
+    public EntityContext GetContext()
+    {
+        return _context;
+    }
+    public void SetContext(EntityContext context)
+    {
+        _context = context;
+    }
 }
 

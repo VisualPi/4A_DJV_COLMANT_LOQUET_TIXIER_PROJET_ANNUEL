@@ -4,27 +4,27 @@ using Assets.Scripts.Context;
 
 public class RuleCondition
 {
-	public Func<SquareContext, bool> _func;
-	public RuleCondition(Func<SquareContext, bool> func)
+	public Func<EntityScript, bool> _func;
+	public RuleCondition(Func<EntityScript, bool> func)
 	{
 		_func = func;
 	}
-	public bool Test(SquareContext c)
+	public bool Test(EntityScript e)
 	{
-		return _func(c);
+		return _func(e);
 	}
 }
 public class RuleAction
 {
-	public Action<SquareContext> _action;
+	public Action<EntityScript> _action;
 
-	public RuleAction(Action<SquareContext> action)
+	public RuleAction(Action<EntityScript> action)
 	{
 		_action = action;
 	}
-	public void Execute(SquareContext context)
+	public void Execute(EntityScript entity)
 	{
-        _action(context);
+        _action(entity);
 	}
 }
 

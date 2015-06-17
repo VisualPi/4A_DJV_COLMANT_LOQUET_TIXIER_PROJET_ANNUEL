@@ -103,7 +103,7 @@ public class CheckerboardMapScript : MonoBehaviour
                 currentSquareMapScript.CameraManager = _cameraManager;
                 currentSquareMapScript.SquareCamera = _squareCamera;
 
-                MapManagerScript._SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
+                GameData.SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
               //  Debug.Log(MapManagerScript._SquareMaps["SquareMap_" + cpt]);
                 x += 64;
                 cpt++;

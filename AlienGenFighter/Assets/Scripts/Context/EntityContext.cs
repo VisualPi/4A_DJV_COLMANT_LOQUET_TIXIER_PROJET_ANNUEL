@@ -1,40 +1,27 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.Context {
-    public class EntityContext : Ressources {
-        public int NbEntity {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-        public int Memorie {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-        public List<EntityScript> Entities {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-        public List<OtherTargetable> SourceWatter {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-        public List<OtherTargetable> SourceFood {
-            get { throw new System.NotImplementedException(); }
-            set { throw new System.NotImplementedException(); }
-        }
-
-        public override void AddWater(OtherTargetable water)
+namespace Assets.Scripts.Context
+{
+    public class EntityContext : Ressources
+    {
+        public EntityContext()
         {
-            throw new System.NotImplementedException();
+            Entities = new List<EntityScript>();
+        }
+        public int NbEntity { get; set; }
+
+        public int Memory { get; set; }
+
+        public List<EntityScript> Entities { get; set; }
+
+        public override void AddWater(EdibleInformations water)
+        {
+            Water.Add(water);
         }
 
-        public override void AddFood(OtherTargetable water)
+        public override void AddFood(EdibleInformations food)
         {
-            throw new System.NotImplementedException();
+            Food.Add(food);
         }
     }
 }
