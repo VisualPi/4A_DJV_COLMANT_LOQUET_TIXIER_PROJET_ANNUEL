@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.GUI;
+using Assets.Scripts.GUI.Misc;
+using UnityEngine;
 
 public class CheckerboardMapScript : MonoBehaviour
 {
@@ -19,6 +21,12 @@ public class CheckerboardMapScript : MonoBehaviour
 
     [SerializeField]
     private CameraManagerScript _cameraManager;
+
+    [SerializeField]
+    private Menu _informationMenu;
+
+    [SerializeField]
+    private ManagedInformationMapList _managedInformationMenu;
 
     BoxCollider[] checkerboard;
     // Use this for initialization
@@ -102,6 +110,8 @@ public class CheckerboardMapScript : MonoBehaviour
                 var currentSquareMapScript = actualCase.GetComponent<SquareMapScript>();
                 currentSquareMapScript.CameraManager = _cameraManager;
                 currentSquareMapScript.SquareCamera = _squareCamera;
+                currentSquareMapScript.InformationMenu = _informationMenu;
+                currentSquareMapScript.ManagedInformationMenu = _managedInformationMenu;
 
                 GameData.SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
               //  Debug.Log(MapManagerScript._SquareMaps["SquareMap_" + cpt]);
@@ -111,11 +121,6 @@ public class CheckerboardMapScript : MonoBehaviour
             z += 64;
             
         }
-
-    }
-    // Update is called once per frame
-    void Update()
-    {
 
     }
 }

@@ -44,6 +44,7 @@ GameObject:
   - 224: {fileID: 22494028}
   - 114: {fileID: 11486234}
   - 114: {fileID: 11478792}
+  - 114: {fileID: 11495290}
   m_Layer: 5
   m_Name: ItemInformationMap
   m_TagString: Untagged
@@ -141,6 +142,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
+--- !u!114 &11495290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40fbbbfaca32c9246811d9d265b18246, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: {fileID: 11402232}
+  Value: {fileID: 11494548}
 --- !u!222 &22281242
 CanvasRenderer:
   m_ObjectHideFlags: 1

@@ -1,9 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using Assets.Scripts.GUI.Sample;
-using UnityEditor;
 
 namespace Assets.Scripts.GUI.Misc {
 
