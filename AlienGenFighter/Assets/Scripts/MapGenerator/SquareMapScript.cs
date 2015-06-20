@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Context;
 using Assets.Scripts.GUI;
 using Assets.Scripts.GUI.Misc;
@@ -84,14 +85,13 @@ public class SquareMapScript : MonoBehaviour {
     }
 
     public void OnMouseOver() {
-        Debug.Log("OnMouseOver");
         ManagedInformationMenu.ClearList();
 
         ManagedInformationMenu.PopulateList(
             new List<ItemInformation> {
                 new ItemInformation { Name = "Entity :", Value = _context.NbEntity.ToString() },
-                new ItemInformation { Name = "Food :", Value = foodQuantity.ToString() },
-                new ItemInformation { Name = "Water :", Value = drinkableWater.ToString() }
+                new ItemInformation { Name = "Food :", Value = _context.Food.Sum(f => f.GetQuantity()).ToString() },
+                new ItemInformation { Name = "Water :", Value = _context.Water.Sum(w => w.GetQuantity()).ToString() }
             });
 
         InformationMenu.IsOpen = true;
