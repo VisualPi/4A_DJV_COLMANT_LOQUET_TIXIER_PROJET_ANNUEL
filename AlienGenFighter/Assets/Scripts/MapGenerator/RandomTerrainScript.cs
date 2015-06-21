@@ -114,7 +114,7 @@ public class RandomTerrainScript : MonoBehaviour
     public void CreateCivilisations()
     {
         RaycastHit hit;
-        Ray ray = new Ray(new Vector3(15f, 255f, sizeMap.z / 2), Vector3.down);
+        Ray ray = new Ray(new Vector3(30f, 520f, 30f), Vector3.down);
         if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
         {
             Instantiate(_civilisation, new Vector3(hit.point.x,
@@ -122,7 +122,7 @@ public class RandomTerrainScript : MonoBehaviour
                                                     hit.point.z), Quaternion.identity);
         }
 
-        ray = new Ray(new Vector3(sizeMap.x - 15f, 255f, sizeMap.z / 2), Vector3.down);
+        ray = new Ray(new Vector3(sizeMap.x - 30f, 520f, sizeMap.z - 30f), Vector3.down);
         if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
         {
             Instantiate(_civilisation, new Vector3(hit.point.x,
@@ -130,7 +130,7 @@ public class RandomTerrainScript : MonoBehaviour
                                                     hit.point.z), Quaternion.identity);
         }
 
-        ray = new Ray(new Vector3(sizeMap.x / 2, 255f, sizeMap.z - 15f), Vector3.down);
+        ray = new Ray(new Vector3(sizeMap.x / 2 , 520f, sizeMap.z / 2), Vector3.down);
         if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
         {
             Instantiate(_civilisation, new Vector3(hit.point.x,
@@ -138,7 +138,7 @@ public class RandomTerrainScript : MonoBehaviour
                                                     hit.point.z), Quaternion.identity);
         }
 
-        ray = new Ray(new Vector3(sizeMap.x / 2, 255f, 15f), Vector3.down);
+        ray = new Ray(new Vector3(sizeMap.x - 30f, 520f, 30f), Vector3.down);
         if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
         {
             Instantiate(_civilisation, new Vector3(hit.point.x,

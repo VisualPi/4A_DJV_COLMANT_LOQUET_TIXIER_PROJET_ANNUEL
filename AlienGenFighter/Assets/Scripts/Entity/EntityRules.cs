@@ -63,7 +63,7 @@ public class EntityRules
 	#region MANGER
 	private bool isHungry(EntityScript entity)
 	{
-		return entity.GetState().GetFood() < 70;
+		return entity.GetState().GetFood() < 50;
 	}
 	private bool CanGoToFood(EntityScript entity)
 	{
@@ -75,14 +75,13 @@ public class EntityRules
 				entity.GetState().SetTargetedFood(entity.GetContext().Food[i]);
 				return true;
 			}
-
 		}
 		return false;
 	}
 	private bool CanEat(EntityScript entity)
 	{
-	    if (Mathf.Abs(entity.GetTransform().position.x - entity.GetState().GetTargetedFood().Position.x) <= 0.5f
-	        && Mathf.Abs(entity.GetTransform().position.z - entity.GetState().GetTargetedFood().Position.z) <= 0.5f)
+	    if (Mathf.Abs(entity.GetTransform().position.x - entity.GetState().GetTargetedFood().Position.x) <= 2.0f
+	        && Mathf.Abs(entity.GetTransform().position.z - entity.GetState().GetTargetedFood().Position.z) <= 2.0f)
 	    {
 	        if (!GameData.Ressources.ContainsKey(entity.GetState().GetTargetedFood().Name))
 	        {
@@ -98,7 +97,7 @@ public class EntityRules
 	#region BOIRE
 	private bool isTthirsty(EntityScript entity)
 	{
-		return entity.GetState().GetWater() < 70;
+		return entity.GetState().GetWater() < 50;
 	}
 	private bool CanGoToWater(EntityScript entity)
 	{
@@ -116,8 +115,8 @@ public class EntityRules
     }
 	private bool CanDrink(EntityScript entity)
     {
-        if (Mathf.Abs(entity.GetTransform().position.x - entity.GetState().GetTargetedWater().Position.x) <= 0.5f
-            && Mathf.Abs(entity.GetTransform().position.z - entity.GetState().GetTargetedWater().Position.z) <= 0.5f)
+        if (Mathf.Abs(entity.GetTransform().position.x - entity.GetState().GetTargetedWater().Position.x) <= 2.0f
+            && Mathf.Abs(entity.GetTransform().position.z - entity.GetState().GetTargetedWater().Position.z) <= 2.0f)
         {
             if (!GameData.Ressources.ContainsKey(entity.GetState().GetTargetedWater().Name))
             {
@@ -161,8 +160,8 @@ public class EntityRules
 	}
 	private void Eat(EntityScript entity)
 	{
-		//Debug.Log("Eat !!");
-		var f = 1;
+        //Debug.Log("Eat !!");
+        var f = Random.Range(10, 50);
         GameData.Ressources[entity.GetState().GetTargetedFood().Name].Take(f); //TODO : a voir le nombre de food
         entity.GetState().SetFood(entity.GetState().GetFood() + f);
 	}
@@ -181,7 +180,7 @@ public class EntityRules
 	private void Drink(EntityScript entity)
 	{
 		//Debug.Log("Eat !!");
-		var f = 1;
+		var f = Random.Range(10, 50);
         GameData.Ressources[entity.GetState().GetTargetedWater().Name].Take(f);  //TODO : a voir le nombre de food
         entity.GetState().SetWater(entity.GetState().GetWater() + f);
 	}
@@ -191,7 +190,7 @@ public class EntityRules
 	{
 		//Debug.Log("Entity " + entity + " is moving");
 		var pos = entity.GetMovement().GetPosition();
-	    var newPos = new Vector3(pos.x + Random.Range(-15f, 15f), 1, pos.z + Random.Range(-15f, 15f));
+	    var newPos = new Vector3(pos.x + Random.Range(-10f, 10f), pos.y, pos.z + Random.Range(-10f, 10f));
 	    newPos.x = Mathf.Clamp(newPos.x, 0, GameData.MapSize.x);
         newPos.z = Mathf.Clamp(newPos.z, 0, GameData.MapSize.z);
         entity.GetMovement().SetTargetPosition(newPos);

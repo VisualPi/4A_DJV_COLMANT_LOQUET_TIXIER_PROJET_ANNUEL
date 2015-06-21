@@ -9,10 +9,8 @@ public class EntityManagerScript : MonoBehaviour
 	[SerializeField]
 	public EntityScript[] tab;
 
-	private static List<float> _timers; 
 	public void Start()
 	{
-		_timers = new List<float>();
 		_AvailableEntities = new Queue<EntityScript>(tab.Length);
 		for(int index = 0 ; index < tab.Length ; index++)
 		{

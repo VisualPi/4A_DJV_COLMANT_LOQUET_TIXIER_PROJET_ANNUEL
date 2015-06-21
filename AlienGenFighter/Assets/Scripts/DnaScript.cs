@@ -6,7 +6,7 @@ public enum ECharateristic : byte
 	NbLamb = 0, NbArm, Nbhead, Skincolor, Wings, Height, Sociability, Bravery, Adventurous, Aggressiveness,
 	Tolerance, Activity, Charism, Timidity, Influence, Attitude, Curiosity, Perfectionism, Sporty, Ambition,
 	Patience, Negociation, Authority, Attention, Kindness, Domination, Suggestibility, Honesty, Subjectivity,
-	Instinct, Loyalty, HeatResistance, DeseaseResistance
+	Instinct, Loyalty, Memory, HeatResistance, DeseaseResistance
 };
 
 public class DnaScript
@@ -14,9 +14,9 @@ public class DnaScript
 	public const string LANG_CODE = "FR"; //TODO : doit etre a part
 
 	private byte[] _genes;
-	private const byte Size = 33;
+	private const byte Size = 34;
 
-	public DnaScript(byte nbLamb, byte nbArm, byte nbHead, byte skinColor, byte wings, byte height, byte sociability, byte bravery, byte adventurous, byte aggressiveness, byte tolerance, byte activity, byte charism, byte timidity, byte influence, byte attitude, byte curiosity, byte perfectionism, byte sporty, byte ambition, byte patience, byte negociation, byte authority, byte attention, byte kindness, byte domination, byte suggestibility, byte honesty, byte subjectivity, byte instinct, byte loyalty, byte heatResistance, byte deseaseResistance)
+	public DnaScript(byte nbLamb, byte nbArm, byte nbHead, byte skinColor, byte wings, byte height, byte sociability, byte bravery, byte adventurous, byte aggressiveness, byte tolerance, byte activity, byte charism, byte timidity, byte influence, byte attitude, byte curiosity, byte perfectionism, byte sporty, byte ambition, byte patience, byte negociation, byte authority, byte attention, byte kindness, byte domination, byte suggestibility, byte honesty, byte subjectivity, byte instinct, byte loyalty, byte memory, byte heatResistance, byte deseaseResistance)
 	{
 		_genes = new byte[Size];
 		_genes[(int)ECharateristic.NbLamb]				= nbLamb;
@@ -25,13 +25,13 @@ public class DnaScript
 		_genes[(int)ECharateristic.Skincolor]			= skinColor;
 		_genes[(int)ECharateristic.Wings]				= wings;
 		_genes[(int)ECharateristic.Height]				= height;
-		_genes[(int)ECharateristic.Sociability]		= sociability;
-		_genes[(int)ECharateristic.Bravery]			= bravery;
-		_genes[(int)ECharateristic.Adventurous]		= adventurous;
+		_genes[(int)ECharateristic.Sociability]		    = sociability;
+		_genes[(int)ECharateristic.Bravery]			    = bravery;
+		_genes[(int)ECharateristic.Adventurous]		    = adventurous;
 		_genes[(int)ECharateristic.Aggressiveness]		= aggressiveness;
 		_genes[(int)ECharateristic.Tolerance]			= tolerance;
 		_genes[(int)ECharateristic.Activity]			= activity;
-		_genes[(int)ECharateristic.Charism]			= charism;
+		_genes[(int)ECharateristic.Charism]			    = charism;
 		_genes[(int)ECharateristic.Timidity]			= timidity;
 		_genes[(int)ECharateristic.Influence]			= influence;
 		_genes[(int)ECharateristic.Attitude]			= attitude;
@@ -40,17 +40,18 @@ public class DnaScript
 		_genes[(int)ECharateristic.Sporty]				= sporty;
 		_genes[(int)ECharateristic.Ambition]			= ambition;
 		_genes[(int)ECharateristic.Patience]			= patience;
-		_genes[(int)ECharateristic.Negociation]		= negociation;
+		_genes[(int)ECharateristic.Negociation]		    = negociation;
 		_genes[(int)ECharateristic.Authority]			= authority;
 		_genes[(int)ECharateristic.Attention]			= attention;
 		_genes[(int)ECharateristic.Kindness]			= kindness;
 		_genes[(int)ECharateristic.Domination]			= domination;
 		_genes[(int)ECharateristic.Suggestibility]		= suggestibility;
-		_genes[(int)ECharateristic.Honesty]			= honesty;
+		_genes[(int)ECharateristic.Honesty]			    = honesty;
 		_genes[(int)ECharateristic.Subjectivity]		= subjectivity;
 		_genes[(int)ECharateristic.Instinct]			= instinct;
-		_genes[(int)ECharateristic.Loyalty]			= loyalty;
-		_genes[(int)ECharateristic.HeatResistance]		= heatResistance;
+		_genes[(int)ECharateristic.Loyalty]			    = loyalty;
+        _genes[(int)ECharateristic.Memory]              = memory;
+        _genes[(int)ECharateristic.HeatResistance]		= heatResistance;
 		_genes[(int)ECharateristic.DeseaseResistance]	= deseaseResistance;
 	}
 	public DnaScript(DnaScript defaultDna)
@@ -63,7 +64,7 @@ public class DnaScript
 	}
 	public DnaScript()
 	{
-		_genes = new byte[Size]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		_genes = new byte[Size]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	}
 	public byte[] GetGenotype()
 	{
@@ -107,12 +108,12 @@ public class DnaScript
 			                     "Attitude : {15} Curiosité : {16} Perfectionnisme : {17} Sportif : {18} Ambition : {19} " +
 			                     "Patience : {20} Negociation : {21} Autorité : {22} Attention : {23} Gentillesse : {24} " +
 			                     "Domination : {25} Influencabilité : {26} Honneteté : {27} Partialité : {28} Instinct : {29} " +
-								 "Loyauté : {30} Resistance au chaud : {31} Resistance a la maladie : {32}"
+								 "Loyauté : {30} Memoire : {31} Resistance au chaud : {32} Resistance a la maladie : {33}"
 								 , _genes[0], _genes[1], _genes[2], _genes[3], _genes[4], _genes[5], _genes[6], _genes[7]
 								 , _genes[8], _genes[9], _genes[10], _genes[11], _genes[12], _genes[13], _genes[14]
 								 , _genes[15], _genes[16], _genes[17], _genes[18], _genes[19], _genes[20], _genes[21]
 								 , _genes[22], _genes[23], _genes[24], _genes[25], _genes[26], _genes[27], _genes[28]
-								 , _genes[29], _genes[30], _genes[31], _genes[32]);
+								 , _genes[29], _genes[30], _genes[31], _genes[32], _genes[33]);
 		else
 			sRet = string.Format("Number of lambs : {0} Number of arms : {1} Number of head : {2} Skin color : {3} " +
 									 "Wings : {4} Height : {5} Sociability : {6} Bravery : {7} Adventure : {8} Aggressiveness : {9} " +
@@ -120,12 +121,12 @@ public class DnaScript
 									 "Attitude : {15} Curiosity : {16} Perfectionism : {17} Sporty : {18} Ambition : {19} " +
 									 "Patience : {20} Negociation : {21} Authority : {22} Attention : {23} Kindness : {24} " +
 									 "Domination : {25} Suggestibility : {26} Honesty : {27} Subjectivity : {28} Instinct : {29} " +
-									 "Loyalty : {30} Heat resistance : {31} Desease resistance : {32}"
+									 "Loyalty : {30} Memory : {31} Heat resistance : {32} Desease resistance : {33}"
 								 , _genes[0], _genes[1], _genes[2], _genes[3], _genes[4], _genes[5], _genes[6], _genes[7]
 								 , _genes[8], _genes[9], _genes[10], _genes[11], _genes[12], _genes[13], _genes[14]
 								 , _genes[15], _genes[16], _genes[17], _genes[18], _genes[19], _genes[20], _genes[21]
 								 , _genes[22], _genes[23], _genes[24], _genes[25], _genes[26], _genes[27], _genes[28]
-								 , _genes[29], _genes[30], _genes[31], _genes[32]);
+								 , _genes[29], _genes[30], _genes[31], _genes[32], _genes[33]);
 		return sRet;
 	}
 }

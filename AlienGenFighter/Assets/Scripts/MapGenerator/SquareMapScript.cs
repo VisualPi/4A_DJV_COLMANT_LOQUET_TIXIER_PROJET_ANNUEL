@@ -113,7 +113,7 @@ public class SquareMapScript : MonoBehaviour {
         RaycastHit hit;
         Ray ray;
         for (var i = 0; i < nb; i++) {
-            ray = new Ray(new Vector3(Random.Range(_collider.bounds.min.x, _collider.bounds.max.x), 255f, Random.Range(_collider.bounds.min.z, _collider.bounds.max.z)), Vector3.down);
+            ray = new Ray(new Vector3(Random.Range(_collider.bounds.min.x, _collider.bounds.max.x), 520f, Random.Range(_collider.bounds.min.z, _collider.bounds.max.z)), Vector3.down);
             if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map"))) {
                 var obj = Instantiate(go, new Vector3(hit.point.x,
                                                         hit.point.y + go.transform.localScale.y,

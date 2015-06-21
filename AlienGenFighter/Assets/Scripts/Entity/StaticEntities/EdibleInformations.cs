@@ -3,7 +3,7 @@
 public class EdibleInformations
 {
     public int Quantity;
-    public int DefaultQuantity = 100;
+    public int DefaultQuantity = 1000;
     public Vector3 Position;
     public string Name;
 

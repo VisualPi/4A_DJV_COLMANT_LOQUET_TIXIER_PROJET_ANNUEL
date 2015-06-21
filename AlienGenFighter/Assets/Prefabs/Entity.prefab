@@ -63,7 +63,7 @@ GameObject:
   - 4: {fileID: 437166}
   - 136: {fileID: 13666508}
   - 114: {fileID: 11416292}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: EntityPhysics
   m_TagString: entity
   m_Icon: {fileID: 0}

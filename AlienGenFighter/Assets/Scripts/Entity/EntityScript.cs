@@ -36,8 +36,14 @@ public class EntityScript : MonoBehaviour
         _foodTime = 0f;
 		_drinkTime = 0f;
 		_movement.Init();
+	    InitFromDna();
 	}
-	void Update()
+
+    public void InitFromDna()
+    {
+        _context.Memory = _dna.GetGeneAt(ECharateristic.Memory);
+    }
+    void Update()
 	{
 		if (_isPlayable)
 		{

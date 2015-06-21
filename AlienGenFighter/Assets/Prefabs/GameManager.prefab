@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0daac2a78160bd84789fd283c5ea55a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentCamera: {fileID: 0}
+  _currentCamera: {fileID: 0}
 --- !u!114 &11428956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _terrain: {fileID: 0}
-  _food: {fileID: 0}
-  _water: {fileID: 0}
+  _food: {fileID: 123276, guid: 971060ebffeabe045858f069f326a98c, type: 2}
+  _water: {fileID: 170814, guid: 493f52f92c487f640ab2719df4126daa, type: 2}
 --- !u!114 &11488468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51f8631f27dfbfb4fa6da55d9eae3c2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _networkView: {fileID: 0}
+  _networkView: {fileID: 14855546, guid: 62ec2b5c1d788034b9c8dddca514a60e, type: 2}
   tab:
   - {fileID: 0}
   - {fileID: 0}
@@ -1181,6 +1181,10 @@ MonoBehaviour:
   Terrain: {fileID: 0}
   CaseOfMap: {fileID: 125850, guid: a5d782a48ed91df4087fb47094250673, type: 2}
   gameArea: {fileID: 0}
+  _squareCamera: {fileID: 0}
+  _cameraManager: {fileID: 11426038}
+  _informationMenu: {fileID: 0}
+  _managedInformationMenu: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

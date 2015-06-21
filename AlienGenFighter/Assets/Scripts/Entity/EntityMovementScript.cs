@@ -42,8 +42,8 @@ public class EntityMovementScript : MonoBehaviour
 			RaycastHit hit;
 			//var animPercentage = (Time.time - _animeStartTime) * _entitySpeed;
 			//var nextPos = Vector3.Lerp(_startPosition, _targetPosition, animPercentage / _distancePosition);
-			var nextPos = _transform.position + (_targetPosition - _transform.position).normalized*_entitySpeed * Time.deltaTime;
-			Ray ray = new Ray(new Vector3(nextPos.x, 500f, nextPos.z), Vector3.down);
+		    var nextPos = _transform.position + (_targetPosition - _transform.position).normalized * _entitySpeed * Time.deltaTime;
+			Ray ray = new Ray(new Vector3(nextPos.x, 520f, nextPos.z), Vector3.down);
 			if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
 			{
 				//Debug.Log(hit.point);

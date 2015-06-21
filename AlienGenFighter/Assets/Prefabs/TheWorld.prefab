@@ -42,11 +42,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   terrain: {fileID: 21851826}
-  sizeMap: {x: 512, y: 250, z: 512}
-  hauteurCoinBasGauche: 0
-  hauteurCoinBasDroite: 0
-  hauteurCoinHautGauche: 0
-  hauteurCoinHautDroite: 0
+  sizeMap: {x: 512, y: 500, z: 512}
+  hauteurCoinBasGauche: .100000001
+  hauteurCoinBasDroite: .100000001
+  hauteurCoinHautGauche: .100000001
+  hauteurCoinHautDroite: .100000001
   roughness: 0
   _civilisation: {fileID: 157926, guid: 41af53ecce0f7c3499589fc33b7d13b6, type: 2}
 --- !u!154 &15476708
@@ -55,7 +55,7 @@ TerrainCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170572}
-  m_Material: {fileID: 13400000, guid: b40539a9efd04f547849ee72ed3cc103, type: 2}
+  m_Material: {fileID: 0}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 51a2cfe663e7aa542a1fd9bd0b6723c4, type: 2}
   m_EnableTreeColliders: 1
