@@ -12,6 +12,15 @@ public class RandomTerrainScript : MonoBehaviour
     [SerializeField]
     public Vector3 sizeMap;
 
+
+    public float hauteurCoinBasGauche = 0.0f;
+    public float hauteurCoinBasDroite = 0.0f;
+    public float hauteurCoinHautGauche = 0.0f;
+    public float hauteurCoinHautDroite = 0.0f;
+
+    public float roughness = 0.0f;
+
+
     static Vector3 _gameArea;
     // La composante Y définit la hauteur maximale du terrain
 
@@ -22,16 +31,22 @@ public class RandomTerrainScript : MonoBehaviour
 
     float randomiseur;
     Vector2 distance;
-    float distanceF;
+    //float distanceF;
+    int heightmapSize;
     
-    List<Vector3> hillsPoint = new List<Vector3>();
-    
+    //List<Vector3> hillsPoint = new List<Vector3>();
+    int cDmd;
+    int cSqr;
     Vector2 actualPoint;
 
-	[SerializeField] private GameObject _civilisation;
-    [SerializeField] private GameObject _food;
-    [SerializeField] private GameObject _water;
+
+   
+   
+
+    [SerializeField] private GameObject _civilisation;
+   
     enum SizeMapZE
+
     {
         A,B,C
     };
@@ -46,52 +61,32 @@ public class RandomTerrainScript : MonoBehaviour
     */
     void InitialiseTerrainParameter()
     {
+
         GameData.MapSize = sizeMap;
+
         _gameArea = sizeMap;
-        heightArray = new float[(int)sizeMap.z, (int)sizeMap.x];
+        heightArray = new float[(int)sizeMap.z+1, (int)sizeMap.x+1];
+        heightmapSize = (int)sizeMap.x + 1;
         terrainData = terrain.terrainData;
         terrainData.heightmapResolution = (int)_gameArea.x;
-        terrainData.SetHeights(0, 0, ArrayMapCreator());
+        Debug.Log(terrainData.heightmapResolution.ToString());
+        terrainData.SetHeights(0, 0, TheLastRandomTerrain());
+       
         terrainData.size = _gameArea;
-		//CreateCivilisations();
-        //PutFoodAndWater(50);
+
+        
+        
+        
+        
+        
     }
 
-
-    void CreateHill()
-    {
-        int seedHill = 3;
-        float RandomHeight = 0.0f;
-
-        for (int i = 0; i < seedHill; ++i)
-        {
-            RandomHeight = Random.Range(0.5f, 0.8f);
-            int x = Random.Range(0, (int)sizeMap.x) ;
-            int z = Random.Range(0, (int)sizeMap.z) ;
-
-              
-                heightArray[z, x] = RandomHeight;
-                hillsPoint.Add(new Vector3(x, RandomHeight,z));
-               // Debug.Log("X: " + x + ", Z: " + z + ", Y:" + RandomHeight);
-        }
-    }
+        
+    
 
 
-    void CreateVolcano(Vector2 sizeMapD, float range)
-    {
-       /* if (distance.magnitude < range)
-        {
-            if (heightArray[(int)sizeMapD.y, (int)sizeMapD.x] != 0.3f)
-            {
-                heightArray[(int)sizeMapD.y, (int)sizeMapD.x] += 0.3f - ((0.3f / range) * distance.magnitude);
-            }
-        }*/
 
-        if (distance.magnitude < 10.0f)
-        {
-            heightArray[(int)sizeMapD.y, (int)sizeMapD.x] = 0.2f;
-        }
-    }
+    
 
 
     Vector2 getDistanceBetweenTwoPoint(Vector2 hillPoint, Vector2 actualPoint)
@@ -102,150 +97,309 @@ public class RandomTerrainScript : MonoBehaviour
         return tempDistance;
     }
 
-    private float SampleGaussian(float x, float mu, float sigma)
+    float offset(float height, float roughness)
     {
-        float d = (x - mu);
-        return Mathf.Exp(-d * d / (sigma * sigma));
+       float offset = Random.Range(0,1)*height*roughness;
+      // Debug.Log("OFFSET :" + offset.ToString());
+       return offset;
     }
 
-    float[,] ArrayMapCreator()
-    {
-
-        CreateHill();
-
-
-
-
-        float range = 0.0f;
-       
-
-        Debug.Log(Mathf.PerlinNoise(10.0f, 10.0f));
-        
-        foreach (Vector3 hillPoint in hillsPoint)
-        {
-            range = Random.Range(60.0f, 150.0f);
-       
-            for (int y = 0; y < sizeMap.z; y++)
-            {
-                for (int x = 0; x < sizeMap.x; x++)
-                {
-                    heightArray[y, x] = 0.0f;
-                    heightArray[y, x] = Mathf.PerlinNoise(Time.time * 1.0F, 0.0F);
-                    distanceF = Vector3.Distance(hillPoint, new Vector3(x,0,y));
-                  /*
-                   if (Vector3.Distance(new Vector3(x,0,y), new Vector3(sizeMap.x/2 ,0,sizeMap.z/2))<10)
-                   {
-                       heightArray[y, x] += 0.0f;
-                   }
-                   else
-                   {
-                       heightArray[y, x] += 0.01f;
-                   }
-
-
-
-                    
-                                       if (distanceF < range)
-                                       {
-                                           if (heightArray[y, x] != hillPoint.y)
-                                           {
-                                               heightArray[y, x] = (hillPoint.y - ((hillPoint.y / range) * distanceF)) + 0.01f;
-                                           }
-                                       }
-                                       else
-                                       {
-                                           if (heightArray[y, x] == 0.0f)
-                                           {
-                                               heightArray[y, x] = 0.01f;
-                                           }
-                                           else
-                                           {
-                                               heightArray[y, x] += 0.01f;
-                                           }
-                                       }  */
-                }               
-            }
-        }
-
-/*
-        for (int g = 0; g < sizeMap.z; g++)
-        {
-            for (int o = 0; o < sizeMap.x; o++)
-            {
-                heightArray[g, o] += Random.Range(0.0f, 0.001f);
-            }
-        }
-*/
-
-        return heightArray;
-    }
-    
-    void Start()
+  
+     void Start()
     {
         InitialiseTerrainParameter();
-        Debug.Log(terrainData.size);
+        //Debug.Log(terrainData.size);
     }
-	public void CreateCivilisations()
-	{
-		RaycastHit hit;
-		Ray ray = new Ray(new Vector3(15f, 255f, sizeMap.z / 2), Vector3.down);
-		if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
-		{
-			Instantiate(_civilisation, new Vector3(hit.point.x,
-													hit.point.y + _civilisation.transform.localScale.y,
-													hit.point.z), Quaternion.identity);
-		}
-
-		ray = new Ray(new Vector3(sizeMap.x - 15f, 255f, sizeMap.z / 2), Vector3.down);
-		if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
-		{
-			Instantiate(_civilisation, new Vector3(hit.point.x,
-													hit.point.y + _civilisation.transform.localScale.y,
-													hit.point.z), Quaternion.identity);
-		}
-
-		ray = new Ray(new Vector3(sizeMap.x / 2, 255f, sizeMap.z - 15f), Vector3.down);
-		if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
-		{
-			Instantiate(_civilisation, new Vector3(hit.point.x,
-													hit.point.y + _civilisation.transform.localScale.y,
-													hit.point.z), Quaternion.identity);
-		}
-
-		ray = new Ray(new Vector3(sizeMap.x / 2, 255f, 15f), Vector3.down);
-		if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
-		{
-			Instantiate(_civilisation, new Vector3(hit.point.x,
-													hit.point.y + _civilisation.transform.localScale.y,
-													hit.point.z), Quaternion.identity);
-		}
-	}
-    public void PutFoodAndWater(int nb)
+    
+    public void CreateCivilisations()
     {
         RaycastHit hit;
-        Ray ray;
-        for (var i = 0; i < nb; i++)
+        Ray ray = new Ray(new Vector3(15f, 255f, sizeMap.z / 2), Vector3.down);
+        if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
         {
-            ray = new Ray(new Vector3(Random.Range(0, sizeMap.x), 255f, Random.Range(0, sizeMap.z)), Vector3.down);
-            if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
-            {
-                Instantiate(_food, new Vector3(hit.point.x,
-                                                        hit.point.y + _food.transform.localScale.y,
-                                                        hit.point.z), Quaternion.identity);
-            }
-        }
-        for (var i = 0; i < nb; i++)
-        {
-            ray = new Ray(new Vector3(Random.Range(0, sizeMap.x), 255f, Random.Range(0, sizeMap.z)), Vector3.down);
-            if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
-            {
-                Instantiate(_water, new Vector3(hit.point.x,
-                                                        hit.point.y + _water.transform.localScale.y,
-                                                        hit.point.z), Quaternion.identity);
-            }
+            Instantiate(_civilisation, new Vector3(hit.point.x,
+                                                    hit.point.y + _civilisation.transform.localScale.y,
+                                                    hit.point.z), Quaternion.identity);
         }
 
+        ray = new Ray(new Vector3(sizeMap.x - 15f, 255f, sizeMap.z / 2), Vector3.down);
+        if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+        {
+            Instantiate(_civilisation, new Vector3(hit.point.x,
+                                                    hit.point.y + _civilisation.transform.localScale.y,
+                                                    hit.point.z), Quaternion.identity);
+        }
+
+        ray = new Ray(new Vector3(sizeMap.x / 2, 255f, sizeMap.z - 15f), Vector3.down);
+        if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+        {
+            Instantiate(_civilisation, new Vector3(hit.point.x,
+                                                    hit.point.y + _civilisation.transform.localScale.y,
+                                                    hit.point.z), Quaternion.identity);
+        }
+
+        ray = new Ray(new Vector3(sizeMap.x / 2, 255f, 15f), Vector3.down);
+        if(Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+        {
+            Instantiate(_civilisation, new Vector3(hit.point.x,
+                                                    hit.point.y + _civilisation.transform.localScale.y,
+                                                    hit.point.z), Quaternion.identity);
+        }
     }
+
+
+    
+
+
+    
+
+
+    public float[,] TheLastRandomTerrain()
+    {
+       
+        int nbIteration=0;
+
+        int xSqr = 0;
+        int ySqr = 0;
+        int demiEspace = 0;
+        float max = 0.0f;
+        float min = 1.0f;
+        
+        float scale = roughness * sizeMap.x;
+
+
+        heightArray[heightmapSize-1, 0] = hauteurCoinHautGauche;
+
+
+        heightArray[heightmapSize - 1, heightmapSize - 1] = hauteurCoinHautDroite;
+
+
+        heightArray[0, 0] = hauteurCoinBasGauche;
+
+
+        heightArray[0, heightmapSize - 1] = hauteurCoinBasDroite;
+
+
+
+        int espace = heightmapSize-1;
+        
+
+       while (espace > 1)
+       {
+            
+           demiEspace =  espace /2;
+           // Debug.Log("Espace Actuel: " + espace);
+           // Debug.Log("Taille map: " + heightmapSize);
+
+            for (xSqr = demiEspace; xSqr < heightmapSize ; xSqr += espace)
+            { 
+                for (ySqr = demiEspace; ySqr < heightmapSize ; ySqr +=  espace)
+                {
+
+                
+                   // nbIteration++;
+
+                    heightArray[ySqr, xSqr] = StepSquare(xSqr, ySqr, demiEspace);
+                    if(heightArray[ySqr,xSqr]>max)
+                    {
+                        max = heightArray[ySqr, xSqr];
+                    }
+                    if (heightArray[ySqr, xSqr] < min)
+                    {
+                        min = heightArray[ySqr, xSqr];
+                    }
+                    //Debug.Log("Point, X:" + xSqr + ", Y: " + ySqr + "  value: " + heightArray[ySqr, xSqr]);
+                    
+                    
+                }
+            }
+
+           
+            for (xSqr = 0; xSqr < heightmapSize; xSqr += demiEspace)
+            {
+                //int unJStart = ((ySqr / espace) % 2 == 0) ? espace : 0;
+               int yStart =  ((xSqr/demiEspace) % 2 == 0) ? demiEspace : 0; 
+                for (ySqr = yStart; ySqr < heightmapSize; ySqr += espace)
+                {
+                    heightArray[ySqr, xSqr] = StepDiamond(xSqr, ySqr, demiEspace);
+                    if (heightArray[ySqr, xSqr] > max)
+                    {
+                        max = heightArray[ySqr, xSqr];
+                    }
+                    if (heightArray[ySqr, xSqr] < min)
+                    {
+                        min = heightArray[ySqr, xSqr];
+                    }
+                    
+                }
+            }
+           
+            espace = demiEspace;
+        }
+
+     /*  for (int x = 0; x < heightmapSize; x++)
+       {
+           for (int y = 0; y < heightmapSize; y++)
+           {
+               
+                   heightArray[y, x] += Random.Range(0.0f, 0.001f);
+              
+           }
+       }*/
+        //normalisation
+      /* for (int i = 0; i < heightmapSize; i++)
+       {
+           for (int j = 0; j < heightmapSize; j++)
+               heightArray[j, i] = ((heightArray[j, i] - min) * (1.0f / (max - min)));
+       }*/
+
+        /*var value=0.0f;
+        var _lissage = true;
+        if (_lissage)
+        {
+            for (int i = 0; i < heightmapSize; i++)
+            {
+                for (int j = 0; j < heightmapSize; j++)
+                {
+                    value = 0.0f;
+                    int n = 0;
+                    for (int k = i - 5; k <= i + 5; k++)
+                    {
+                        for (int l = j - 5; l <= j + 5; l++)
+                        {
+                            if ((k >= 0) && (k < heightmapSize) && (l >= 0) && (l < heightmapSize))
+                            {
+                                n++;
+                                value += heightArray[l, k];
+                            }
+                        }
+                    }
+                    heightArray[j, i] = (value / n);
+                }
+            }
+        }*/
+       //Debug.Log("Nombre d'iteration: " + nbIteration);
+       Debug.Log("Execution de Step Square :" + cSqr);
+       Debug.Log("Execution de Step Diamond :" + cDmd);
+       return heightArray;
+        
+    }
+
+    //public 
+    float StepSquare(int x, int y, int espace)
+    {
+        cSqr++;
+        float heightValue = 0.0f;
+        float a = 0.0f;
+        float b = 0.0f;
+        float c = 0.0f;
+        float d = 0.0f;
+        float ratio = 0.0f;
+        float moyenne = 0.0f;
+        float espaceVal = 0.0f;
+
+        if( x >= espace  && y >= espace )
+        {
+            a = heightArray[y - espace, x - espace];
+            ++ratio;
+        }
+        if (x+espace < heightmapSize && y >= espace)
+        {
+            b = heightArray[y - espace, x + espace];
+            ++ratio;
+        }
+        if (x >= espace && (y + espace < heightmapSize))
+        {
+            c = heightArray[y + espace, x - espace];
+            ++ratio;
+        }
+        if ((x + espace < heightmapSize) && (y + espace < heightmapSize))
+        { 
+            d = heightArray[y + espace, x + espace];
+            ++ratio;
+        }
+
+        moyenne = (a + b + c + d) / ratio;
+
+       if (espace < 1000)
+        {
+            espaceVal = (1.0f + ((float)espace / 1000.0f));
+        }
+        else if (espace > 1000)
+        {
+            espaceVal = (1.0f + ((float)espace / 10000.0f));
+        }
+        //Debug.Log("ESPACE VALUE : " + espaceVal);
+        heightValue = moyenne * espaceVal;
+       //Debug.Log("Valeur du carré:" + heightValue);
+        return heightValue;
+    }
+
+
+    float StepDiamond(int x, int y, int espace)
+    {
+        cDmd++;
+        float heightValue = 0.0f;
+        float a = 0.0f;
+        float b = 0.0f;
+        float c = 0.0f;
+        float d = 0.0f;
+        float ratio = 0.0f;
+        float moyenne = 0.0f;
+        float espaceVal = 0.0f;
+
+        if (x >= espace)
+        {
+            a = heightArray[y, x - espace];
+            ++ratio;
+        }
+        if (x + espace < heightmapSize )
+        {
+            b = heightArray[y, x + espace];
+            ++ratio;
+        }
+        if ( y >= espace)
+        {
+            c = heightArray[y - espace, x];
+            ++ratio;
+        }
+        if (y + espace < heightmapSize)
+        {
+            d = heightArray[y + espace, x];
+            ++ratio;
+        }
+
+        moyenne = (a + b + c + d) / ratio;
+        if (espace < 1000)
+        {
+            espaceVal = (1.0f + ((float)espace / 1000.0f));
+        }
+        else if(espace > 1000)
+        {
+            espaceVal = (1.0f + ((float)espace / 10000.0f));
+        }
+       
+       // Debug.Log("ESPACE VALUE : " + espaceVal);
+        
+        heightValue = moyenne * espaceVal ;
+        return heightValue;
+    }
+
+
+
+    
+
+    
+
 }
-	
-	
+    
+    
+
+
+
+
+
+
+//RECHERCHE A SUPPRIMER UNE FOIS FINI//
+
+
