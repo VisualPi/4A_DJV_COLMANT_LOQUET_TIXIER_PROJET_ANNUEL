@@ -18,8 +18,14 @@ public class RandomTerrainScript : MonoBehaviour
     public float hauteurCoinHautGauche = 0.0f;
     public float hauteurCoinHautDroite = 0.0f;
 
-    public float roughness = 0.0f;
+    float HCBG = 0.0f;
+    float HCBD = 0.0f;
+    float HCHG = 0.0f;
+    float HCHD = 0.0f;
 
+    public float roughness = 0.0f;
+    
+    float[] angleSetting = { 0 };
 
     static Vector3 _gameArea;
     // La composante Y définit la hauteur maximale du terrain
@@ -39,7 +45,8 @@ public class RandomTerrainScript : MonoBehaviour
     int cSqr;
     Vector2 actualPoint;
 
-
+    [SerializeField]
+    private SeedGeneratorScript seedObject;
    
    
 
@@ -148,35 +155,62 @@ public class RandomTerrainScript : MonoBehaviour
     }
 
 
-    
 
 
+    public float[] generateRandomSeed()
+    {
+        float[] tableSeed = { 0,0,0,0 };
+
+        HCBG = Random.Range(0.0f, 255.0f);
+        HCBD = Random.Range(0.0f, 255.0f);
+        HCHD = Random.Range(0.0f, 255.0f);
+        HCHG = Random.Range(0.0f, 255.0f);
+
+        string mySeed;
+        mySeed = HCBG.ToString() + ";" + HCBD.ToString() + ";" + HCHD.ToString() + ";" + HCHG.ToString();
+        Debug.Log("Seed de génération : " + mySeed);
+
+        HCBG = 1.0f / HCBG;
+        HCBD = 1.0f / HCBD;
+        HCHD = 1.0f / HCHD;
+        HCHG = 1.0f / HCHG;
+
+
+        tableSeed[0] = HCBG;
+        tableSeed[1] = HCBD;
+        tableSeed[2] = HCHD;
+        tableSeed[3] = HCHG;
+
+        return tableSeed;
+    }
     
 
 
     public float[,] TheLastRandomTerrain()
     {
-       
-        int nbIteration=0;
+         
+        
+        angleSetting = generateRandomSeed();
+
+        //int nbIteration=0;
 
         int xSqr = 0;
         int ySqr = 0;
         int demiEspace = 0;
-        float max = 0.0f;
-        float min = 1.0f;
+        //float max = 0.0f;
+        //float min = 1.0f;
         
         float scale = roughness * sizeMap.x;
 
+        hauteurCoinBasGauche = angleSetting[0];
+        hauteurCoinBasDroite = angleSetting[1];
+        hauteurCoinHautGauche = angleSetting[2];
+        hauteurCoinHautDroite = angleSetting[3];
+
 
         heightArray[heightmapSize-1, 0] = hauteurCoinHautGauche;
-
-
         heightArray[heightmapSize - 1, heightmapSize - 1] = hauteurCoinHautDroite;
-
-
         heightArray[0, 0] = hauteurCoinBasGauche;
-
-
         heightArray[0, heightmapSize - 1] = hauteurCoinBasDroite;
 
 
