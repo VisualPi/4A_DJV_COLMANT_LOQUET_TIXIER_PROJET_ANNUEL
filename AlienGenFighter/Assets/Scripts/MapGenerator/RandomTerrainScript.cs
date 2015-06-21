@@ -275,15 +275,7 @@ public class RandomTerrainScript : MonoBehaviour
             espace = demiEspace;
         }
 
-     /*  for (int x = 0; x < heightmapSize; x++)
-       {
-           for (int y = 0; y < heightmapSize; y++)
-           {
-               
-                   heightArray[y, x] += Random.Range(0.0f, 0.001f);
-              
-           }
-       }*/
+    
         //normalisation
       /* for (int i = 0; i < heightmapSize; i++)
        {
