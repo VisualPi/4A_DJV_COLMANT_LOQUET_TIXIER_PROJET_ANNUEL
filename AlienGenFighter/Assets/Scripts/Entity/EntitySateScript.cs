@@ -3,8 +3,8 @@ using System.Collections;
 
 public class EntityStateScript
 {
-	private int _food = 50;
-	private int _water = 50;
+	private int _food = 100;
+	private int _water = 100;
 	private EdibleInformations _targetedFood;
 	private EdibleInformations _targetedWater;
 

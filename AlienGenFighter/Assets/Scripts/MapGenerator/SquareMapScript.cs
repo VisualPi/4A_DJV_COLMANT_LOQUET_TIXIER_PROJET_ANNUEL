@@ -16,6 +16,8 @@ public class SquareMapScript : MonoBehaviour {
     private Collider _collider;
     [SerializeField]
     private Transform _transform;
+    [SerializeField]
+    private Transform _delimination;
 
     private SquareContext _context = new SquareContext();
 
@@ -63,6 +65,11 @@ public class SquareMapScript : MonoBehaviour {
         Debug.Log("EAU : " + drinkableWater.ToString());
     }
 
+    public Transform GetDelimitation()
+    {
+        return _delimination;
+    }
+
     public SquareContext GetContext() {
         return _context;
     }
@@ -105,7 +112,14 @@ public class SquareMapScript : MonoBehaviour {
         if (CameraManager.IsCurrentCamera(SquareCamera))
             return;
 
-        SquareCamera.transform.position = new Vector3(_transform.position.x, _transform.position.y + 50, _transform.position.z);
+        RaycastHit hit;
+        Ray ray;
+        ray = new Ray(new Vector3(_transform.position.x, 550f, _transform.position.z), Vector3.down);
+        if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+        {
+            SquareCamera.transform.position = new Vector3(hit.point.x, hit.point.y+50, hit.point.z);
+        }
+        
         CameraManager.ShowCamera(SquareCamera);
     }
 

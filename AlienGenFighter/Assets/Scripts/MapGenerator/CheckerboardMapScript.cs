@@ -76,7 +76,6 @@ public class CheckerboardMapScript : MonoBehaviour
     {
         Debug.Log(gameArea.sizeMap.x);
         Debug.Log(gameArea.sizeMap.z);
-
         //division 64 
         int nbCaseX = (int)gameArea.sizeMap.x / 64;
         int nbCaseZ = (int)gameArea.sizeMap.z / 64;
@@ -88,11 +87,11 @@ public class CheckerboardMapScript : MonoBehaviour
         int z = 0;
         int cpt = 0;
         
-        for (int i = 0; i < nbCaseZ; i++)
+        for (int i = 0; i < 8; i++)
         {
-            for (int j = 0; j < nbCaseX; j++)
+            for (int j = 0; j < 8; j++)
             {
-                if (x > (int)gameArea.sizeMap.x-32)
+                if (x > (int)gameArea.sizeMap.x - 32)
                 {
                     x = 0;
                 }
@@ -100,26 +99,48 @@ public class CheckerboardMapScript : MonoBehaviour
                 {
                     z = 0;
                 }
-                Vector3 colliderPosition = new Vector3(32+x, 100, 32+z);
+                if (gameArea.sizeMap.x == 512 && gameArea.sizeMap.z == 512)
+                {
+ 
+                    var colliderPosition = new Vector3(32+ x, 100, 32 + z);
+                    actualCase = (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
+                    actualCase.transform.parent = Terrain.transform;
+                    actualCase.GetComponent<BoxCollider>().name = "SquareMap_" + cpt;
+                    var currentSquareMapScript = actualCase.GetComponent<SquareMapScript>();
 
-                actualCase = (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
-                actualCase.transform.parent = Terrain.transform;
-                actualCase.GetComponent<BoxCollider>().name = "SquareMap_" + cpt;
+                    currentSquareMapScript.CameraManager = _cameraManager;
+                    currentSquareMapScript.SquareCamera = _squareCamera;
+                    currentSquareMapScript.InformationMenu = _informationMenu;
+                    currentSquareMapScript.ManagedInformationMenu = _managedInformationMenu;
 
-                // Define for does not "GetComponent" for all component in SquareMapScript.
-                var currentSquareMapScript = actualCase.GetComponent<SquareMapScript>();
-                currentSquareMapScript.CameraManager = _cameraManager;
-                currentSquareMapScript.SquareCamera = _squareCamera;
-                currentSquareMapScript.InformationMenu = _informationMenu;
-                currentSquareMapScript.ManagedInformationMenu = _managedInformationMenu;
+                    GameData.SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
+                    x += 64;
+                }
+                else if (gameArea.sizeMap.x == 1024 && gameArea.sizeMap.z == 1024)
+                {
+                    var colliderPosition = new Vector3(64 + x, 100, 64 + z);
+                    actualCase = (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
+                    actualCase.transform.parent = Terrain.transform;
+                    actualCase.GetComponent<BoxCollider>().name = "SquareMap_" + cpt;
+                    actualCase.GetComponent<BoxCollider>().size = new Vector3(128, actualCase.GetComponent<BoxCollider>().size.y, 128);
+                    var currentSquareMapScript = actualCase.GetComponent<SquareMapScript>();
+                    currentSquareMapScript.GetDelimitation().transform.localScale = new Vector3(13, 1, 13);
 
-                GameData.SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
-              //  Debug.Log(MapManagerScript._SquareMaps["SquareMap_" + cpt]);
-                x += 64;
+                    currentSquareMapScript.CameraManager = _cameraManager;
+                    currentSquareMapScript.SquareCamera = _squareCamera;
+                    currentSquareMapScript.InformationMenu = _informationMenu;
+                    currentSquareMapScript.ManagedInformationMenu = _managedInformationMenu;
+       
+                    GameData.SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
+                    x += 128;
+                }
+                
                 cpt++;
             }
-            z += 64;
-            
+            if (gameArea.sizeMap.x == 512 && gameArea.sizeMap.z == 512)
+                z += 64;
+            else if (gameArea.sizeMap.x == 1024 && gameArea.sizeMap.z == 1024)
+                z += 128;
         }
 
     }

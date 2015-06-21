@@ -28,12 +28,6 @@ public class EntityMovementScript : MonoBehaviour
 		_targetPosition = _startPosition;
 		_animeStartTime = 0f;
 	}
-
-	public void OnMouseDown()
-	{
-		SetTargetPosition(new Vector3(15,1,15));
-		Debug.Log("GO");
-	}
 	void Update()
 	{
 		_isPlayable = true;

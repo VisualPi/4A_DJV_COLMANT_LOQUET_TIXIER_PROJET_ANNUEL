@@ -275,6 +275,13 @@ MonoBehaviour:
   _movement: {fileID: 11444928}
   _networkView: {fileID: 14855546}
   _collider: {fileID: 11416292}
+  _meshRenderer: {fileID: 2392680}
+  _materials:
+  - {fileID: 2100000, guid: 6c5a71ec00cde9b4c9088d85115fb696, type: 2}
+  - {fileID: 2100000, guid: 0fc7a80831adf444abad8ba75224911f, type: 2}
+  - {fileID: 2100000, guid: 90f5bdc721d0db14a846a8fc13f6ed0e, type: 2}
+  - {fileID: 2100000, guid: 34527673bf24dda479ad1a9f77518014, type: 2}
+  - {fileID: 2100000, guid: 7a54c6f6e55885d4b86d03fc350e3ca8, type: 2}
 --- !u!135 &13561970
 SphereCollider:
   m_ObjectHideFlags: 1

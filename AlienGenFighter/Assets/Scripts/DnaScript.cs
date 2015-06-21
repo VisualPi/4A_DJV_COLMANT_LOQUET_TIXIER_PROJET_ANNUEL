@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public enum ECharateristic : byte
 {
 	NbLamb = 0, NbArm, Nbhead, Skincolor, Wings, Height, Sociability, Bravery, Adventurous, Aggressiveness,
@@ -64,8 +64,44 @@ public class DnaScript
 	}
 	public DnaScript()
 	{
-		_genes = new byte[Size]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-	}
+		//_genes = new byte[Size]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        _genes = new byte[Size];
+	    _genes[(int) ECharateristic.NbLamb]             = (byte)Random.Range(2, 2);
+        _genes[(int)ECharateristic.NbArm]               = (byte)Random.Range(2, 2);
+        _genes[(int)ECharateristic.Nbhead]              = (byte)Random.Range(1, 1);
+        _genes[(int)ECharateristic.Skincolor]           = (byte)Random.Range(0, 4);
+        _genes[(int)ECharateristic.Wings]               = (byte)Random.Range(0, 0);
+        _genes[(int)ECharateristic.Height]              = (byte)Random.Range(1, 1);
+        _genes[(int)ECharateristic.Sociability]         = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Bravery]             = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Adventurous]         = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Aggressiveness]      = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Tolerance]           = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Activity]            = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Charism]             = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Timidity]            = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Influence]           = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Attitude]            = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Curiosity]           = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Perfectionism]       = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Sporty]              = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Ambition]            = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Patience]            = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Negociation]         = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Authority]           = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Attention]           = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Kindness]            = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Domination]          = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Suggestibility]      = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Honesty]             = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Subjectivity]        = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Instinct]            = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Loyalty]             = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.Memory]              = (byte)Random.Range(0, 5);
+        _genes[(int)ECharateristic.HeatResistance]      = (byte)Random.Range(0, 100);
+        _genes[(int)ECharateristic.DeseaseResistance]   = (byte)Random.Range(0, 100);
+
+    }
 	public byte[] GetGenotype()
 	{
 		return _genes;

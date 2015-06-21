@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Assets.Scripts.Context;
 
 [Serializable]
@@ -12,6 +13,8 @@ public class EntityScript : MonoBehaviour
 	[SerializeField] private EntityMovementScript	_movement;
 	[SerializeField] private NetworkView			_networkView;
 	[SerializeField] private EntityCollisionScript	_collider;
+    [SerializeField] private MeshRenderer           _meshRenderer;
+    [SerializeField] private List<Material>         _materials = new List<Material>(5);
 
 	private DnaScript		_dna;
 	private CapacityScript	_capacities;
@@ -39,9 +42,15 @@ public class EntityScript : MonoBehaviour
 	    InitFromDna();
 	}
 
+    void OnMouseDown()
+    {
+        Debug.Log("ADN = " + _dna.ToString());
+        Debug.Log("Food : " + _state.GetFood() + " Water : " + _state.GetWater());
+    }
     public void InitFromDna()
     {
         _context.Memory = _dna.GetGeneAt(ECharateristic.Memory);
+        _meshRenderer.material = _materials[_dna.GetGeneAt(ECharateristic.Skincolor)];
     }
     void Update()
 	{
