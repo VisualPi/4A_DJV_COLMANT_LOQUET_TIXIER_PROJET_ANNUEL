@@ -45,8 +45,8 @@ public class RandomTerrainScript : MonoBehaviour
     int cSqr;
     Vector2 actualPoint;
 
-    [SerializeField]
-    private SeedGeneratorScript seedObject;
+    //[SerializeField]
+    //private SeedGeneratorScript seedObject;
    
    
 
