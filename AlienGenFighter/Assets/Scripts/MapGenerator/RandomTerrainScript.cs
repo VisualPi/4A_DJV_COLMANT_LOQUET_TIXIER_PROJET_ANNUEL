@@ -73,7 +73,7 @@ public class RandomTerrainScript : MonoBehaviour
         terrainData.SetHeights(0, 0, TheLastRandomTerrain());
        
         terrainData.size = _gameArea;
-
+        //SetupAlphaMap();
         
         
         
@@ -199,7 +199,9 @@ public class RandomTerrainScript : MonoBehaviour
                 
                    // nbIteration++;
 
-                    heightArray[ySqr, xSqr] = StepSquare(xSqr, ySqr, demiEspace);
+                    heightArray[ySqr, xSqr] = StepSquare(xSqr, ySqr, demiEspace) + (Random.Range(-0.5f, 0.5f) * (espace / sizeMap.x));
+
+/*
                     if(heightArray[ySqr,xSqr]>max)
                     {
                         max = heightArray[ySqr, xSqr];
@@ -208,6 +210,7 @@ public class RandomTerrainScript : MonoBehaviour
                     {
                         min = heightArray[ySqr, xSqr];
                     }
+  */
                     //Debug.Log("Point, X:" + xSqr + ", Y: " + ySqr + "  value: " + heightArray[ySqr, xSqr]);
                     
                     
@@ -221,7 +224,8 @@ public class RandomTerrainScript : MonoBehaviour
                int yStart =  ((xSqr/demiEspace) % 2 == 0) ? demiEspace : 0; 
                 for (ySqr = yStart; ySqr < heightmapSize; ySqr += espace)
                 {
-                    heightArray[ySqr, xSqr] = StepDiamond(xSqr, ySqr, demiEspace);
+                    heightArray[ySqr, xSqr] = StepDiamond(xSqr, ySqr, demiEspace) + (Random.Range(-0.5f, 0.5f) * (espace / sizeMap.x)) ;
+         /*          
                     if (heightArray[ySqr, xSqr] > max)
                     {
                         max = heightArray[ySqr, xSqr];
@@ -230,7 +234,7 @@ public class RandomTerrainScript : MonoBehaviour
                     {
                         min = heightArray[ySqr, xSqr];
                     }
-                    
+         */
                 }
             }
            
@@ -330,7 +334,7 @@ public class RandomTerrainScript : MonoBehaviour
             espaceVal = (1.0f + ((float)espace / 10000.0f));
         }
         //Debug.Log("ESPACE VALUE : " + espaceVal);
-        heightValue = moyenne * espaceVal;
+        heightValue = moyenne;
        //Debug.Log("Valeur du carré:" + heightValue);
         return heightValue;
     }
@@ -381,12 +385,37 @@ public class RandomTerrainScript : MonoBehaviour
        
        // Debug.Log("ESPACE VALUE : " + espaceVal);
         
-        heightValue = moyenne * espaceVal ;
+        heightValue = moyenne;
         return heightValue;
     }
 
 
-
+    void SetupAlphaMap()
+    {
+        float[,,] map = new float[terrain.terrainData.alphamapWidth, terrain.terrainData.alphamapHeight, 2];
+		
+		// For each point on the alphamap...
+		for (int y = 0; y < terrain.terrainData.alphamapHeight; y++) {
+			for (int x = 0; x < terrain.terrainData.alphamapWidth; x++) {
+				// Get the normalized terrain coordinate that
+				// corresponds to the the point.
+				double normX = x * 1.0 / (terrain.terrainData.alphamapWidth - 1);
+				double normY = y * 1.0 / (terrain.terrainData.alphamapHeight - 1);
+				
+				// Get the steepness value at the normalized coordinate.
+				double angle = terrain.terrainData.GetSteepness((float)normX, (float)normY);
+				
+				// Steepness is given as an angle, 0..90 degrees. Divide
+				// by 90 to get an alpha blending value in the range 0..1.
+				double frac = angle / 90.0;
+				map[x, y, 0] = (float)frac;
+                map[x, y, 1] = 1 - (float)frac;
+			}
+		}
+		
+		terrain.terrainData.SetAlphamaps(0, 0, map);
+	
+    }
     
 
     
