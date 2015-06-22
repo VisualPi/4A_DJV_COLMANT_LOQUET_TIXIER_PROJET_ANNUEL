@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class CameraMoveScript : MonoBehaviour {
+public class CameraMoveScript : MonoBehaviour
+{
 
     [SerializeField]
     private Transform _transform;
@@ -12,32 +13,42 @@ public class CameraMoveScript : MonoBehaviour {
     [SerializeField]
     private float _fastMoveFactor = 5;
 
-    void Start() {
+    void Start()
+    {
         Cursor.visible = true;
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         var moveSpeed = _normalMoveSpeed;
 
-        if (Input.GetKey(KeyCode.AltGr) || Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) {
+        if (Input.GetKey(KeyCode.AltGr) || Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt))
+        {
             moveSpeed = _normalMoveSpeed * _fastMoveFactor * Time.deltaTime;
-        } else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) {
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+        {
             moveSpeed = _normalMoveSpeed * _slowMoveFactor * Time.deltaTime;
-        } else {
+        }
+        else
+        {
             moveSpeed *= Time.deltaTime;
         }
 
         _transform.transform.position += Vector3.forward * moveSpeed * Input.GetAxis("Vertical");
         _transform.transform.position += Vector3.right * moveSpeed * Input.GetAxis("Horizontal");
 
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetKey(KeyCode.Space))
+        {
             _transform.transform.position += Vector3.up * moveSpeed;
         }
-        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+        {
             _transform.transform.position -= Vector3.up * moveSpeed;
         }
 
-        if (Input.GetKeyDown(KeyCode.End)) {
+        if (Input.GetKeyDown(KeyCode.End))
+        {
             Cursor.visible = Cursor.visible == false;
         }
     }

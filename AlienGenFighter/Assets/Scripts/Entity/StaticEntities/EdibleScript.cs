@@ -3,9 +3,12 @@ using System.Collections;
 
 public class EdibleScript : MonoBehaviour, OtherTargetable
 {
-    [SerializeField] private Transform _transform;
-    [SerializeField] private Collider _collider;
-    [SerializeField] private GameObject _gameObject;
+    [SerializeField]
+    private Transform _transform;
+    [SerializeField]
+    private Collider _collider;
+    [SerializeField]
+    private GameObject _gameObject;
 
     private EdibleInformations infos = new EdibleInformations();
     private string _lastCol = "";
@@ -20,19 +23,19 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
     // Update is called once per frame
     void Update()
     {
-        if (infos.Quantity == infos.DefaultQuantity / 2) //TODO : a voir, fonctionnera que si on décremente la nourriture par 1 !!
+        if ( infos.Quantity == infos.DefaultQuantity / 2 ) //TODO : a voir, fonctionnera que si on décremente la nourriture par 1 !!
         {
             _transform.localScale = tag.Equals("Water")
                                     ? new Vector3(_transform.localScale.x / 2, _transform.localScale.y, _transform.localScale.z / 2)
                                     : new Vector3(_transform.localScale.x / 2, _transform.localScale.y, _transform.localScale.z);
         }
-        if (infos.Quantity < 1)
+        if ( infos.Quantity < 1 )
         {
-            if (tag.Equals("Food"))
+            if ( tag.Equals("Food") )
             {
                 GameData.SquareMaps[_lastCol].GetContext().Food.Remove(this);
             }
-            else if (tag.Equals("Water"))
+            else if ( tag.Equals("Water") )
             {
                 GameData.SquareMaps[_lastCol].GetContext().Water.Remove(this);
             }
@@ -42,21 +45,21 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
     }
     public void OnTriggerEnter(Collider col)
     {
-        if (tag.Equals("")) return;
-        if (col.tag.Equals("SquareMap") && !col.name.Equals(_lastCol))
+        if ( tag.Equals("") ) return;
+        if ( col.tag.Equals("SquareMap") && !col.name.Equals(_lastCol) )
         {
-            if (!_lastCol.Equals(""))
+            if ( !_lastCol.Equals("") )
             {
-                if (tag.Equals("Food"))
+                if ( tag.Equals("Food") )
                     GameData.SquareMaps[_lastCol].GetContext().Food.Remove(this);
-                else if (tag.Equals("Water"))
+                else if ( tag.Equals("Water") )
                     GameData.SquareMaps[_lastCol].GetContext().Water.Remove(this);
             }
-            if (tag.Equals("Food"))
+            if ( tag.Equals("Food") )
                 GameData.SquareMaps[col.name].GetContext().Food.Add(this);
-            else if (tag.Equals("Water"))
+            else if ( tag.Equals("Water") )
                 GameData.SquareMaps[col.name].GetContext().Water.Add(this);
-            //Debug.Log("Now SquareMap : " + col.name + " list contains " + this.name);
+            Debug.Log("Now SquareMap : " + col.name + " list contains " + this.name);
             _lastCol = col.name;
         }
     }

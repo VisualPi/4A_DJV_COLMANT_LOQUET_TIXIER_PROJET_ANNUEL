@@ -5,7 +5,8 @@ using Assets.Scripts.GUI;
 using Assets.Scripts.GUI.Misc;
 using UnityEngine;
 
-public class SquareMapScript : MonoBehaviour {
+public class SquareMapScript : MonoBehaviour
+{
     private float moveSpeedInfluence = 1.0f;
     private float temperature = 25.0f;
 
@@ -21,12 +22,15 @@ public class SquareMapScript : MonoBehaviour {
 
     private SquareContext _context = new SquareContext();
 
-    void Start() {
-        if (SquareCamera == null) {
+    void Start()
+    {
+        if ( SquareCamera == null )
+        {
             Debug.Log("error : _squareCamera is null");
             SquareCamera = GameObject.Find("Camera3D").GetComponent<Camera>();
         }
-        if (CameraManager == null) {
+        if ( CameraManager == null )
+        {
             Debug.Log("error : _cameraManager is null");
             CameraManager = GameObject.Find("CameraManager").GetComponent<CameraManagerScript>();
         }
@@ -37,29 +41,34 @@ public class SquareMapScript : MonoBehaviour {
     public Menu InformationMenu { get; set; }
     public ManagedInformationMapList ManagedInformationMenu { get; set; }
 
-    public void OnTriggerEnter(Collider col) {
+    public void OnTriggerEnter(Collider col)
+    {
         //Debug.Log("Enter on square");
-        if (col.tag.Equals("entity"))
+        if ( col.tag.Equals("entity") )
             _context.NbEntity += 1;
     }
-    public void OnTriggerExit(Collider col) {
+    public void OnTriggerExit(Collider col)
+    {
         //Debug.Log("Exit from square");
-        if (col.tag.Equals("entity"))
+        if ( col.tag.Equals("entity") )
             _context.NbEntity -= 1;
-        if (_context.NbEntity < 0)
+        if ( _context.NbEntity < 0 )
             _context.NbEntity = 0;//TODO : au cas ou pour les tests, a enlever apres
     }
-    void setEnvironnementalConstraint(float _moveSpeedInfluence, float _temperature) {
+    void setEnvironnementalConstraint(float _moveSpeedInfluence, float _temperature)
+    {
         moveSpeedInfluence = _moveSpeedInfluence;
         temperature = _temperature;
 
     }
-    private void setResources(int _foodQuantity, int _drinkableWater) {
+    private void setResources(int _foodQuantity, int _drinkableWater)
+    {
         foodQuantity = _foodQuantity;
         drinkableWater = _drinkableWater;
     }
 
-    public void getResources() {
+    public void getResources()
+    {
         Debug.Log("NB ENTITE : " + _context.NbEntity);
         Debug.Log("NOURRITURE : " + foodQuantity.ToString());
         Debug.Log("EAU : " + drinkableWater.ToString());
@@ -70,28 +79,35 @@ public class SquareMapScript : MonoBehaviour {
         return _delimination;
     }
 
-    public SquareContext GetContext() {
+    public SquareContext GetContext()
+    {
         return _context;
     }
-    public void SetContext(SquareContext context) {
+    public void SetContext(SquareContext context)
+    {
         _context = context;
     }
-    void consumeResources(int _foodQuantity, int _drinkableWater) {
+    void consumeResources(int _foodQuantity, int _drinkableWater)
+    {
         foodQuantity = foodQuantity - _foodQuantity;
         drinkableWater = drinkableWater - _drinkableWater;
     }
-    void modifyEnvironnementalConstraint(float valueOfChangeInPercent) {
+    void modifyEnvironnementalConstraint(float valueOfChangeInPercent)
+    {
         moveSpeedInfluence *= valueOfChangeInPercent;
         temperature *= valueOfChangeInPercent;
     }
 
-    void SetEntityLastMapName() {
-        for (int i = 0; i < _context.NbEntity; ++i) {
+    void SetEntityLastMapName()
+    {
+        for ( int i = 0 ; i < _context.NbEntity ; ++i )
+        {
             _context.Entities[i].GetColliderScript().SetLastCol(_collider.name);
         }
     }
 
-    public void OnMouseOver() {
+    public void OnMouseOver()
+    {
         ManagedInformationMenu.ClearList();
 
         ManagedInformationMenu.PopulateList(
@@ -104,31 +120,36 @@ public class SquareMapScript : MonoBehaviour {
         InformationMenu.IsOpen = true;
     }
 
-    public void OnMouseExit() {
+    public void OnMouseExit()
+    {
         InformationMenu.IsOpen = false;
     }
 
-    public void OnMouseDown() {
-        if (CameraManager.IsCurrentCamera(SquareCamera))
+    public void OnMouseDown()
+    {
+        if ( CameraManager.IsCurrentCamera(SquareCamera) )
             return;
 
         RaycastHit hit;
         Ray ray;
         ray = new Ray(new Vector3(_transform.position.x, 550f, _transform.position.z), Vector3.down);
-        if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")))
+        if ( Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")) )
         {
             SquareCamera.transform.position = new Vector3(hit.point.x, hit.point.y+50, hit.point.z);
         }
-        
+
         CameraManager.ShowCamera(SquareCamera);
     }
 
-    public void AddEdible(GameObject go, int nb) {
+    public void AddEdible(GameObject go, int nb)
+    {
         RaycastHit hit;
         Ray ray;
-        for (var i = 0; i < nb; i++) {
+        for ( var i = 0 ; i < nb ; i++ )
+        {
             ray = new Ray(new Vector3(Random.Range(_collider.bounds.min.x, _collider.bounds.max.x), 520f, Random.Range(_collider.bounds.min.z, _collider.bounds.max.z)), Vector3.down);
-            if (Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map"))) {
+            if ( Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")) )
+            {
                 var obj = Instantiate(go, new Vector3(hit.point.x,
                                                         hit.point.y + go.transform.localScale.y,
                                                         hit.point.z), Quaternion.identity) as GameObject;

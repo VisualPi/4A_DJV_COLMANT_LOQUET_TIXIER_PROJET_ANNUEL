@@ -4616,11 +4616,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400582, guid: 5ca1862eae722394da0590d3db1d080c, type: 2}
       propertyPath: sizeMap.x
-      value: 1024
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 11400582, guid: 5ca1862eae722394da0590d3db1d080c, type: 2}
       propertyPath: sizeMap.z
-      value: 1024
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 11400582, guid: 5ca1862eae722394da0590d3db1d080c, type: 2}
       propertyPath: hauteurCoinBasGauche

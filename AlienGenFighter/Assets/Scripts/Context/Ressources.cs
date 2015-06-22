@@ -18,9 +18,9 @@ namespace Assets.Scripts.Context
 
         public void RemoveWaterByPosition(Vector3 pos)
         {
-            for (var i = 0; i < Water.Count; ++i)
+            for ( var i = 0 ; i < Water.Count ; ++i )
             {
-                if (Water[i].Position == pos)
+                if ( Water[i].Position == pos )
                 {
                     GameData.Ressources.Remove(Water[i].Name);
                     Water.RemoveAt(i);
@@ -31,9 +31,9 @@ namespace Assets.Scripts.Context
 
         public void RemoveFoodByPosition(Vector3 pos)
         {
-            for (var i = 0; i < Food.Count; ++i)
+            for ( var i = 0 ; i < Food.Count ; ++i )
             {
-                if (Food[i].Position == pos)
+                if ( Food[i].Position == pos )
                 {
                     GameData.Ressources.Remove(Food[i].Name);
                     Food.RemoveAt(i);

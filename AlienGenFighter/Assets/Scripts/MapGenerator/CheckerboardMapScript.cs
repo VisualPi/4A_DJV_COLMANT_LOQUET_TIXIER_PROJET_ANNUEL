@@ -6,28 +6,20 @@ public class CheckerboardMapScript : MonoBehaviour
 {
     [SerializeField]
     GameObject Terrain;
-
-   // [SerializeField]
-   // Vector3 sizeMap;
-
+    // [SerializeField]
+    // Vector3 sizeMap;
     [SerializeField]
     GameObject CaseOfMap;
-
     [SerializeField]
     RandomTerrainScript gameArea;
-
     [SerializeField]
     private Camera _squareCamera;
-
     [SerializeField]
     private CameraManagerScript _cameraManager;
-
     [SerializeField]
     private Menu _informationMenu;
-
     [SerializeField]
     private ManagedInformationMapList _managedInformationMenu;
-
     BoxCollider[] checkerboard;
     // Use this for initialization
     /*void Start()
@@ -86,22 +78,21 @@ public class CheckerboardMapScript : MonoBehaviour
         int x = 0;
         int z = 0;
         int cpt = 0;
-        
-        for (int i = 0; i < 8; i++)
+
+        for ( int i = 0 ; i < 8 ; i++ )
         {
-            for (int j = 0; j < 8; j++)
+            for ( int j = 0 ; j < 8 ; j++ )
             {
-                if (x > (int)gameArea.sizeMap.x - 32)
+                if ( x > (int)gameArea.sizeMap.x - 32 )
                 {
                     x = 0;
                 }
-                if (z > (int)gameArea.sizeMap.z - 32)
+                if ( z > (int)gameArea.sizeMap.z - 32 )
                 {
                     z = 0;
                 }
-                if (gameArea.sizeMap.x == 512 && gameArea.sizeMap.z == 512)
+                if ( gameArea.sizeMap.x == 512 && gameArea.sizeMap.z == 512 )
                 {
- 
                     var colliderPosition = new Vector3(32+ x, 100, 32 + z);
                     actualCase = (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
                     actualCase.transform.parent = Terrain.transform;
@@ -116,7 +107,7 @@ public class CheckerboardMapScript : MonoBehaviour
                     GameData.SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
                     x += 64;
                 }
-                else if (gameArea.sizeMap.x == 1024 && gameArea.sizeMap.z == 1024)
+                else if ( gameArea.sizeMap.x == 1024 && gameArea.sizeMap.z == 1024 )
                 {
                     var colliderPosition = new Vector3(64 + x, 100, 64 + z);
                     actualCase = (GameObject)Instantiate(CaseOfMap, colliderPosition, Quaternion.identity);
@@ -130,18 +121,16 @@ public class CheckerboardMapScript : MonoBehaviour
                     currentSquareMapScript.SquareCamera = _squareCamera;
                     currentSquareMapScript.InformationMenu = _informationMenu;
                     currentSquareMapScript.ManagedInformationMenu = _managedInformationMenu;
-       
+
                     GameData.SquareMaps.Add("SquareMap_" + cpt, currentSquareMapScript);
                     x += 128;
                 }
-                
                 cpt++;
             }
-            if (gameArea.sizeMap.x == 512 && gameArea.sizeMap.z == 512)
+            if ( gameArea.sizeMap.x == 512 && gameArea.sizeMap.z == 512 )
                 z += 64;
-            else if (gameArea.sizeMap.x == 1024 && gameArea.sizeMap.z == 1024)
+            else if ( gameArea.sizeMap.x == 1024 && gameArea.sizeMap.z == 1024 )
                 z += 128;
         }
-
     }
 }
