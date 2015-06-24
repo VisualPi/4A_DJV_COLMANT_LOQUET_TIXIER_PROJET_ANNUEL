@@ -11,16 +11,34 @@ namespace Assets.Scripts.Context
         }
         public int NbEntity { get; set; }
 
+        public EntityScript Leader { get; set; }
+
         public List<EntityScript> Entities { get; set; }
 
         public override void AddWater(EdibleInformations water)
         {
-            throw new System.NotImplementedException();
+            Water.Add(water);
+        }
+        
+        public override void AddFood(EdibleInformations food)
+        {
+            Food.Add(food);
         }
 
-        public override void AddFood(EdibleInformations water)
+        public void AddEntity(EntityScript entity)
         {
-            throw new System.NotImplementedException();
+            Entities.Add(entity);
+            for (var i = 0; i < entity.GetContext().Food.Count; ++i)
+            {
+                if(!Food.Contains(entity.GetContext().Food[i]))
+                    Food.Add(entity.GetContext().Food[i]);
+            }
+            for ( var i = 0 ; i < entity.GetContext().Water.Count ; ++i )
+            {
+                if ( !Water.Contains(entity.GetContext().Water[i]) )
+                    Water.Add(entity.GetContext().Water[i]);
+            }
         }
+
     }
 }

@@ -9,6 +9,8 @@ public class EntityManagerScript : MonoBehaviour
     [SerializeField]
     public EntityScript[] tab;
 
+    private static int nbInstanciated;
+
     public void Start()
     {
         _AvailableEntities = new Queue<EntityScript>(tab.Length);
@@ -17,19 +19,24 @@ public class EntityManagerScript : MonoBehaviour
             EntityScript t = tab[index];
             AddToQueue(t);
         }
-
+        nbInstanciated = 0;
         tab = null;
     }
     public static EntityScript GetFromQueue()
     {
         var e = _AvailableEntities.Dequeue();
         e.EnableComponents();
+        e.name = "Entity_" + nbInstanciated;
+        //e.collider.name = 
+        GameData.Entities.Add(e.name, e);
+        nbInstanciated++;
         return e;
     }
     [RPC]
     public static void AddToQueue(EntityScript e)
     {
-
+        //TODO : ajouter la gestion de groupe lors de la mort, leader etc...
+        GameData.Entities.Remove(e.name);
         e.DisableComponents();
         _AvailableEntities.Enqueue(e);
     }

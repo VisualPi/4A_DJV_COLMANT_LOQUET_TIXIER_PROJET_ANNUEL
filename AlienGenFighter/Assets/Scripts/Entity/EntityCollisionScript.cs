@@ -24,6 +24,12 @@ public class EntityCollisionScript : MonoBehaviour
         {
             _entity.GetContext().AddWater(( (EdibleScript)GameData.Ressources[col.name] ).GetInformations());
         }
+        if ( col.tag.Equals("Entity") )
+        {
+            //Debug.Log("Entity (" + col.name + ") is supposed to enter in a group");
+            if(GameData.Entities[col.name].GetDNA().GetGeneAt(ECharateristic.Sociability) > 50)
+                _entity.GetGroupContext().AddEntity(GameData.Entities[col.name]);
+        }
     }
 
     public void SetLastCol(string s)

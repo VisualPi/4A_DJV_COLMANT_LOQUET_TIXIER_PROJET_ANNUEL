@@ -59,7 +59,7 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
                 GameData.SquareMaps[col.name].GetContext().Food.Add(this);
             else if ( tag.Equals("Water") )
                 GameData.SquareMaps[col.name].GetContext().Water.Add(this);
-            Debug.Log("Now SquareMap : " + col.name + " list contains " + this.name);
+            //Debug.Log("Now SquareMap : " + col.name + " list contains " + this.name);
             _lastCol = col.name;
         }
     }

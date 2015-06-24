@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - entity
+  - Entity
   - SquareMap
   - Food
   - Water
@@ -23,7 +23,7 @@ TagManager:
   - Targetable
   - FieldOfVue
   - Entity
-  - 
+  - Group
   - 
   - 
   - 

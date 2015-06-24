@@ -7,35 +7,32 @@ using Assets.Scripts.Context;
 [Serializable]
 public class EntityScript : MonoBehaviour
 {
-    [SerializeField]
-    private Transform              _transform;
-    [SerializeField]
-    private GameObject             _gameObject;
-    [SerializeField]
-    private Rigidbody              _rigidbody;
-    [SerializeField]
-    private EntityMovementScript   _movement;
-    [SerializeField]
-    private NetworkView            _networkView;
-    [SerializeField]
-    private EntityCollisionScript  _collider;
-    [SerializeField]
-    private MeshRenderer           _meshRenderer;
-    [SerializeField]
-    private List<Material>         _materials = new List<Material>(5);
+    [SerializeField] private Transform              _transform;
+    [SerializeField] private GameObject             _gameObject;
+    [SerializeField] private Rigidbody              _rigidbody;
+    [SerializeField] private EntityMovementScript   _movement;
+    [SerializeField] private NetworkView            _networkView;
+    [SerializeField] private EntityCollisionScript  _collision;
+    [SerializeField] private CapsuleCollider        _collider;
+    [SerializeField] private SphereCollider         _groupCollider;
+    [SerializeField] private MeshRenderer           _pastilleRenderer;
+    [SerializeField] private MeshRenderer           _meshRenderer;
+    [SerializeField] private List<Material>         _materials = new List<Material>(5);
 
-    private DnaScript       _dna;
-    private CapacityScript  _capacities;
+    private DnaScript                               _dna;
+    private CapacityScript                          _capacities;
 
-    private bool            _isPlayable = false;
-    private bool            _isAlive = true;
+    private bool                                    _isPlayable = false;
+    private bool                                    _isAlive = true;
 
-    private EntityRules _rules;
-    private EntityStateScript _state;
-    private EntityContext _context;
+    private EntityRules                             _rules;
+    private EntityStateScript                       _state;
+    private EntityContext                           _context;
 
-    private float _foodTime;
-    private float _drinkTime;
+    private float                                   _foodTime;
+    private float                                   _drinkTime;
+
+    private GroupContext                            _groupContext = null;
     public void Init()
     {
         _dna = new DnaScript();
@@ -47,7 +44,7 @@ public class EntityScript : MonoBehaviour
         _foodTime = 0f;
         _drinkTime = 0f;
         _movement.Init();
-
+        _collider.name = name;
     }
 
     void OnMouseDown()
@@ -60,6 +57,14 @@ public class EntityScript : MonoBehaviour
     {
         _context.Memory = _dna.GetGeneAt(ECharateristic.Memory);
         _meshRenderer.material = _materials[_dna.GetGeneAt(ECharateristic.Skincolor)];
+        _pastilleRenderer.material = _materials[_dna.GetGeneAt(ECharateristic.Skincolor)];
+        if (_dna.GetGeneAt(ECharateristic.Sociability) > 80)
+        {
+            _groupCollider.enabled = true;
+            _groupContext = new GroupContext {Leader = this};
+            _groupContext.Entities.Add(this);
+            Debug.Log(name + " is ready to create a group");
+        }
     }
     void Update()
     {
@@ -138,11 +143,11 @@ public class EntityScript : MonoBehaviour
     }
     public EntityCollisionScript GetColliderScript()
     {
-        return _collider;
+        return _collision;
     }
     public void SetColliderScript(EntityCollisionScript col)
     {
-        _collider = col;
+        _collision = col;
     }
     public Transform GetTransform()
     {
@@ -183,6 +188,14 @@ public class EntityScript : MonoBehaviour
     public void SetContext(EntityContext context)
     {
         _context = context;
+    }
+    public GroupContext GetGroupContext()
+    {
+        return _groupContext;
+    }
+    public void SetGroupContext(GroupContext context)
+    {
+        _groupContext = context;
     }
 }
 
