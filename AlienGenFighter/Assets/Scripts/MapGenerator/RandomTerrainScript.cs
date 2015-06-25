@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Linq;
-using System.Collections.Generic; // used for Sum of array
+using Assets.Scripts.Misc;
+
+// used for Sum of array
 
 public class RandomTerrainScript : MonoBehaviour
 {
@@ -89,7 +89,7 @@ public class RandomTerrainScript : MonoBehaviour
     private void Start()
     {
         InitialiseTerrainParameter();
-        //Debug.Log(terrainData.size);
+        Log.info("Size : {0}", terrainData.size);
     }
 
     public void CreateCivilisations()
@@ -205,7 +205,8 @@ public class RandomTerrainScript : MonoBehaviour
                                             min = heightArray[ySqr, xSqr];
                                         }
                       */
-                    //Debug.Log("Point, X:" + xSqr + ", Y: " + ySqr + "  value: " + heightArray[ySqr, xSqr]);
+
+                    Log.Debug.Map("Point, X: {0}, Y: {1}  value: {2}", xSqr, ySqr, heightArray[ySqr, xSqr]);
                 }
             }
             for (xSqr = 0; xSqr < heightmapSize; xSqr += demiEspace)
@@ -263,8 +264,7 @@ public class RandomTerrainScript : MonoBehaviour
             }
         }*/
         //Debug.Log("Nombre d'iteration: " + nbIteration);
-        Debug.Log("Execution de Step Square :" + cSqr);
-        Debug.Log("Execution de Step Diamond :" + cDmd);
+        Log.Debug.Map("Step Square : {0, -10}\n Step Diamond : {1, -10}", cSqr, cDmd);
         return heightArray;
     }
 
@@ -306,11 +306,11 @@ public class RandomTerrainScript : MonoBehaviour
 
         if (espace < 1000)
         {
-            espaceVal = (1.0f + ((float) espace/1000.0f));
+            espaceVal = (1.0f + (espace/1000.0f));
         }
         else if (espace > 1000)
         {
-            espaceVal = (1.0f + ((float) espace/10000.0f));
+            espaceVal = (1.0f + (espace/10000.0f));
         }
         //Debug.Log("ESPACE VALUE : " + espaceVal);
         heightValue = moyenne;

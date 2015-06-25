@@ -3,6 +3,7 @@ using System.Linq;
 using Assets.Scripts.Context;
 using Assets.Scripts.GUI;
 using Assets.Scripts.GUI.Misc;
+using Assets.Scripts.Misc;
 using UnityEngine;
 
 public class SquareMapScript : MonoBehaviour
@@ -43,13 +44,12 @@ public class SquareMapScript : MonoBehaviour
 
     public void OnTriggerEnter(Collider col)
     {
-        //Debug.Log("Enter on square");
+        Log.Trace.SquareMap("Enter");
         if ( col.tag.Equals("entity") )
             _context.NbEntity += 1;
     }
-    public void OnTriggerExit(Collider col)
-    {
-        //Debug.Log("Exit from square");
+    public void OnTriggerExit(Collider col) {
+        Log.Trace.SquareMap("Exit");
         if ( col.tag.Equals("entity") )
             _context.NbEntity -= 1;
         if ( _context.NbEntity < 0 )

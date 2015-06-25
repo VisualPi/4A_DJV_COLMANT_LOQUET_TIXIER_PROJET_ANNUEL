@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Assets.Scripts.Misc;
 
 public class EdibleScript : MonoBehaviour, OtherTargetable
 {
@@ -59,7 +59,7 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
                 GameData.SquareMaps[col.name].GetContext().Food.Add(this);
             else if ( tag.Equals("Water") )
                 GameData.SquareMaps[col.name].GetContext().Water.Add(this);
-            //Debug.Log("Now SquareMap : " + col.name + " list contains " + this.name);
+            Log.Debug.Map("Now SquareMap : {0} list contains {1}.", col.name, name);
             _lastCol = col.name;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
-using Assets.Scripts.Context;
+using Assets.Scripts.Misc;
 using Random = UnityEngine.Random;
 
 public class EntityRules
@@ -143,8 +142,7 @@ public class EntityRules
     private void Die(EntityScript entity)
     {
         EntityManagerScript.AddToQueueAndMove(entity);
-        //Debug.LogError("DIE !!!");
-        return;
+        Log.Error.Entity("DIE !!!");
     }
     #endregion
     #region MANGER
@@ -155,12 +153,11 @@ public class EntityRules
     }
     private void GoToEat(EntityScript entity)
     {
-        //Debug.Log("Go To eat");
+        Log.Debug.Entity("Go To Eat");
         entity.GetMovement().SetTargetPosition(entity.GetState().GetTargetedFood().Position);
     }
-    private void Eat(EntityScript entity)
-    {
-        //Debug.Log("Eat !!");
+    private void Eat(EntityScript entity) {
+        Log.Debug.Entity("Eat !!");
         var f = Random.Range(10, 50);
         GameData.Ressources[entity.GetState().GetTargetedFood().Name].Take(f); //TODO : a voir le nombre de food
         entity.GetState().SetFood(entity.GetState().GetFood() + f);
@@ -172,14 +169,12 @@ public class EntityRules
         return;
         //imaginer une animation ou il cherche a manger ou alors il se tient le ventre ...
     }
-    private void GoToWater(EntityScript entity)
-    {
-        //Debug.Log("Go To drink");
+    private void GoToWater(EntityScript entity) {
+        Log.Debug.Entity("Go To Drink");
         entity.GetMovement().SetTargetPosition(entity.GetState().GetTargetedWater().Position);
     }
-    private void Drink(EntityScript entity)
-    {
-        //Debug.Log("Eat !!");
+    private void Drink(EntityScript entity) {
+        Log.Debug.Entity("Drink !!");
         var f = Random.Range(10, 50);
         GameData.Ressources[entity.GetState().GetTargetedWater().Name].Take(f);  //TODO : a voir le nombre de food
         entity.GetState().SetWater(entity.GetState().GetWater() + f);
@@ -188,7 +183,7 @@ public class EntityRules
     #region BOUGER
     private void Move(EntityScript entity)
     {
-        //Debug.Log("Entity " + entity + " is moving");
+        Log.Debug.Entity("{0} is moving.", entity);
         var pos = entity.GetMovement().GetPosition();
         var newPos = new Vector3(pos.x + Random.Range(-10f, 10f), pos.y, pos.z + Random.Range(-10f, 10f));
         newPos.x = Mathf.Clamp(newPos.x, 0, GameData.MapSize.x);

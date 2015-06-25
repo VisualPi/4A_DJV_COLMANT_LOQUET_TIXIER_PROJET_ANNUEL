@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Misc;
+using UnityEngine;
 
 public class EntityCollisionScript : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class EntityCollisionScript : MonoBehaviour
         }
         if ( col.tag.Equals("Entity") )
         {
-            //Debug.Log("Entity (" + col.name + ") is supposed to enter in a group");
+            Log.Debug.Entity("({0}) is supposed to enter in a group", col.name);
             if(GameData.Entities[col.name].GetDNA().GetGeneAt(ECharateristic.Sociability) > 50)
                 _entity.GetGroupContext().AddEntity(GameData.Entities[col.name]);
         }
