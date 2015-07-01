@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.Context;
+using Assets.Scripts.Group;
 
 public class EntityManagerScript : MonoBehaviour
 {
     [SerializeField]
     private NetworkView _networkView;
-    public static Queue<EntityScript> _AvailableEntities;
+    public static Queue<EntityScript> AvailableEntities;
     [SerializeField]
     public EntityScript[] tab;
+
+    [SerializeField] public GroupScript[] tabGroups;
+    public static Queue<GroupScript> AvailableGroups; 
 
     private static int nbInstanciated;
 
     public void Start()
     {
-        _AvailableEntities = new Queue<EntityScript>(tab.Length);
+        AvailableEntities = new Queue<EntityScript>(tab.Length);
         for ( int index = 0 ; index < tab.Length ; index++ )
         {
             EntityScript t = tab[index];
@@ -21,10 +26,18 @@ public class EntityManagerScript : MonoBehaviour
         }
         nbInstanciated = 0;
         tab = null;
+        AvailableGroups = new Queue<GroupScript>(tabGroups.Length);
+        for ( var index = 0 ; index < tabGroups.Length ; index++ )
+        {
+            GroupScript t = tabGroups[index];
+            AddGroupToQueue(t);
+        }
+        //nbInstanciated = 0;
+        tabGroups = null;
     }
     public static EntityScript GetFromQueue()
     {
-        var e = _AvailableEntities.Dequeue();
+        var e = AvailableEntities.Dequeue();
         e.EnableComponents();
         e.name = "Entity_" + nbInstanciated;
         //e.collider.name = 
@@ -32,17 +45,30 @@ public class EntityManagerScript : MonoBehaviour
         nbInstanciated++;
         return e;
     }
+    public static GroupScript GetGroupFromQueue()
+    {
+        var g = AvailableGroups.Dequeue();
+        g.GetComponent<Collider>().enabled = true; //TODO : a voir
+        return g;
+    }
+    public static void AddGroupToQueue(GroupScript g)
+    {
+        g.Collider.enabled = false;
+        g.Transform.position = new Vector3(-2000,1000,5000); //TODO:mouais
+        AvailableGroups.Enqueue(g);
+    }
     [RPC]
     public static void AddToQueue(EntityScript e)
     {
         //TODO : ajouter la gestion de groupe lors de la mort, leader etc...
-        GameData.Entities.Remove(e.name);
         e.DisableComponents();
-        _AvailableEntities.Enqueue(e);
+        AvailableEntities.Enqueue(e);
     }
     public static void AddToQueueAndMove(EntityScript e)
     {
-        e.GetTransform().position = new Vector3(10000, 10000, _AvailableEntities.Count+10);
+        GameData.Entities.Remove(e.name);
+        e.DisableComponents();
+        e.GetTransform().position = new Vector3(10000, 10000, AvailableEntities.Count+10);
         AddToQueue(e);
     }
 }

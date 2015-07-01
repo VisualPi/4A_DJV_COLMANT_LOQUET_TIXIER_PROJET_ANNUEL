@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Misc;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EntityCollisionScript : MonoBehaviour
 {
@@ -24,12 +23,6 @@ public class EntityCollisionScript : MonoBehaviour
         if ( col.tag.Equals("Water") )
         {
             _entity.GetContext().AddWater(( (EdibleScript)GameData.Ressources[col.name] ).GetInformations());
-        }
-        if ( col.tag.Equals("Entity") )
-        {
-            Log.Debug.Entity("({0}) is supposed to enter in a group", col.name);
-            if(GameData.Entities[col.name].GetDNA().GetGeneAt(ECharateristic.Sociability) > 50)
-                _entity.GetGroupContext().AddEntity(GameData.Entities[col.name]);
         }
     }
 

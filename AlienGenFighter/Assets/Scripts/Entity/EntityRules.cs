@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.Context;
+using Assets.Scripts.Group;
 using Assets.Scripts.Misc;
 using Random = UnityEngine.Random;
 
 public class EntityRules
 {
-    private List<RulesGroup>[] _rules;
+    public List<RulesGroup>[] Rules { get; set; }
+
     public EntityRules()
     {
-        _rules = new List<RulesGroup>[]
+        Rules = new List<RulesGroup>[]
         {
             new List<RulesGroup>(),
             new List<RulesGroup>(),
@@ -17,36 +20,34 @@ public class EntityRules
         //mourir - pritity 0
         RulesGroup rg = new RulesGroup();
         rg.GetRuleList().Add(new Rules(new RuleCondition(HasZeroFood), new RuleAction(Die)));
-        _rules[0].Add(rg);
+        Rules[0].Add(rg);
         rg = new RulesGroup();
         rg.GetRuleList().Add(new Rules(new RuleCondition(HasZeroWater), new RuleAction(Die)));
-        _rules[0].Add(rg);
+        Rules[0].Add(rg);
+        //groupe - priority 0
+        rg = new RulesGroup();
+        rg.GetRuleList().Add(new Rules(new RuleCondition(IsNotInAGroup), new RuleAction(Iddle)));
+        rg.GetRuleList().Add(new Rules(new RuleCondition(WantToBeInAGroup), new RuleAction(SearchingForGroup)));
+        Rules[0].Add(rg);
         ////manger - priority 0
         rg = new RulesGroup();
         rg.GetRuleList().Add(new Rules(new RuleCondition(isHungry), new RuleAction(SearchForEat)));
         rg.GetRuleList().Add(new Rules(new RuleCondition(CanGoToFood), new RuleAction(GoToEat)));
         rg.GetRuleList().Add(new Rules(new RuleCondition(CanEat), new RuleAction(Eat)));
-        _rules[0].Add(rg);
+        Rules[0].Add(rg);
         //boire - priority 0
         rg = new RulesGroup();
         rg.GetRuleList().Add(new Rules(new RuleCondition(isTthirsty), new RuleAction(SearchForWater)));
         rg.GetRuleList().Add(new Rules(new RuleCondition(CanGoToWater), new RuleAction(GoToWater)));
         rg.GetRuleList().Add(new Rules(new RuleCondition(CanDrink), new RuleAction(Drink)));
-        _rules[0].Add(rg);
+        Rules[0].Add(rg);
 
         //avancer aleatoirement - priority 2
         rg = new RulesGroup();
         rg.GetRuleList().Add(new Rules(new RuleCondition(CanMove), new RuleAction(Move)));
-        _rules[2].Add(rg);
+        Rules[2].Add(rg);
 
     }
-
-    public List<RulesGroup>[] GetRules()
-    {
-        return _rules;
-    }
-
-    public bool b = true;
 
     #region CONDITION_DEFINITION
     #region MOURIR
@@ -57,6 +58,19 @@ public class EntityRules
     private bool HasZeroWater(EntityScript entity)
     {
         return entity.GetState().GetWater() <= 0;
+    }
+    #endregion
+    #region GROUPE
+    private bool IsNotInAGroup(EntityScript entity)
+    {
+        return !entity._isInGroup;
+    }
+    private bool WantToBeInAGroup(EntityScript entity)
+    {
+        if (entity.GetDNA().GetGeneAt(ECharateristic.Sociability) < 70)
+            return false;
+        var coef = Random.Range(0, 100);
+        return coef > entity.GetDNA().GetGeneAt(ECharateristic.Sociability);
     }
     #endregion
     #region MANGER
@@ -75,6 +89,19 @@ public class EntityRules
                 return true;
             }
         }
+        if (entity.GroupContext != null)
+        {
+            for ( var i = 0 ; i < entity.GroupContext.Food.Count ; ++i )
+            {
+                if ( Vector3.Distance(entity.GroupContext.Food[i].Position,
+                    entity.GetTransform().position) < 5f )
+                {
+                    entity.GetState().SetTargetedFood(entity.GroupContext.Food[i]);
+                    return true;
+                }
+            }
+        }
+        
         return false;
     }
     private bool CanEat(EntityScript entity)
@@ -110,6 +137,18 @@ public class EntityRules
             }
 
         }
+        if ( entity.GroupContext != null )
+        {
+            for ( var i = 0 ; i < entity.GroupContext.Water.Count ; ++i )
+            {
+                if ( Vector3.Distance(entity.GroupContext.Water[i].Position,
+                    entity.GetTransform().position) < 5f )
+                {
+                    entity.GetState().SetTargetedWater(entity.GroupContext.Water[i]);
+                    return true;
+                }
+            }
+        }
         return false;
     }
     private bool CanDrink(EntityScript entity)
@@ -137,12 +176,30 @@ public class EntityRules
 
     #endregion
     #endregion
+
     #region ACTION_DEFINITION
     #region MOURIR
     private void Die(EntityScript entity)
     {
         EntityManagerScript.AddToQueueAndMove(entity);
         Log.Error.Entity("DIE !!!");
+    }
+    #endregion
+    #region GROUPE
+    private void Iddle(EntityScript entity) //TODO: a voir
+    {
+        return;
+    }
+    private void SearchingForGroup(EntityScript entity)//Pour l'instant ce sera creer un groupe
+    {
+        //entity.GroupContext = new GroupContext();
+        var gr = EntityManagerScript.GetGroupFromQueue() as GroupScript;
+        entity.GroupContext = gr.GroupContext;
+        entity.GroupObject = gr.GameObject;
+        entity.GroupContext.AddEntity(entity);
+        gr.Transform.position = entity.GetTransform().position;
+        gr.Transform.parent = entity.GetTransform();
+
     }
     #endregion
     #region MANGER
@@ -186,6 +243,12 @@ public class EntityRules
         Log.Debug.Entity("{0} is moving.", entity);
         var pos = entity.GetMovement().GetPosition();
         var newPos = new Vector3(pos.x + Random.Range(-10f, 10f), pos.y, pos.z + Random.Range(-10f, 10f));
+        if(entity._isInGroup && Random.Range(0,100) < entity.GetDNA().GetGeneAt(ECharateristic.Adventurous))
+        {
+            newPos.x = Mathf.Clamp(newPos.x, entity.GroupContext.Group.Collider.bounds.min.x, entity.GroupContext.Group.Collider.bounds.max.x);
+            newPos.x = Mathf.Clamp(newPos.x, entity.GroupContext.Group.Collider.bounds.min.z, entity.GroupContext.Group.Collider.bounds.max.z);
+            //TODO : gerer le fait que l'entite peut sortir des bounds, techniquement ça se joue avec l'aventure ..
+        }
         newPos.x = Mathf.Clamp(newPos.x, 0, GameData.MapSize.x);
         newPos.z = Mathf.Clamp(newPos.z, 0, GameData.MapSize.z);
         entity.GetMovement().SetTargetPosition(newPos);

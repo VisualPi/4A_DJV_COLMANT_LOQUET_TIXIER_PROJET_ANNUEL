@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Misc;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public class GameManager : MonoBehaviour
@@ -29,21 +28,27 @@ public class GameManager : MonoBehaviour
             first = false;
         }
 
-        foreach ( var map in GameData.SquareMaps ) {
-            Log.Trace.SquareMap("Foreach {0}", map.Value.name);
-            foreach ( var ent in map.Value.GetContext().Entities ) {
-                Log.Trace.Entity("Foreach {0}", ent.name);
+        foreach ( var map in GameData.SquareMaps )
+        {
+            //Debug.Log("Foreach " + map.Value.name);
+            foreach ( var ent in map.Value.GetContext().Entities )
+            {
+                //Debug.Log("Foreach " + ent.name);
                 bool next = false;
-                for ( var priority = 0 ; priority < ent.GetRules().GetRules().Length ; ++priority ) {
-                    Log.Trace.Entity("For priority {0}", priority);
-                    for ( var group = 0 ; group < ent.GetRules().GetRules()[priority].Count ; ++group ) {
-                        Log.Trace.Entity("For group {0}", group);
-                        for ( var rule = 0 ; rule < ent.GetRules().GetRules()[priority][group].GetRuleList().Count ; ++rule ) {
-                            Log.Trace.Entity("For rule {0}", rule);
-                            var curRule = ent.GetRules().GetRules()[priority][group].GetRuleList()[rule];
-                            if ( curRule._condition.Test(ent) ) {
+                for ( var priority = 0 ; priority < ent.GetRules().Rules.Length ; ++priority )
+                {
+                    //Debug.Log("For priority = " + priority);
+                    for ( var group = 0 ; group < ent.GetRules().Rules[priority].Count ; ++group )
+                    {
+                        //Debug.Log("For group = " + group);
+                        for ( var rule = 0 ; rule < ent.GetRules().Rules[priority][group].GetRuleList().Count ; ++rule )
+                        {
+                            //Debug.Log("For rule = " + rule);
+                            var curRule = ent.GetRules().Rules[priority][group].GetRuleList()[rule];
+                            if ( curRule._condition.Test(ent) )
+                            {
                                 curRule._action.Execute(ent);
-                                if ( rule == ent.GetRules().GetRules()[priority][group].GetRuleList().Count - 1 )
+                                if ( rule == ent.GetRules().Rules[priority][group].GetRuleList().Count - 1 )
                                     next = true;
                             }
                             else

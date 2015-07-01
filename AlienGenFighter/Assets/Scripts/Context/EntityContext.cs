@@ -27,6 +27,7 @@ namespace Assets.Scripts.Context
             }
             else
             {
+                //TODO : tester si la ressource existe pas déja dans le groupe mais dans ce cas : reference croisé
                 Water.Add(water);
             }
 
@@ -44,6 +45,7 @@ namespace Assets.Scripts.Context
             }
             else
             {
+                //TODO : tester si la ressource existe pas déja dans le groupe mais dans ce cas : reference croisé
                 Food.Add(food);
             }
         }
