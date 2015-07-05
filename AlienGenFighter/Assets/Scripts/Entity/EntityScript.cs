@@ -17,6 +17,7 @@ public class EntityScript : MonoBehaviour
     [SerializeField] private CapsuleCollider        _collider;
     [SerializeField] private MeshRenderer           _pastilleRenderer;
     [SerializeField] private MeshRenderer           _meshRenderer;
+    [SerializeField] private EntityCollisionScript  _contextCollision;
     [SerializeField] private List<Material>         _materials = new List<Material>(5);
     
     private DnaScript                               _dna;
@@ -28,8 +29,8 @@ public class EntityScript : MonoBehaviour
     private EntityRules                             _rules;
     private EntityStateScript                       _state;
     private EntityContext                           _context;
+
     public GroupContext                             GroupContext { get; set; }
-    public GameObject                               GroupObject { get; set; }
 
     private float                                   _foodTime;
     private float                                   _drinkTime;
@@ -52,6 +53,8 @@ public class EntityScript : MonoBehaviour
         GroupContext = null;
         IsInGroup = false;
         _collider.name = name;
+        _collision.EntName = name;
+        _contextCollision.EntName = name;
     }
 
     void OnMouseDown() {
@@ -115,6 +118,7 @@ public class EntityScript : MonoBehaviour
         _isPlayable = false;
         _movement.SetPlayable(false);
         enabled = false;
+        GroupContext = null;
     }
 
     public void EnableComponents()

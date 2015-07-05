@@ -20,16 +20,11 @@ public class EntityRules
         rg.RuleList.Add(new Rules(new RuleCondition(HasZeroFood), new RuleAction(Die)));
         Rules[0].Add(rg);
 
-        // ?? - priority ?
+        // mourrir - priority 0
         rg = new RulesGroup(); // TODO JO FROM AMAU : Deux groupe pour mourir ?
         rg.RuleList.Add(new Rules(new RuleCondition(HasZeroWater), new RuleAction(Die)));
         Rules[0].Add(rg);
 
-        // groupe - priority 0
-        rg = new RulesGroup();
-        rg.RuleList.Add(new Rules(new RuleCondition(IsNotInAGroup), new RuleAction(Iddle)));
-        rg.RuleList.Add(new Rules(new RuleCondition(WantToBeInAGroup), new RuleAction(SearchingForGroup)));
-        Rules[0].Add(rg);
 
         // manger - priority 0
         rg = new RulesGroup();
@@ -45,7 +40,21 @@ public class EntityRules
         rg.RuleList.Add(new Rules(new RuleCondition(CanDrink), new RuleAction(Drink)));
         Rules[0].Add(rg);
 
-        // avancer aleatoirement - priority 2
+
+        //groupe - priority 1
+        rg = new RulesGroup();
+        rg.RuleList.Add(new Rules(new RuleCondition(IsNotInAGroup), new RuleAction(Iddle)));
+        rg.RuleList.Add(new Rules(new RuleCondition(WantToBeInAGroup), new RuleAction(SearchingForGroup)));
+        Rules[1].Add(rg);
+
+        //deleteGroup - Prority 1
+        rg = new RulesGroup();
+        rg.RuleList.Add(new Rules(new RuleCondition(IsInAGroup), new RuleAction(Iddle)));
+        rg.RuleList.Add(new Rules(new RuleCondition(IsNotEnoughMember), new RuleAction(DeleteGroup)));
+        Rules[1].Add(rg);
+
+
+        //avancer aleatoirement - priority 2
         rg = new RulesGroup();
         rg.RuleList.Add(new Rules(new RuleCondition(CanMove), new RuleAction(Move)));
         Rules[2].Add(rg);
@@ -63,17 +72,32 @@ public class EntityRules
     }
     #endregion
     #region GROUPE
+    #region GROUPE_CREATION
     private bool IsNotInAGroup(EntityScript entity)
     {
-        return !entity.IsInGroup;
+        return !entity.IsInGroup && Time.time > Utils.MinuteToSecond(1);
     }
     private bool WantToBeInAGroup(EntityScript entity)
     {
-        if (entity.DNA.GetGeneAt(ECharateristic.Sociability) < 70)
+        if ( entity.DNA.GetGeneAt(ECharateristic.Sociability) < 70 )
             return false;
         var coef = Random.Range(0, 100);
         return coef > entity.DNA.GetGeneAt(ECharateristic.Sociability);
     }
+    #endregion
+    #region GROUPE_DELETE
+    private bool IsInAGroup(EntityScript entity)
+    {
+        return entity.IsInGroup;
+    }
+    private bool IsNotEnoughMember(EntityScript entity)//cette fonction va retourner true si le group contient qu'une seule personne apres 5 minutes d'existance
+    {
+        if ( entity.GroupContext.Entities.Count > 1 )
+            return false; //retourne faux si le groupe n'est pas vide
+        return entity.GroupContext.Group.TimeEllapsed > Utils.MinuteToSecond(5);
+    }
+
+    #endregion
     #endregion
     #region MANGER
     private bool isHungry(EntityScript entity)
@@ -91,7 +115,7 @@ public class EntityRules
                 return true;
             }
         }
-        if (entity.GroupContext != null)
+        if ( entity.GroupContext != null )
         {
             for ( var i = 0 ; i < entity.GroupContext.Food.Count ; ++i )
             {
@@ -103,7 +127,7 @@ public class EntityRules
                 }
             }
         }
-        
+
         return false;
     }
     private bool CanEat(EntityScript entity)
@@ -171,7 +195,7 @@ public class EntityRules
 
     #endregion
     #endregion
-
+    //--------------------------------------------------------------------------------//
     #region ACTION_DEFINITION
     #region MOURIR
     private void Die(EntityScript entity)
@@ -181,6 +205,7 @@ public class EntityRules
     }
     #endregion
     #region GROUPE
+    #region GROUPE_CREATION
     private void Iddle(EntityScript entity) //TODO: a voir
     {
         return;
@@ -190,12 +215,21 @@ public class EntityRules
         //entity.GroupContext = new GroupContext();
         var gr = EntityManagerScript.GetGroupFromQueue();
         entity.GroupContext = gr.GroupContext;
-        entity.GroupObject = gr.GameObject;
         entity.GroupContext.AddEntity(entity);
         gr.Transform.position = entity.Transform.position;
         gr.Transform.parent = entity.Transform;
+        gr.StartTimer();
 
     }
+    #endregion
+    #region GROUPE_DELETE
+    private void DeleteGroup(EntityScript entity)//Pour l'instant ce sera creer un groupe
+    {
+        EntityManagerScript.AddGroupToQueue(entity.GroupContext.Group);
+        entity.IsInGroup    = false;
+        entity.GroupContext = null;
+    }
+    #endregion
     #endregion
     #region MANGER
     private void SearchForEat(EntityScript entity)
@@ -208,7 +242,8 @@ public class EntityRules
         Log.Debug.Entity("Go To Eat");
         entity.Movement.SetTargetPosition(entity.State.TargetedFood.Position);
     }
-    private void Eat(EntityScript entity) {
+    private void Eat(EntityScript entity)
+    {
         Log.Debug.Entity("Eat !!");
         var f = Random.Range(10, 50);
         GameData.Ressources[entity.State.TargetedFood.Name].Take(f); //TODO : a voir le nombre de food
@@ -221,11 +256,13 @@ public class EntityRules
         return;
         //imaginer une animation ou il cherche a manger ou alors il se tient le ventre ...
     }
-    private void GoToWater(EntityScript entity) {
+    private void GoToWater(EntityScript entity)
+    {
         Log.Debug.Entity("Go To Drink");
         entity.Movement.SetTargetPosition(entity.State.TargetedWater.Position);
     }
-    private void Drink(EntityScript entity) {
+    private void Drink(EntityScript entity)
+    {
         Log.Debug.Entity("Drink !!");
         var w = Random.Range(10, 50);
         GameData.Ressources[entity.State.TargetedWater.Name].Take(w);  //TODO : a voir le nombre de food
@@ -244,7 +281,7 @@ public class EntityRules
         if(entity.IsInGroup && Random.Range(0,100) < entity.DNA.GetGeneAt(ECharateristic.Adventurous))
         {
             newPos.x = Mathf.Clamp(newPos.x, entity.GroupContext.Group.Collider.bounds.min.x, entity.GroupContext.Group.Collider.bounds.max.x);
-            newPos.x = Mathf.Clamp(newPos.x, entity.GroupContext.Group.Collider.bounds.min.z, entity.GroupContext.Group.Collider.bounds.max.z); // TODO JO FROM AMAU : maybe u want set newPos.z ?
+            newPos.z = Mathf.Clamp(newPos.z, entity.GroupContext.Group.Collider.bounds.min.z, entity.GroupContext.Group.Collider.bounds.max.z);
             //TODO : gerer le fait que l'entite peut sortir des bounds, techniquement ça se joue avec l'aventure ..
         }
         newPos.x = Mathf.Clamp(newPos.x, 0, GameData.MapSize.x);

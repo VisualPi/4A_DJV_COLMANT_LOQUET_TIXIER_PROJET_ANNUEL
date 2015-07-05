@@ -74,10 +74,32 @@ namespace Assets.Scripts.Context
             Group.Collider.transform.localScale += new Vector3(.5f, .5f, .5f);
         }
 
+        public void RemoveEntity(EntityScript e)
+        {
+            Entities.Remove(e);
+            if (Leader == e)
+            {
+                ChangeLeader(GetNewLeader());
+            }
+        }
         private void ChangeLeader(EntityScript entity)
         {
             Leader = entity;
             Group.Transform.parent = entity.Transform;
+        }
+
+        private EntityScript GetNewLeader()
+        {
+            var tmp = Entities[0];
+            for (var i = 0; i < Entities.Count; ++i)
+            {
+                if (Entities[i].DNA.GetGeneAt(ECharateristic.Authority) >
+                    tmp.DNA.GetGeneAt(ECharateristic.Authority))
+                {
+                    tmp = Entities[i];
+                }
+            }
+            return tmp;
         }
     }
 }

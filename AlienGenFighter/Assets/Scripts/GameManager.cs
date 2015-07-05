@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
             }
             first = false;
         }
-
         foreach ( var map in GameData.SquareMaps )
         {
             //Debug.Log("Foreach " + map.Value.name);

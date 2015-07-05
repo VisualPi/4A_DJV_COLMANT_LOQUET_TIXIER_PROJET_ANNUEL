@@ -238,7 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd70a7063924b8646bab6cc403a436a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entity: {fileID: 11449362}
+  EntName: 
+  _lastCol: 
 --- !u!114 &11416292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,7 +251,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd70a7063924b8646bab6cc403a436a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _entity: {fileID: 11449362}
+  EntName: 
+  _lastCol: 
 --- !u!114 &11444928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -289,6 +291,7 @@ MonoBehaviour:
   _collider: {fileID: 13666508}
   _pastilleRenderer: {fileID: 2305788}
   _meshRenderer: {fileID: 2392680}
+  _contextCollision: {fileID: 11404118}
   _materials:
   - {fileID: 2100000, guid: 6c5a71ec00cde9b4c9088d85115fb696, type: 2}
   - {fileID: 2100000, guid: 0fc7a80831adf444abad8ba75224911f, type: 2}

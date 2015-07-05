@@ -55,6 +55,8 @@ public class EntityManagerScript : MonoBehaviour
     {
         g.Collider.enabled = false;
         g.Transform.position = new Vector3(-2000,1000,5000); //TODO:mouais
+        g.TimeEllapsed = 0;
+        g.StopTimer();
         AvailableGroups.Enqueue(g);
     }
 
@@ -69,6 +71,7 @@ public class EntityManagerScript : MonoBehaviour
     public static void AddToQueueAndMove(EntityScript e)
     {
         GameData.Entities.Remove(e.name);
+        e.GroupContext.RemoveEntity(e);
         e.DisableComponents();
         e.Transform.position = new Vector3(10000, 10000, AvailableEntities.Count+10);
         AddToQueue(e);
