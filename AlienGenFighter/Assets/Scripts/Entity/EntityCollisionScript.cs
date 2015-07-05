@@ -12,17 +12,17 @@ public class EntityCollisionScript : MonoBehaviour
         if ( col.tag.Equals("SquareMap") && !col.name.Equals(_lastCol) )
         {
             if ( !_lastCol.Equals("") )
-                GameData.SquareMaps[_lastCol].GetContext().Entities.Remove(_entity);
-            GameData.SquareMaps[col.name].GetContext().Entities.Add(_entity);
+                GameData.SquareMaps[_lastCol].Context.Entities.Remove(_entity);
+            GameData.SquareMaps[col.name].Context.Entities.Add(_entity);
             _lastCol = col.name;
         }
         if ( col.tag.Equals("Food") )
         {
-            _entity.GetContext().AddFood(( (EdibleScript)GameData.Ressources[col.name] ).GetInformations());
+            _entity.Context.AddFood(( (EdibleScript)GameData.Ressources[col.name] ).Informations);
         }
         if ( col.tag.Equals("Water") )
         {
-            _entity.GetContext().AddWater(( (EdibleScript)GameData.Ressources[col.name] ).GetInformations());
+            _entity.Context.AddWater(( (EdibleScript)GameData.Ressources[col.name] ).Informations);
         }
     }
 

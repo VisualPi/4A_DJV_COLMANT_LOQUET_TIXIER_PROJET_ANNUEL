@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Assets.Scripts.Context;
 using Assets.Scripts.Group;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class GroupColliderScript : MonoBehaviour
 {
@@ -12,11 +10,11 @@ public class GroupColliderScript : MonoBehaviour
     {
         if ( col.tag.Equals("Food") )
         {
-            _group.GroupContext.AddFood(( (EdibleScript)GameData.Ressources[col.name] ).GetInformations());
+            _group.GroupContext.AddFood(( (EdibleScript)GameData.Ressources[col.name] ).Informations);
         }
         if ( col.tag.Equals("Water") )
         {
-            _group.GroupContext.AddWater(( (EdibleScript)GameData.Ressources[col.name] ).GetInformations());
+            _group.GroupContext.AddWater(( (EdibleScript)GameData.Ressources[col.name] ).Informations);
         }
         if ( col.tag.Equals("Entity") )
         {

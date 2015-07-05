@@ -8,11 +8,11 @@ using UnityEngine;
 
 public class SquareMapScript : MonoBehaviour
 {
-    private float moveSpeedInfluence = 1.0f;
-    private float temperature = 25.0f;
+    private float _moveSpeedInfluence = 1.0f;
+    private float _temperature = 25.0f;
 
-    private int foodQuantity = 50;
-    private int drinkableWater = 1000;
+    private int _foodQuantity = 50;
+    private int _drinkableWater = 1000;
 
     [SerializeField]
     private Collider _collider;
@@ -55,23 +55,23 @@ public class SquareMapScript : MonoBehaviour
         if ( _context.NbEntity < 0 )
             _context.NbEntity = 0;//TODO : au cas ou pour les tests, a enlever apres
     }
-    void setEnvironnementalConstraint(float _moveSpeedInfluence, float _temperature)
+    void setEnvironnementalConstraint(float moveSpeedInfluence, float temperature)
     {
-        moveSpeedInfluence = _moveSpeedInfluence;
-        temperature = _temperature;
+        _moveSpeedInfluence = moveSpeedInfluence;
+        _temperature = temperature;
 
     }
-    private void setResources(int _foodQuantity, int _drinkableWater)
+    private void setResources(int foodQuantity, int drinkableWater)
     {
-        foodQuantity = _foodQuantity;
-        drinkableWater = _drinkableWater;
+        _foodQuantity = foodQuantity;
+        _drinkableWater = drinkableWater;
     }
 
     public void getResources()
     {
         Debug.Log("NB ENTITE : " + _context.NbEntity);
-        Debug.Log("NOURRITURE : " + foodQuantity.ToString());
-        Debug.Log("EAU : " + drinkableWater.ToString());
+        Debug.Log("NOURRITURE : " + _foodQuantity.ToString());
+        Debug.Log("EAU : " + _drinkableWater.ToString());
     }
 
     public Transform GetDelimitation()
@@ -79,30 +79,27 @@ public class SquareMapScript : MonoBehaviour
         return _delimination;
     }
 
-    public SquareContext GetContext()
-    {
-        return _context;
+    public SquareContext Context {
+        get { return _context; }
+        set { _context = value; }
     }
-    public void SetContext(SquareContext context)
+
+    void consumeResources(int foodQuantity, int drinkableWater)
     {
-        _context = context;
-    }
-    void consumeResources(int _foodQuantity, int _drinkableWater)
-    {
-        foodQuantity = foodQuantity - _foodQuantity;
-        drinkableWater = drinkableWater - _drinkableWater;
+        _foodQuantity -= foodQuantity;
+        _drinkableWater -= drinkableWater;
     }
     void modifyEnvironnementalConstraint(float valueOfChangeInPercent)
     {
-        moveSpeedInfluence *= valueOfChangeInPercent;
-        temperature *= valueOfChangeInPercent;
+        _moveSpeedInfluence *= valueOfChangeInPercent;
+        _temperature *= valueOfChangeInPercent;
     }
 
     void SetEntityLastMapName()
     {
         for ( int i = 0 ; i < _context.NbEntity ; ++i )
         {
-            _context.Entities[i].GetColliderScript().SetLastCol(_collider.name);
+            _context.Entities[i].CollisionScript.SetLastCol(_collider.name);
         }
     }
 
@@ -113,8 +110,8 @@ public class SquareMapScript : MonoBehaviour
         ManagedInformationMenu.PopulateList(
             new List<ItemInformation> {
                 new ItemInformation { Name = "Entity :", Value = _context.NbEntity.ToString() },
-                new ItemInformation { Name = "Food :", Value = _context.Food.Sum(f => f.GetQuantity()).ToString() },
-                new ItemInformation { Name = "Water :", Value = _context.Water.Sum(w => w.GetQuantity()).ToString() }
+                new ItemInformation { Name = "Food :", Value = _context.Food.Sum(f => f.Quantity).ToString() },
+                new ItemInformation { Name = "Water :", Value = _context.Water.Sum(w => w.Quantity).ToString() }
             });
 
         InformationMenu.IsOpen = true;
@@ -131,8 +128,7 @@ public class SquareMapScript : MonoBehaviour
             return;
 
         RaycastHit hit;
-        Ray ray;
-        ray = new Ray(new Vector3(_transform.position.x, 550f, _transform.position.z), Vector3.down);
+        var ray = new Ray(new Vector3(_transform.position.x, 550f, _transform.position.z), Vector3.down);
         if ( Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")) )
         {
             SquareCamera.transform.position = new Vector3(hit.point.x, hit.point.y+50, hit.point.z);

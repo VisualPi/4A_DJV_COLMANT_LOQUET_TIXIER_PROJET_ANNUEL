@@ -53,20 +53,20 @@ namespace Assets.Scripts.Context
         public void AddEntity(EntityScript entity)
         {
             entity.GroupContext = this;//redondant pour le leader de base
-            entity._isInGroup = true;
+            entity.IsInGroup = true;
             Entities.Add(entity);
-            for ( var i = 0 ; i < entity.GetContext().Food.Count ; ++i )
+            for ( var i = 0 ; i < entity.Context.Food.Count ; ++i )
             {
-                if ( !Food.Contains(entity.GetContext().Food[i]) )
-                    Food.Add(entity.GetContext().Food[i]);
+                if ( !Food.Contains(entity.Context.Food[i]) )
+                    Food.Add(entity.Context.Food[i]);
             }
-            for ( var i = 0 ; i < entity.GetContext().Water.Count ; ++i )
+            for ( var i = 0 ; i < entity.Context.Water.Count ; ++i )
             {
-                if ( !Water.Contains(entity.GetContext().Water[i]) )
-                    Water.Add(entity.GetContext().Water[i]);
+                if ( !Water.Contains(entity.Context.Water[i]) )
+                    Water.Add(entity.Context.Water[i]);
             }
-            if (Leader == null || ( entity.GetDNA().GetGeneAt(ECharateristic.Authority) >
-                                    Leader.GetDNA().GetGeneAt(ECharateristic.Authority) ) )
+            if (Leader == null || ( entity.DNA.GetGeneAt(ECharateristic.Authority) >
+                                    Leader.DNA.GetGeneAt(ECharateristic.Authority) ) )
                 ChangeLeader(entity);
 
             if (Leader != null) Debug.Log("leader is : " + Leader.name);
@@ -77,7 +77,7 @@ namespace Assets.Scripts.Context
         private void ChangeLeader(EntityScript entity)
         {
             Leader = entity;
-            Group.Transform.parent = entity.GetTransform();
+            Group.Transform.parent = entity.Transform;
         }
     }
 }

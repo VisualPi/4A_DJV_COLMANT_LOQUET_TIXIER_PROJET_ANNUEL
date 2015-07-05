@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Threading;
 
 public class EntityMovementScript : MonoBehaviour
 {
@@ -45,7 +43,7 @@ public class EntityMovementScript : MonoBehaviour
             {
                 //Debug.Log(hit.point);
                 _transform.position = new Vector3(hit.point.x,
-                                                   hit.point.y+ _entity.GetDNA().GetGeneAt(ECharateristic.Height),
+                                                   hit.point.y+ _entity.DNA.GetGeneAt(ECharateristic.Height),
                                                    hit.point.z);
             }
         }
@@ -71,12 +69,10 @@ public class EntityMovementScript : MonoBehaviour
     {
         _isPlayable = b;
     }
-    public Vector3 GetPosition()
+
+    public Vector3 Position
     {
-        return _transform.position;
-    }
-    public void SetPosition(Vector3 pos)
-    {
-        _transform.position = pos;
+        get { return _transform.position; }
+        set { _transform.position = value; }
     }
 }

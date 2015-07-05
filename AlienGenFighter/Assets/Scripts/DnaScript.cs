@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using UnityEngine;
 using Random = UnityEngine.Random;
 public enum ECharateristic : byte
 {
@@ -56,7 +55,7 @@ public class DnaScript
     }
     public DnaScript(DnaScript defaultDna)
     {
-        _genes = defaultDna._genes;
+        _genes = defaultDna._genes; // TODO Jo from Amau : Sale ^^ _genes is private!
     }
     public DnaScript(byte[] genes)
     {

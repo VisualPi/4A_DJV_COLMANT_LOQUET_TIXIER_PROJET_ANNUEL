@@ -40,6 +40,7 @@ public class TerrainGenerationScript : MonoBehaviour
         //InfoTerrain.alphamapResolution = 512 + 1;
 
         //QUELQUES OUTPUT
+        Debug.Log("yes we are");
         Log.Trace.Map("InfoTerrain :\n" +
                       "WIDTH : {0, -20}\n" +
                       "LENGTH : {1, -20}\n" +

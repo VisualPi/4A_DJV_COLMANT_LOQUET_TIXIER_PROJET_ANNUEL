@@ -31,24 +31,25 @@ public class GameManager : MonoBehaviour
         foreach ( var map in GameData.SquareMaps )
         {
             //Debug.Log("Foreach " + map.Value.name);
-            foreach ( var ent in map.Value.GetContext().Entities )
+            foreach ( var ent in map.Value.Context.Entities )
             {
                 //Debug.Log("Foreach " + ent.name);
-                bool next = false;
-                for ( var priority = 0 ; priority < ent.GetRules().Rules.Length ; ++priority )
+                var next = false;
+
+                for ( var priority = 0 ; priority < ent.Rules.Rules.Length ; ++priority )
                 {
                     //Debug.Log("For priority = " + priority);
-                    for ( var group = 0 ; group < ent.GetRules().Rules[priority].Count ; ++group )
+                    for ( var group = 0 ; group < ent.Rules.Rules[priority].Count ; ++group )
                     {
                         //Debug.Log("For group = " + group);
-                        for ( var rule = 0 ; rule < ent.GetRules().Rules[priority][group].GetRuleList().Count ; ++rule )
+                        for ( var rule = 0 ; rule < ent.Rules.Rules[priority][group].RuleList.Count ; ++rule )
                         {
                             //Debug.Log("For rule = " + rule);
-                            var curRule = ent.GetRules().Rules[priority][group].GetRuleList()[rule];
-                            if ( curRule._condition.Test(ent) )
+                            var curRule = ent.Rules.Rules[priority][group].RuleList[rule];
+                            if ( curRule.Condition.Test(ent) )
                             {
-                                curRule._action.Execute(ent);
-                                if ( rule == ent.GetRules().Rules[priority][group].GetRuleList().Count - 1 )
+                                curRule.Action.Execute(ent);
+                                if ( rule == ent.Rules.Rules[priority][group].RuleList.Count - 1 )
                                     next = true;
                             }
                             else

@@ -1,7 +1,5 @@
-﻿
-using Random = System.Random;
+﻿using Random = System.Random;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class MapGenerator : MonoBehaviour

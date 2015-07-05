@@ -4,6 +4,6 @@ public interface OtherTargetable
 {
     void Start();
     void OnTriggerEnter(Collider col);
-    Transform GetTransform();
+    Transform Transform { get; }
     void Take(int value);
 }

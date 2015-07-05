@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.Configuration;
 using Assets.Scripts.Context;
+using Assets.Scripts.Misc;
 using Random = UnityEngine.Random;
 
 [Serializable]
@@ -35,7 +34,7 @@ public class EntityScript : MonoBehaviour
     private float                                   _foodTime;
     private float                                   _drinkTime;
 
-    public bool                                     _isInGroup { get; set; }
+    public bool                                     IsInGroup { get; set; }
 
     #endregion
 
@@ -51,41 +50,44 @@ public class EntityScript : MonoBehaviour
         _drinkTime = 0f;
         _movement.Init();
         GroupContext = null;
-        _isInGroup = false;
+        IsInGroup = false;
         _collider.name = name;
     }
 
-    void OnMouseDown()
-    {
-        Debug.Log("ADN = " + _dna.ToString());
-        Debug.Log("Food : " + _state.GetFood() + " Water : " + _state.GetWater());
-        Debug.Log("Context : Food count = " + _context.Food.Count + ", Water count = " + _context.Water.Count);
-        if ( _isInGroup )
-        {
-            Debug.Log("For this entity ["
-                + name
-                + "] Group : Leader is "
-                + GroupContext.Leader.name
-                + " and there is "
-                + GroupContext.Entities.Count
-                + " entities in the group"
-                );
+    void OnMouseDown() {
+        Log.Trace.Entity("INFO OnMouseDown\nADN = {0, -10}\n Food = {1, -10}\n Water = {2, -10}\n\nContext :\nFood count = {3, -10}\nWater count = {4, -10}",
+            _dna, _state.Food, _state.Water, _context.Food.Count, _context.Water.Count);
+        //Debug.Log("ADN = " + _dna);
+        //Debug.Log("Food : " + _state.Food + " Water : " + _state.Water);
+        //Debug.Log("Context : Food count = " + _context.Food.Count + ", Water count = " + _context.Water.Count);
+        if ( IsInGroup ) {
+            Log.Trace.Entity("INFO OnMouseDown _isInGoroup\nFor this entity [{0}] Group : Leader is {1} and there is {2} entities in the group.",
+                name, GroupContext.Leader.name, GroupContext.Entities.Count);
+            //Debug.Log("For this entity ["
+            //    + name
+            //    + "] Group : Leader is "
+            //    + GroupContext.Leader.name
+            //    + " and there is "
+            //    + GroupContext.Entities.Count
+            //    + " entities in the group"
+            //    );
         }
-
     }
+
     public void InitFromDna()
     {
         _context.Memory = _dna.GetGeneAt(ECharateristic.Memory);
         _meshRenderer.material = _materials[_dna.GetGeneAt(ECharateristic.Skincolor)];
         _pastilleRenderer.material = _materials[_dna.GetGeneAt(ECharateristic.Skincolor)];
-        if (_dna.GetGeneAt(ECharateristic.Sociability) > 80)
-        {
+        //if (_dna.GetGeneAt(ECharateristic.Sociability) > 80)
+        //{
             //_groupCollider.enabled = true;
             //_groupContext = new GroupContext {Leader = this};
             //_groupContext.Entities.Add(this);
             //Debug.Log(name + " is ready to create a group");
-        }
+        //}
     }
+
     void Update()
     {
         if ( _isPlayable )
@@ -95,27 +97,29 @@ public class EntityScript : MonoBehaviour
             _drinkTime += Time.deltaTime;
             if ( _foodTime >= 10f )
             {
-                _state.SetFood(_state.GetFood() - 1);
+                _state.Food = _state.Food - 1; // TODO JO FROM AMAU : Il peut avoir moins de 0 de nourriture ?
                 _foodTime = 0f;
             }
             if ( _drinkTime >= 10f )
             {
-                _state.SetWater(_state.GetWater() - 1);
+                _state.Water = _state.Water - 1; // TODO JO FROM AMAU : Il peut avoir moins de 0 d'eau ?
                 _drinkTime = 0f;
             }
         }
     }
+
     public void DisableComponents()
     {
         _movement.enabled = false;
         _isAlive = false;
         _isPlayable = false;
         _movement.SetPlayable(false);
-        this.enabled = false;
+        enabled = false;
     }
+
     public void EnableComponents()
     {
-        this.enabled = true;
+        enabled = true;
         _movement.enabled = true;
         _isPlayable = true;
         _movement.SetPlayable(true);
@@ -125,94 +129,64 @@ public class EntityScript : MonoBehaviour
 
     public bool AskForGroup()
     {
-        if ( _isInGroup ) //TODO : tester l'abandon de groupe
+        if ( IsInGroup ) //TODO : tester l'abandon de groupe
             return false;
         var r = Random.Range(0, 100);
         //Debug.Log("random is : " + r + " and sociability is : " + _dna.GetGeneAt(ECharateristic.Sociability) + " and timidity : " + _dna.GetGeneAt(ECharateristic.Timidity));
-        float coef = ((_dna.GetGeneAt(ECharateristic.Sociability)*((100f - _dna.GetGeneAt(ECharateristic.Timidity))/100f)));
+        var coef = ((_dna.GetGeneAt(ECharateristic.Sociability)*((100f - _dna.GetGeneAt(ECharateristic.Timidity))/100f)));
         return r < coef;
     }
 
     #region getterSetter
-    public EntityCollisionScript GetColliderScript()
-    {
-        return _collision;
+
+    public EntityCollisionScript CollisionScript {
+        get { return _collision; }
+        set { _collision = value; }
     }
-    public void SetColliderScript(EntityCollisionScript col)
-    {
-        _collision = col;
+
+    public Transform Transform {
+        get { return _transform; }
+        set { _transform = value; }
     }
-    public Transform GetTransform()
-    {
-        return _transform;
+
+    public EntityMovementScript Movement {
+        get { return _movement; }
+        set { _movement = value; }
     }
-    public void SetTransform(Transform tr)
-    {
-        _transform = tr;
+
+    public EntityRules Rules {
+        get { return _rules; }
+        set { _rules = value; }
     }
-    public EntityMovementScript GetMovement()
-    {
-        return _movement;
+
+    public EntityStateScript State {
+        get { return _state; }
+        set { _state = value; }
     }
-    public void SetMovement(EntityMovementScript mv)
-    {
-        _movement = mv;
+
+    public EntityContext Context {
+        get { return _context; }
+        set { _context = value; }
     }
-    public EntityRules GetRules()
-    {
-        return _rules;
+
+    public DnaScript DNA {
+        get { return _dna; }
+        set { _dna = value; }
     }
-    public void SetRules(EntityRules rules)
-    {
-        _rules = rules;
+
+    public CapacityScript Capacities {
+        get { return _capacities; }
+        set { _capacities = value; }
     }
-    public EntityStateScript GetState()
-    {
-        return _state;
+
+    public bool Playable {
+        get { return _isPlayable; }
+        set { _isPlayable = value; }
     }
-    public void SetState(EntityStateScript state)
-    {
-        _state = state;
-    }
-    public EntityContext GetContext()
-    {
-        return _context;
-    }
-    public void SetContext(EntityContext context)
-    {
-        _context = context;
-    }
-    public DnaScript GetDNA()
-    {
-        return _dna;
-    }
-    public void SetDNA(DnaScript dna)
-    {
-        _dna = dna;
-    }
-    public CapacityScript GetCapacity()
-    {
-        return _capacities;
-    }
-    public void SetCapacity(CapacityScript cap)
-    {
-        _capacities = cap;
-    }
-    public bool GetPlayable()
-    {
-        return _isPlayable;
-    }
-    public bool GetAlive()
-    {
-        return _isAlive;
-    }
-    public void SetPlayable(bool b)
-    {
-        _isPlayable = b;
-    }
-    public void SetAlive(bool b)
-    {
-        _isAlive = b;
+
+    public bool Alive {
+        get { return _isAlive; }
+        set { _isAlive = value; }
     }
     #endregion
 }

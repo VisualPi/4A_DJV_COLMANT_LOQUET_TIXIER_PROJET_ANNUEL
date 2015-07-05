@@ -10,36 +10,37 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
     [SerializeField]
     private GameObject _gameObject;
 
-    private EdibleInformations infos = new EdibleInformations();
+    private EdibleInformations _infos = new EdibleInformations();
     private string _lastCol = "";
+
     // Use this for initialization
     public void Start()
     {
-        infos.Quantity = infos.DefaultQuantity;
-        infos.Position = _transform.position;
-        infos.Name = name;
+        _infos.Quantity = _infos.DefaultQuantity;
+        _infos.Position = _transform.position;
+        _infos.Name = name;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ( infos.Quantity == infos.DefaultQuantity / 2 ) //TODO : a voir, fonctionnera que si on décremente la nourriture par 1 !!
+        if ( _infos.Quantity == _infos.DefaultQuantity / 2 ) //TODO : a voir, fonctionnera que si on décremente la nourriture par 1 !!
         {
-            _transform.localScale = tag.Equals("Water")
+            _transform.localScale = tag.Equals("Water") // TODO JO FROM AMAU : Pourquoi Water et pas un autre ? (groupe, food, ...)
                                     ? new Vector3(_transform.localScale.x / 2, _transform.localScale.y, _transform.localScale.z / 2)
                                     : new Vector3(_transform.localScale.x / 2, _transform.localScale.y, _transform.localScale.z);
         }
-        if ( infos.Quantity < 1 )
+        if ( _infos.Quantity < 1 )
         {
             if ( tag.Equals("Food") )
             {
-                GameData.SquareMaps[_lastCol].GetContext().Food.Remove(this);
+                GameData.SquareMaps[_lastCol].Context.Food.Remove(this);
             }
             else if ( tag.Equals("Water") )
             {
-                GameData.SquareMaps[_lastCol].GetContext().Water.Remove(this);
+                GameData.SquareMaps[_lastCol].Context.Water.Remove(this);
             }
-            GameData.Ressources.Remove(this.name);
+            GameData.Ressources.Remove(name); // TODO JO FROM AMAU : name?
             Destroy(_gameObject);
         }
     }
@@ -48,38 +49,38 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
         if ( tag.Equals("") ) return;
         if ( col.tag.Equals("SquareMap") && !col.name.Equals(_lastCol) )
         {
-            if ( !_lastCol.Equals("") )
+            if (tag.Equals("Food"))
             {
-                if ( tag.Equals("Food") )
-                    GameData.SquareMaps[_lastCol].GetContext().Food.Remove(this);
-                else if ( tag.Equals("Water") )
-                    GameData.SquareMaps[_lastCol].GetContext().Water.Remove(this);
+                if (!_lastCol.Equals(""))
+                    GameData.SquareMaps[_lastCol].Context.Food.Remove(this);
+                GameData.SquareMaps[col.name].Context.Food.Add(this);
             }
-            if ( tag.Equals("Food") )
-                GameData.SquareMaps[col.name].GetContext().Food.Add(this);
-            else if ( tag.Equals("Water") )
-                GameData.SquareMaps[col.name].GetContext().Water.Add(this);
+            else if (tag.Equals("Water"))
+            {
+                if (!_lastCol.Equals(""))
+                    GameData.SquareMaps[_lastCol].Context.Water.Remove(this);
+                GameData.SquareMaps[col.name].Context.Water.Add(this);
+            }
             Log.Debug.Map("Now SquareMap : {0} list contains {1}.", col.name, name);
             _lastCol = col.name;
         }
     }
 
-    public Transform GetTransform()
-    {
-        return _transform;
-    }
-    public int GetQuantity()
-    {
-        return infos.Quantity;
-    }
-    public void Take(int value)
-    {
-        infos.Quantity -= value;
+    public int Quantity {
+        get { return _infos.Quantity; }
     }
 
-    public EdibleInformations GetInformations()
+    public void Take(int value) 
     {
-        return new EdibleInformations(infos);
+        _infos.Quantity -= value; // TODO JO FROM AMAU : si la value est superieur à la quantity?
+    }
+
+    public Transform Transform {
+        get { return _transform; }
+    }
+
+    public EdibleInformations Informations {
+        get { return _infos; }
     }
 }
 

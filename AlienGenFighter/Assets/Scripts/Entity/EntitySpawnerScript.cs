@@ -18,15 +18,9 @@ public class EntitySpawnerScript : MonoBehaviour
             var e = EntityManagerScript.GetFromQueue();
             e.transform.position = new Vector3(_transform.position.x + Random.Range(1.0f, 15f), _transform.position.y, _transform.position.z + Random.Range(1.0f, 15f));
             e.Init();
-            e.GetDNA().SetGeneAt(ECharateristic.Skincolor, skin);
+            e.DNA.SetGeneAt(ECharateristic.Skincolor, skin);
             e.InitFromDna();
             _entitiesInCivilisation.Add(e);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
