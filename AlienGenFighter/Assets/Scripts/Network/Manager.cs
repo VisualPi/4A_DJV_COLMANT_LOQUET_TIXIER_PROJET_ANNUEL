@@ -2,9 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UENetwork = UnityEngine.Network;
-
-using Assets.Scripts.GUI.Misc;
-using UnityEngine.UI;
+using Assets.Scripts.GUI.ScrollList.Item;
+using Assets.Scripts.GUI.ScrollList.Manager;
 
 namespace Assets.Scripts.Network
 {
@@ -12,7 +11,7 @@ namespace Assets.Scripts.Network
     {
         //
         [SerializeField]
-        private ManagedScrollList _scrollListManager;
+        private ManagedPublicServer _scrollListManager;
 
         //
         private string  _titleMessage = "AGF";
@@ -102,7 +101,7 @@ namespace Assets.Scripts.Network
         public IEnumerator SearchPublicServer()
         {
             // Clear the list of servers
-            _scrollListManager.ClearList();
+            _scrollListManager.RemoveAll();
             MasterServer.ClearHostList();
             MasterServer.RequestHostList(_gameNameType);
 
@@ -113,10 +112,10 @@ namespace Assets.Scripts.Network
             _hostDatas = MasterServer.PollHostList();
 
             // We process information to be displayed
-            var items = new List<Item>();
+            var items = new List<ItemServeurPublic>();
             for ( int i = 0 ; i < _hostDatas.Length ; i++ )
             {
-                items.Add(new Item()
+                items.Add(new ItemServeurPublic()
                 {
                     Id = i,
                     CurrentNbPlayer = _hostDatas[i].connectedPlayers.ToString(),
@@ -127,7 +126,7 @@ namespace Assets.Scripts.Network
                 });
             }
 
-            _scrollListManager.PopulateList(items);
+            _scrollListManager.PopulatePanel(items);
         }
 
         public void ConnectToAPublicServer(int id)

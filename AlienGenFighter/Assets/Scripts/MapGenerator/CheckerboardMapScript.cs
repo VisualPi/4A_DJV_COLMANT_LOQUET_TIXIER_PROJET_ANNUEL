@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.GUI;
-using Assets.Scripts.GUI.Misc;
+using Assets.Scripts.GUI.ScrollList;
+using Assets.Scripts.GUI.ScrollList.Manager;
 using UnityEngine;
 
 public class CheckerboardMapScript : MonoBehaviour

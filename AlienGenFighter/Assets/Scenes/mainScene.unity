@@ -6260,10 +6260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9b2c2199fb7df45ad0506610ef2a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SampleInformationItem: {fileID: 189194, guid: 7a7d068f606a714438df9daec3f7226e,
-    type: 2}
   ItemList: []
   ContentPanel: {fileID: 1736737831}
+  SampleButton: {fileID: 189194, guid: 7a7d068f606a714438df9daec3f7226e, type: 2}
 --- !u!1 &208590241
 GameObject:
   m_ObjectHideFlags: 0
@@ -6626,6 +6625,10 @@ Prefab:
     - target: {fileID: 22448714, guid: 4b5105ead20556c41a58535439436f05, type: 2}
       propertyPath: m_Pivot.y
       value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11487696, guid: 4b5105ead20556c41a58535439436f05, type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4b5105ead20556c41a58535439436f05, type: 2}
