@@ -2,7 +2,8 @@
 using System.Linq;
 using Assets.Scripts.Context;
 using Assets.Scripts.GUI;
-using Assets.Scripts.GUI.Misc;
+using Assets.Scripts.GUI.ScrollList.Item;
+using Assets.Scripts.GUI.ScrollList.Manager;
 using Assets.Scripts.Misc;
 using UnityEngine;
 
@@ -105,13 +106,15 @@ public class SquareMapScript : MonoBehaviour
 
     public void OnMouseOver()
     {
-        ManagedInformationMenu.ClearList();
+        Log.Debug.Ui("OnMouseOver() want RemoveAll");
+        ManagedInformationMenu.RemoveAll();
 
-        ManagedInformationMenu.PopulateList(
-            new List<ItemInformation> {
-                new ItemInformation { Name = "Entity :", Value = _context.NbEntity.ToString() },
-                new ItemInformation { Name = "Food :", Value = _context.Food.Sum(f => f.Quantity).ToString() },
-                new ItemInformation { Name = "Water :", Value = _context.Water.Sum(w => w.Quantity).ToString() }
+        Log.Debug.Ui("OnMouseOver() want Populate");
+        ManagedInformationMenu.PopulatePanel(
+            new List<ItemInformationMap> {
+                new ItemInformationMap { Name = "Entity :", Value = _context.NbEntity.ToString() },
+                new ItemInformationMap { Name = "Food :", Value = _context.Food.Sum(f => f.Quantity).ToString() },
+                new ItemInformationMap { Name = "Water :", Value = _context.Water.Sum(w => w.Quantity).ToString() }
             });
 
         InformationMenu.IsOpen = true;

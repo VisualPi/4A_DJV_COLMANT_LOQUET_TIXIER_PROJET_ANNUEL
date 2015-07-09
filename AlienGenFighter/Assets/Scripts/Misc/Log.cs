@@ -69,6 +69,17 @@ namespace Assets.Scripts.Misc {
             public static void Entity(string format, params object[] arg) {
                 UnityEngine.Debug.LogFormat("[DEBUG.ENTITY]\n{0}", string.Format(format, arg));
             }
+
+            /// <summary>
+            /// Writes the text representation of the specified array of objects, followed by the current line terminator, to the standard output stream.
+            /// <para>Conditional compilation : ALL, DEBUG, DEBUG_UI</para>
+            /// </summary>
+            /// <param name="format">A composite format string</param>
+            /// <param name="arg">An object array that contains zero or more objects using <c>format</c>.</param>
+            [Conditional("ALL"), Conditional("DEBUG"), Conditional("DEBUG_UI")]
+            public static void Ui(string format, params object[] arg) {
+                UnityEngine.Debug.LogFormat("[DEBUG.UI]\n{0}", string.Format(format, arg));
+            }
         }
         #endregion debug
 
@@ -120,6 +131,17 @@ namespace Assets.Scripts.Misc {
             public static void Entity(string format, params object[] arg) {
                 UnityEngine.Debug.LogFormat("[TRACE.ENTITY]\n{0}", string.Format(format, arg));
             }
+
+            /// <summary>
+            /// Writes the text representation of the specified array of objects, followed by the current line terminator, to the standard output stream.
+            /// <para>Conditional compilation : ALL, DEBUG, TRACE, TRACE_Ui</para>
+            /// </summary>
+            /// <param name="format">A composite format string</param>
+            /// <param name="arg">An object array that contains zero or more objects using <c>format</c>.</param>
+            [Conditional("ALL"), Conditional("TRACE"), Conditional("DEBUG"), Conditional("TRACE_UI")]
+            public static void Ui(string format, params object[] arg) {
+                UnityEngine.Debug.LogFormat("[TRACE.UI]\n{0}", string.Format(format, arg));
+            }
         }
 
         #endregion trace
@@ -162,7 +184,6 @@ namespace Assets.Scripts.Misc {
                 UnityEngine.Debug.LogFormat("[WARN.SQUAREMAP]\n{0}", string.Format(format, arg));
             }
 
-
             /// <summary>
             /// Writes the text representation of the specified array of objects, followed by the current line terminator, to the standard output stream.
             /// <para>Conditional compilation : ALL, TRACE, DEBUG, WARN, WARN_ENTITY</para>
@@ -172,6 +193,17 @@ namespace Assets.Scripts.Misc {
             [Conditional("ALL"), Conditional("WARN"), Conditional("TRACE"), Conditional("DEBUG"), Conditional("WARN_ENTITY")]
             public static void Entity(string format, params object[] arg) {
                 UnityEngine.Debug.LogWarningFormat("[WARN.ENTITY]\n{0}", string.Format(format, arg));
+            }
+
+            /// <summary>
+            /// Writes the text representation of the specified array of objects, followed by the current line terminator, to the standard output stream.
+            /// <para>Conditional compilation : ALL, TRACE, DEBUG, WARN, WARN_UI</para>
+            /// </summary>
+            /// <param name="format">A composite format string</param>
+            /// <param name="arg">An object array that contains zero or more objects using <c>format</c>.</param>
+            [Conditional("ALL"), Conditional("WARN"), Conditional("TRACE"), Conditional("DEBUG"), Conditional("WARN_UI")]
+            public static void Ui(string format, params object[] arg) {
+                UnityEngine.Debug.LogWarningFormat("[WARN.UI]\n{0}", string.Format(format, arg));
             }
         }
         #endregion warning
@@ -223,6 +255,17 @@ namespace Assets.Scripts.Misc {
             [Conditional("ALL"), Conditional("ERROR"), Conditional("WARN"), Conditional("TRACE"), Conditional("DEBUG"), Conditional("ERROR_ENTITY")]
             public static void Entity(string format, params object[] arg) {
                 UnityEngine.Debug.LogErrorFormat("[ERROR.ENTITY]\n{0}", string.Format(format, arg));
+            }
+
+            /// <summary>
+            /// Writes the text representation of the specified array of objects, followed by the current line terminator, to the standard output stream.
+            /// <para>Conditional compilation : ALL, TRACE, DEBUG, WARN, ERROR, ERROR_UI</para>
+            /// </summary>
+            /// <param name="format">A composite format string</param>
+            /// <param name="arg">An object array that contains zero or more objects using <c>format</c>.</param>
+            [Conditional("ALL"), Conditional("ERROR"), Conditional("WARN"), Conditional("TRACE"), Conditional("DEBUG"), Conditional("ERROR_UI")]
+            public static void Ui(string format, params object[] arg) {
+                UnityEngine.Debug.LogErrorFormat("[ERROR.UI]\n{0}", string.Format(format, arg));
             }
         }
         #endregion error
