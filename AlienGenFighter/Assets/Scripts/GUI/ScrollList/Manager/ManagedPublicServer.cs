@@ -11,7 +11,7 @@ namespace Assets.Scripts.GUI.ScrollList.Manager {
             // For each item in list...
             for (var i = 0; i < ItemList.Count; ++i) {
                 // We Instantiate a new gameObject and get component for ...
-                var button = Object.Instantiate(SampleButton).GetComponent<SampleButtonServer>();
+                var button = Instantiate(SampleButton).GetComponent<SampleButtonServer>();
 
                 // ... initialyze data.
                 button.Id = ItemList[i].Id;

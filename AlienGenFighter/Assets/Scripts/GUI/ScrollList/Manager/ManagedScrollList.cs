@@ -9,7 +9,7 @@ namespace Assets.Scripts.GUI.ScrollList.Manager {
         [SerializeField]
         protected Transform ContentPanel;
 
-        protected void ClearPanel() {
+        protected virtual void ClearPanel() {
             Log.Debug.Ui("ClearPanel() : {0}", ContentPanel.name);
             // For each child in ContentPanel...
             for (var i = 0; i < ContentPanel.transform.childCount; i++) {
@@ -38,6 +38,7 @@ namespace Assets.Scripts.GUI.ScrollList.Manager {
         public void PopulatePanel(IEnumerable<T> items) {
             Log.Debug.Ui("PopulatePanel(items) : {0}", ItemList);
             ItemList.AddRange(items);
+            ClearPanel();
             _populateList();
         }
     }

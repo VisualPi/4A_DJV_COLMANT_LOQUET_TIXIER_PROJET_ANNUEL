@@ -63,6 +63,7 @@ GameObject:
   - 224: {fileID: 22448714}
   - 225: {fileID: 22547388}
   - 114: {fileID: 11414724}
+  - 114: {fileID: 11454450}
   m_Layer: 5
   m_Name: ItemPopup
   m_TagString: Untagged
@@ -547,6 +548,23 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11454450
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1fd2c4aa2b95543a3c7965fab6363f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonEvent: {fileID: 11402384}
+  ButtonRemoveEvent: {fileID: 11430702}
+  Icon: {fileID: 11431904}
+  Title: {fileID: 11487696}
+  Description: {fileID: 11498858}
+  Timestamp: {fileID: 11406292}
 --- !u!114 &11454574
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -115,7 +115,7 @@ namespace Assets.Scripts.Network
             var items = new List<ItemServeurPublic>();
             for ( int i = 0 ; i < _hostDatas.Length ; i++ )
             {
-                items.Add(new ItemServeurPublic()
+                items.Add(new ItemServeurPublic
                 {
                     Id = i,
                     CurrentNbPlayer = _hostDatas[i].connectedPlayers.ToString(),

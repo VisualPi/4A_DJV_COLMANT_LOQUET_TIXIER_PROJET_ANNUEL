@@ -10,6 +10,6 @@ namespace Assets.Scripts.GUI.ScrollList.Item {
         public string MaxNbPlayer;
         public string Ping;
 
-        public DoWorkFunc DoWork;
+        public DoWorkFuncId DoWork;
     }
 }
