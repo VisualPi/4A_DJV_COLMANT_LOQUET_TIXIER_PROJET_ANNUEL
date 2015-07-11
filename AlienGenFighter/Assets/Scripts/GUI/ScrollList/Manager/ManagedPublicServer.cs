@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GUI.Sample;
+﻿using System.Collections.Generic;
+using Assets.Scripts.GUI.Sample;
 using Assets.Scripts.GUI.ScrollList.Item;
 using UnityEngine;
 
@@ -7,22 +8,22 @@ namespace Assets.Scripts.GUI.ScrollList.Manager {
         [SerializeField]
         private GameObject SampleButton;
 
-        protected override void _populateList() {
+        protected override void _populateList(List<ItemServeurPublic> items) {
             // For each item in list...
-            for (var i = 0; i < ItemList.Count; ++i) {
+            for (var i = 0; i < items.Count; ++i) {
                 // We Instantiate a new gameObject and get component for ...
                 var button = Instantiate(SampleButton).GetComponent<SampleButtonServer>();
 
                 // ... initialyze data.
-                button.Id = ItemList[i].Id;
-                button.ServerName.text = ItemList[i].ServerName;
-                button.IconServer.sprite = ItemList[i].Icon;
-                button.CurrentNbPlayer.text = ItemList[i].CurrentNbPlayer;
-                button.MaxNbPlayer.text = ItemList[i].MaxNbPlayer;
-                button.Ping.text = ItemList[i].Ping;
+                button.Id = items[i].Id;
+                button.ServerName.text = items[i].ServerName;
+                button.IconServer.sprite = items[i].Icon;
+                button.CurrentNbPlayer.text = items[i].CurrentNbPlayer;
+                button.MaxNbPlayer.text = items[i].MaxNbPlayer;
+                button.Ping.text = items[i].Ping;
 
                 // Here we need copy for does not lost the item at the end of for.
-                var item = ItemList[i];
+                var item = items[i];
                 button.Button.onClick.AddListener(delegate { item.DoWork(button.Id); });
 
                 // In the end, we attache this new gameObject at ContentPanel.

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GUI.Sample;
+﻿using System.Collections.Generic;
+using Assets.Scripts.GUI.Sample;
 using Assets.Scripts.GUI.ScrollList.Item;
 using UnityEngine;
 
@@ -7,15 +8,15 @@ namespace Assets.Scripts.GUI.ScrollList.Manager {
         [SerializeField]
         private GameObject SampleButton;
 
-        protected override void _populateList() {
+        protected override void _populateList(List<ItemInformationMap> items) {
             // For each item in list...
-            for (var i = 0; i < ItemList.Count; ++i) {
+            for (var i = 0; i < items.Count; ++i) {
                 // We Instantiate a new gameObject and get component for ...
-                var information = Object.Instantiate(SampleButton).GetComponent<SampleInformationMap>();
+                var information = Instantiate(SampleButton).GetComponent<SampleInformationMap>();
 
                 // ... initialyze data.
-                information.Name.text = ItemList[i].Name;
-                information.Value.text = ItemList[i].Value;
+                information.Name.text = items[i].Name;
+                information.Value.text = items[i].Value;
 
                 // In the end, we attache this new gameObject at ContentPanel.
                 // We define false for not adapting the child to the parent. 

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.GUI.Sample;
+﻿using System.Collections.Generic;
+using Assets.Scripts.GUI.Sample;
 using Assets.Scripts.GUI.ScrollList.Item;
 using UnityEngine;
 
@@ -15,26 +16,28 @@ namespace Assets.Scripts.GUI.ScrollList.Manager {
             base.ClearPanel();
         }
 
-        protected override void _populateList() {
+        protected override void _populateList(List<ItemEvent> items) {
             // For each item in list...
-            for (var i = 0; i < ItemList.Count; ++i) {
+            for (var i = 0; i < items.Count; ++i) {
                 // We Instantiate a new gameObject and get component for ...
                 var button = Instantiate(_sampleButton).GetComponent<SamplePopupEvent>();
 
                 // ... initialyze data.
-                button.Icon.sprite = ItemList[i].Icon;
-                button.Title.text = ItemList[i].Title;
-                button.Description.text = ItemList[i].Description;
-                button.Timestamp.text = ItemList[i].Timestamp;
+                button.Icon.sprite = items[i].Icon;
+                button.Title.text = items[i].Title;
+                button.Description.text = items[i].Description;
+                button.Timestamp.text = items[i].Timestamp;
 
                 // Here we need copy for does not lost the item at the end of for.
-                var item = ItemList[i];
+                var item = items[i];
                 button.ButtonEvent.onClick.AddListener(delegate { item.DoWorkEvent(); });
-                button.ButtonRemoveEvent.onClick.AddListener(() => RemoveItem(item));
+                button.ButtonRemoveEvent.onClick.AddListener(() => { RemoveItem(item); RefreshPanel(); });
+                button.ActionEvent.AddListener(() => RemoveItem(item));
 
                 // In the end, we attache this new gameObject at ContentPanel.
                 // We define false for not adapting the child to the parent. 
                 button.transform.SetParent(ContentPanel, false);
+                button.StartTimer(3f);
             }
 
             if (ItemList.Count > 0)

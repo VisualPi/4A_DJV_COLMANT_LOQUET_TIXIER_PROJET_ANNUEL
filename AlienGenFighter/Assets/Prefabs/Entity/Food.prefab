@@ -102,10 +102,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _transform: {fileID: 476642}
-  _defaultQuantity: 100
   _collider: {fileID: 6512920}
   _gameObject: {fileID: 123276}
-  _quantity: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

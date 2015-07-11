@@ -40,8 +40,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Terrain: {fileID: 110536}
-  sizeMap: {x: 500, y: 250, z: 500}
   CaseOfMap: {fileID: 125850, guid: a5d782a48ed91df4087fb47094250673, type: 2}
+  gameArea: {fileID: 0}
+  _squareCamera: {fileID: 0}
+  _cameraManager: {fileID: 0}
+  _informationMenu: {fileID: 0}
+  _managedInformationMenu: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

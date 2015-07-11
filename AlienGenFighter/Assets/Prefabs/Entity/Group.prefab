@@ -60,6 +60,7 @@ MonoBehaviour:
   Transform: {fileID: 440394}
   GameObject: {fileID: 171944}
   Collider: {fileID: 13545314}
+  TimeEllapsed: 0
 --- !u!114 &11493016
 MonoBehaviour:
   m_ObjectHideFlags: 1

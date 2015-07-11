@@ -1,29 +1,28 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.GUI
-{
-    public class Menu : MonoBehaviour
-    {
+namespace Assets.Scripts.GUI {
+    public class Menu : MonoBehaviour {
         [SerializeField]
         private Animator _animator;
         [SerializeField]
         private CanvasGroup _canvasGroup;
 
-        public bool IsOpen
-        {
+        public bool IsOpen {
             get { return _animator.GetBool("IsOpen"); }
             set { _animator.SetBool("IsOpen", value); }
         }
 
-        public void Awake()
-        {
+        public AnimatorStateInfo AnimatorState {
+            get { return _animator.GetCurrentAnimatorStateInfo(0); }
+        }
+
+        public void Awake() {
             var rect = GetComponent<RectTransform>();
             rect.offsetMax = rect.offsetMin = new Vector2(0, 0);
         }
 
-        public void Update()
-        {
-            if ( !_animator.GetCurrentAnimatorStateInfo(0).IsName("Open") )
+        public void Update() {
+            if (!_animator.GetCurrentAnimatorStateInfo(0).IsName("Open"))
                 _canvasGroup.blocksRaycasts = _canvasGroup.interactable = false;
             else
                 _canvasGroup.blocksRaycasts = _canvasGroup.interactable = true;
