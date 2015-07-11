@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 namespace Assets.Scripts.GUI.Sample {
-    public class SamplePopupEvent : MonoBehaviour {
+    public class SamplePopupEvent : TimerEvent {
         public Button ButtonEvent;
         public Button ButtonRemoveEvent;
         public Image Icon;

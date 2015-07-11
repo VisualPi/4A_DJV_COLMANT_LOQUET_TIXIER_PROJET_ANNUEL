@@ -8,6 +8,6 @@ public class Test : MonoBehaviour {
                                " bla bla bla bla bla bla bla bla bla bla bla bla bla " +
                                " bla bla bla bla bla bla bla bla bla bla bla bla bla ";
     public void test() {
-        GameEventMessage.PopulatePanel(EIconEventMessage.NotImplemented, "NotImplemented", Description, DateTime.Now);
+        GameEventMessage.AddEventMessage(EIconEventMessage.NotImplemented, "NotImplemented", Description, DateTime.Now);
     }
 }

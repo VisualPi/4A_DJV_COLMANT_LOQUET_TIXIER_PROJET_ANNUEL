@@ -220,7 +220,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 310782312}
+      - m_Target: {fileID: 1528186539}
         m_MethodName: OnExitGame
         m_Mode: 1
         m_Arguments:
@@ -351,7 +351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23abd5cc23a9e4e4e973d658365e3ba7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _buttonExitGame: {fileID: 41061758}
 --- !u!114 &310782313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1903,6 +1902,7 @@ GameObject:
   - 114: {fileID: 1528186535}
   - 114: {fileID: 1528186534}
   - 114: {fileID: 1528186538}
+  - 114: {fileID: 1528186539}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1994,6 +1994,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentMenu: {fileID: 310782311}
+--- !u!114 &1528186539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1528186533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546d6cd34939ac245a556e4e6cacb426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonsExitGame:
+  - {fileID: 41061758}
 --- !u!1 &1586645517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2110,7 +2123,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 310782313}
+      - m_Target: {fileID: 1528186539}
         m_MethodName: OnJoinGame
         m_Mode: 5
         m_Arguments:

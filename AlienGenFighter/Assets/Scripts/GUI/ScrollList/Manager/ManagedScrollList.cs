@@ -25,21 +25,21 @@ namespace Assets.Scripts.GUI.ScrollList.Manager {
         }
 
         public bool RemoveItem(T items) {
-            if (!ItemList.Remove(items))
-                return false;
-
-            ClearPanel();
-            _populateList();
-            return true;
+            return ItemList.Remove(items);
         }
 
-        protected abstract void _populateList();
+        protected abstract void _populateList(List<T> items);
 
         public void PopulatePanel(IEnumerable<T> items) {
-            Log.Debug.Ui("PopulatePanel(items) : {0}", ItemList);
             ItemList.AddRange(items);
+            Log.Debug.Ui("PopulatePanel(items) : {0}", ItemList);
+            _populateList(items as List<T>);
+        }
+
+        public void RefreshPanel() {
+            Log.Debug.Ui("RefreshPanel()");
             ClearPanel();
-            _populateList();
+            _populateList(ItemList);
         }
     }
 }
