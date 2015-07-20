@@ -47,6 +47,7 @@ public class EntityManagerScript : MonoBehaviour
     public static GroupScript GetGroupFromQueue()
     {
         var g = AvailableGroups.Dequeue();
+        g.Init();
         g.EnabledCollision = true;
         return g;
     }

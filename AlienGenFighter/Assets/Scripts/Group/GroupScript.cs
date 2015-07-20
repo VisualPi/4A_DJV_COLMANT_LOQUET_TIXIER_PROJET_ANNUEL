@@ -13,7 +13,7 @@ namespace Assets.Scripts.Group
         public float TimeEllapsed;
         private bool _isStarted;
 
-        public void Start()
+        public void Init()
         {
             GroupContext = new GroupContext(this);
             TimeEllapsed = 0f;

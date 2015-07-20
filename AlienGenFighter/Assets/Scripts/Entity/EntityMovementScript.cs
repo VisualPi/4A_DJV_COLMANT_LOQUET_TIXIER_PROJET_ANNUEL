@@ -37,7 +37,7 @@ public class EntityMovementScript : MonoBehaviour
             //var animPercentage = (Time.time - _animeStartTime) * _entitySpeed;
             //var nextPos = Vector3.Lerp(_startPosition, _targetPosition, animPercentage / _distancePosition);
             //TODO: gerer l'arret des unités
-            var nextPos = _transform.position + (_targetPosition - _transform.position).normalized * _entitySpeed * Time.deltaTime;
+            var nextPos = _transform.position + (_targetPosition - _transform.position).normalized * _entitySpeed * Time.deltaTime * GameData.GameSpeed;
             Ray ray = new Ray(new Vector3(nextPos.x, 520f, nextPos.z), Vector3.down);
             if ( Physics.Raycast(ray, out hit, float.MaxValue, 1 << LayerMask.NameToLayer("Map")) )
             {

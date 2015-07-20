@@ -100,7 +100,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11488468, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
       propertyPath: tabGroups.Array.size
-      value: 200
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 400990, guid: 11c696afce134f24fab96885fdf9f065, type: 2}
       propertyPath: m_LocalPosition.x
@@ -8693,7 +8693,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1001 &1822740761
 Prefab:
   m_ObjectHideFlags: 0

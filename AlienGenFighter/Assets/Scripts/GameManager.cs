@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private bool first = true;
     public void Update()
     {
+        GetInputs();
         if ( first ) //deg mais bon
         {
             foreach ( var map in GameData.SquareMaps )
@@ -62,6 +63,23 @@ public class GameManager : MonoBehaviour
                 }
 
             }
+        }
+    }
+
+    private void GetInputs()
+    {
+        if (Input.GetKey(KeyCode.Plus))
+        {
+            Debug.LogError("Input + !!");
+            GameData.GameSpeed += 1;
+        }
+        if ( Input.GetKey(KeyCode.Minus) )
+        {
+            GameData.GameSpeed -= 1;
+        }
+        if ( Input.GetKey(KeyCode.Alpha0) )
+        {
+            GameData.GameSpeed = 0;
         }
     }
 }

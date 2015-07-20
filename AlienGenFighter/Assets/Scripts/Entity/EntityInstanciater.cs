@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using Assets.Scripts.Group;
 #if UNITY_EDITOR
 using UnityEditor;
-using Assets.Scripts.Group;
+
 
 [CustomEditor(typeof(EntityManagerScript))]
 [CanEditMultipleObjects]

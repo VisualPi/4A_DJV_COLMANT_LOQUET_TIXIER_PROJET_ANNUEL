@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEngine;
 using Assets.Scripts.Misc;
 
 public class EdibleScript : MonoBehaviour, OtherTargetable
@@ -32,17 +33,22 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
         }
         if ( _infos.Quantity < 1 )
         {
-            if ( tag.Equals("Food") )
-            {
-                GameData.SquareMaps[_lastCol].Context.Food.Remove(this);
-            }
-            else if ( tag.Equals("Water") )
-            {
-                GameData.SquareMaps[_lastCol].Context.Water.Remove(this);
-            }
-            GameData.Ressources.Remove(name); // TODO JO FROM AMAU : name?
-            Destroy(_gameObject);
+            //DeleteEdible();
         }
+    }
+
+    private void DeleteEdible()
+    {
+        if ( tag.Equals("Food") )
+        {
+            GameData.SquareMaps[_lastCol].Context.Food.Remove(this);
+        }
+        else if ( tag.Equals("Water") )
+        {
+            GameData.SquareMaps[_lastCol].Context.Water.Remove(this);
+        }
+        GameData.Ressources.Remove(name);
+        Destroy(_gameObject);
     }
     public void OnTriggerEnter(Collider col)
     {
@@ -70,9 +76,16 @@ public class EdibleScript : MonoBehaviour, OtherTargetable
         get { return _infos.Quantity; }
     }
 
-    public void Take(int value) 
+    public int Take(int value)
     {
-        _infos.Quantity -= value; // TODO JO FROM AMAU : si la value est superieur à la quantity?
+        if (_infos.Quantity - value <= 0)
+        {
+            Debug.LogWarning("Deleting because " + _infos.Quantity);
+            value = _infos.Quantity;
+            DeleteEdible();
+        }
+        _infos.Quantity -= value;
+        return value;
     }
 
     public Transform Transform {

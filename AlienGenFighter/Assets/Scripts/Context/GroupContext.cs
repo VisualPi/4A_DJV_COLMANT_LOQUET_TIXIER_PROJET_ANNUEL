@@ -68,9 +68,6 @@ namespace Assets.Scripts.Context
             if (Leader == null || ( entity.DNA.GetGeneAt(ECharateristic.Authority) >
                                     Leader.DNA.GetGeneAt(ECharateristic.Authority) ) )
                 ChangeLeader(entity);
-
-            if (Leader != null) Debug.Log("leader is : " + Leader.name);
-            else Debug.LogError("LEADER IS NOT SUPPOSED TO BE NULL");
             Group.Collider.transform.localScale += new Vector3(.5f, .5f, .5f);
         }
 
@@ -86,6 +83,8 @@ namespace Assets.Scripts.Context
         {
             Leader = entity;
             Group.Transform.parent = entity.Transform;
+            Group.Transform.position = entity.Transform.position;
+            Debug.Log("NEW LEADER");
         }
 
         private EntityScript GetNewLeader()

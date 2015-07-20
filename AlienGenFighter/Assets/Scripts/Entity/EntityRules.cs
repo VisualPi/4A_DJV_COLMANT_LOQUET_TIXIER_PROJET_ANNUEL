@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
+using Assets.Scripts.GUI;
 using Assets.Scripts.Misc;
 using Random = UnityEngine.Random;
 
@@ -75,7 +77,7 @@ public class EntityRules
     #region GROUPE_CREATION
     private bool IsNotInAGroup(EntityScript entity)
     {
-        return !entity.IsInGroup && Time.time > Utils.MinuteToSecond(1);
+        return !entity.IsInGroup && Time.time > Utils.MinuteToSecond(1) * GameData.GameSpeed;
     }
     private bool WantToBeInAGroup(EntityScript entity)
     {
@@ -213,12 +215,12 @@ public class EntityRules
     private void SearchingForGroup(EntityScript entity)//Pour l'instant ce sera creer un groupe
     {
         //entity.GroupContext = new GroupContext();
-        var gr = EntityManagerScript.GetGroupFromQueue();
-        entity.GroupContext = gr.GroupContext;
+        entity.GroupContext = EntityManagerScript.GetGroupFromQueue().GroupContext;
         entity.GroupContext.AddEntity(entity);
-        gr.Transform.position = entity.Transform.position;
-        gr.Transform.parent = entity.Transform;
-        gr.StartTimer();
+        entity.GroupContext.Group.Transform.position = entity.Transform.position;
+        entity.GroupContext.Group.Transform.parent = entity.Transform;
+        entity.GroupContext.Group.StartTimer();
+        GameEventMessage.AddEventMessage(EIconEventMessage.NotImplemented,entity.name + " is creating goup", "creation de groupe", DateTime.Now );
 
     }
     #endregion
@@ -245,9 +247,8 @@ public class EntityRules
     private void Eat(EntityScript entity)
     {
         Log.Debug.Entity("Eat !!");
-        var f = Random.Range(10, 50);
-        GameData.Ressources[entity.State.TargetedFood.Name].Take(f); //TODO : a voir le nombre de food
-        entity.State.Food = entity.State.Food + f; // TODO JO FROM AMAU : Si 'TargetedFood.Name' a moin de food que 'f' ? And Food n'a pas de limite maximum ?
+        var f = Random.Range(10, 50);//TODO : a voir le nombre de food
+        entity.State.Food = entity.State.Food + GameData.Ressources[entity.State.TargetedFood.Name].Take(f);
     }
     #endregion
     #region BOIRE
@@ -264,9 +265,8 @@ public class EntityRules
     private void Drink(EntityScript entity)
     {
         Log.Debug.Entity("Drink !!");
-        var w = Random.Range(10, 50);
-        GameData.Ressources[entity.State.TargetedWater.Name].Take(w);  //TODO : a voir le nombre de food
-        entity.State.Water = entity.State.Water + w; // TODO JO FROM AMAU : Si 'TargetedWater.Name' a moin de water que 'w' ? And Water n'a pas de limite maximum ?
+        var w = Random.Range(10, 50);//TODO : a voir le nombre de Water
+        entity.State.Water = entity.State.Water + GameData.Ressources[entity.State.TargetedWater.Name].Take(w);
     }
     #endregion
     #region BOUGER
