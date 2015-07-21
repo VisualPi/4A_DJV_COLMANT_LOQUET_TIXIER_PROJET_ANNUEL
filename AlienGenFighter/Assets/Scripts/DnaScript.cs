@@ -129,6 +129,14 @@ public class DnaScript
 
         return dnaRet;
     }
+    public DnaScript Mutate(DnaScript gene)
+    {
+        DnaScript dnaRet = new DnaScript();
+        for ( byte i = 0 ; i < Size ; ++i )
+            dnaRet.SetGeneAt(i, this.GetGeneAt(i) > gene.GetGeneAt(i) ? this.GetGeneAt(i) : gene.GetGeneAt(i));
+
+        return dnaRet;
+    }
     public string ToCode()
     {
         return _genes.Aggregate("", (current, g) => current + g);

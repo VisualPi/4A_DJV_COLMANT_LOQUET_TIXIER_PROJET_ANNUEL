@@ -1,4 +1,4 @@
-﻿#define TRACE_ENTITY
+﻿#define WARN
 //#define 
 
 using System.Diagnostics;

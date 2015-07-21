@@ -46,12 +46,12 @@ public class SquareMapScript : MonoBehaviour
     public void OnTriggerEnter(Collider col)
     {
         Log.Trace.SquareMap("Enter");
-        if ( col.tag.Equals("entity") )
+        if ( col.tag.Equals("Entity") )
             _context.NbEntity += 1;
     }
     public void OnTriggerExit(Collider col) {
         Log.Trace.SquareMap("Exit");
-        if ( col.tag.Equals("entity") )
+        if ( col.tag.Equals("Entity") )
             _context.NbEntity -= 1;
         if ( _context.NbEntity < 0 )
             _context.NbEntity = 0;//TODO : au cas ou pour les tests, a enlever apres

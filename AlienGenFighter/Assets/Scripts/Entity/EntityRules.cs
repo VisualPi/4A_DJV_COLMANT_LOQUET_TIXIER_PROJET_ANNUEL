@@ -77,7 +77,7 @@ public class EntityRules
     #region GROUPE_CREATION
     private bool IsNotInAGroup(EntityScript entity)
     {
-        return !entity.IsInGroup && Time.time > Utils.MinuteToSecond(1) * GameData.GameSpeed;
+        return !entity.IsInGroup && Time.time > Utils.MinuteToSecond(0.5f) * GameData.GameSpeed;
     }
     private bool WantToBeInAGroup(EntityScript entity)
     {
@@ -220,7 +220,7 @@ public class EntityRules
         entity.GroupContext.Group.Transform.position = entity.Transform.position;
         entity.GroupContext.Group.Transform.parent = entity.Transform;
         entity.GroupContext.Group.StartTimer();
-        GameEventMessage.AddEventMessage(EIconEventMessage.NotImplemented,entity.name + " is creating goup", "creation de groupe", DateTime.Now );
+        GameEventMessage.AddEventMessage(EIconEventMessage.Group,entity.name + " is creating goup", "creation de groupe", DateTime.Now );
 
     }
     #endregion
